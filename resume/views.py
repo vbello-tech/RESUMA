@@ -11,8 +11,52 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, update_session_auth_hash
 
-# Create your views here.
+# Create your vie
+#PDF
+from io import BytesIO
+from django.http import HttpResponse
+from django.template.loader import get_template, render_to_string
+from xhtml2pdf import pisa
+import os
 
+#function to convert html to pdf
+def html_to_pdf(template_src, context_dict={}):
+    template = get_template(template_src)
+    html = template.render(context_dict)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return None
+
+class GeneratePdf(View):
+    def get(self, request, pk, *args, **kwargs):
+        mainuser = User.objects.get(username=request.user)
+        userprofile = Userprofile.objects.get(user=request.user)
+        resume = Resume.objects.get(user=request.user, pk=pk)
+        project = Project.objects.filter(user=request.user, resume=resume)
+        work = Work.objects.filter(user=request.user, resume=resume)
+        open('templates/resume/resumepdf.html', "w").write(render_to_string('resume/resume.html',
+                                                                            {
+                                                                                'user': mainuser,
+                                                                                'userp': userprofile,
+                                                                                'resume': resume,
+                                                                                'projects': project,
+                                                                                'works': work
+                                                                            }))
+        pdf = html_to_pdf('resume/resumepdf.html')
+        return HttpResponse(pdf, content_type='application/pdf')
+
+        """
+        if pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            filename = "%s %s CV" % (self.request.user, resume.name)
+            #content = "inline; filename=%s" % (filename)
+            content = "attachment; filename=%s" %(filename)
+            response['Content-disposition']=content
+            return response
+        return HttpResponse("Not Found")
+        """
 
 def home(request):
     context ={
@@ -135,6 +179,22 @@ def responsibility(request, pk):
     }
     return render(request, 'resume/addresponsibility.html', context)
 
+class ResumeView(View):
+    def get(self, request, pk,  *args, **kwargs):
+        mainuser = User.objects.get(username=request.user)
+        userprofile = Userprofile.objects.get(user=request.user)
+        resume = Resume.objects.get(user=self.request.user, pk=pk)
+        project = Project.objects.filter(user=request.user, resume=resume)
+        work = Work.objects.filter(user=request.user, resume=resume)
+        context =  {
+            'user':mainuser,
+            'userp':userprofile,
+            'resume':resume,
+            'projects':project,
+            'works':work
+        }
+        return render (self.request, 'resume/resume.html', context)
+
 
 def signup_view(request):
     if request.method == 'POST':
@@ -194,8 +254,50 @@ def user_edit(request, pk):
     return render(request, 'registrations/user_edit.html', context)
 
 
+# CHECK OUT VIEW
+class CreateProfileView(LoginRequiredMixin, View):
+    def get(self, *args, **kwargs):
+        try:
+            if self.request.user.is_authenticated:
+                userprofile = Userprofile.objects.get(user=self.request.user)
+            else:
+                return redirect('resume:login')
+        except ObjectDoesNotExist:
+            return redirect('resume:sign_up')
+        form = ProfileForm()
+        context = {
+            'form': form,
+            'userprofile':userprofile
+        }
+        return render (self.request, 'resume/createprofile.html', context)
+
+    def post(self, *args, **kwargs):
+        try:
+            userprofile = Userprofile.objects.get(user=self.request.user)
+            if userprofile.has_profile:
+                return redirect('resume:home')
+            else:
+                form = ProfileForm(self.request.POST or None)
+                if form.is_valid():
+                    bio = form.cleaned_data.get('bio')
+                    phone = form.cleaned_data.get('phone')
+                    github = form.cleaned_data.get('github')
+                    linkedin = form.cleaned_data.get('linkedin')
+                    userprofile.bio = bio
+                    userprofile.phone = phone
+                    userprofile.github = github
+                    userprofile.linkedin = linkedin
+                    userprofile.has_profile = True
+                    userprofile.save()
+                    return redirect('resume:home')
+                else:
+                    return redirect('resume:sign_up')
+
+        except ObjectDoesNotExist:
+            return redirect('resume:sign_up')
+        
 def profile_edit(request):
-    user_profile = get_object_or_404(Userprofile, user=request.user)
+    user_profile = get_object_or_404(Userprofile, user=request.user, has_profile=True)
     if request.method == "POST":
         form = EditProfileForm(request.POST, instance=user_profile)
         if form.is_valid:
