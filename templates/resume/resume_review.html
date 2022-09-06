@@ -92,6 +92,8 @@
 </head>
 
 <body>
+<h2><a href="{% url 'resume:generate_pdf' pk=resume.pk %}">GENERATE PDF</a></h2>
+<h2><a href="{{ resume.get_resume }}">GENERATE LINK</a></h2>
     <div class="newbie">
         <div class="developer">
             <ul style="float: left;">

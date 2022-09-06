@@ -2,13 +2,18 @@ from django.db import models
 from django.utils import timezone
 from django.shortcuts import reverse
 from phonenumber_field.modelfields import PhoneNumberField
+import random, string
 # Create your models here.
 
+
+def create_code():
+    return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
 
 class Resume(models.Model):
     user = models.ForeignKey('auth.user', on_delete=models.CASCADE)
     name = models.CharField(max_length=60)
     resume_link = models.URLField(blank=True, null=True)
+    slug = models.SlugField(default=create_code())
 
     def add_project(self):
         return reverse("resume:add_project", kwargs={
@@ -18,6 +23,13 @@ class Resume(models.Model):
     def add_work(self):
         return reverse("resume:add_work", kwargs={
             'pk': self.pk,
+        })
+
+    def get_resume(self):
+        return reverse("resume:resume", kwargs={
+            'slug': self.slug,
+            'name': self.name,
+            'user': self.user,
         })
 
     def __str__(self):

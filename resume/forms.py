@@ -52,6 +52,7 @@ class WorkForm(forms.ModelForm):
         model = Work
         fields = (
             'company_name',
+            'company_description',
             'start_date',
             'end_date',
         )

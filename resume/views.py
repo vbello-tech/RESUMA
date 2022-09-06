@@ -29,6 +29,7 @@ def html_to_pdf(template_src, context_dict={}):
         return HttpResponse(result.getvalue(), content_type='application/pdf')
     return None
 
+#RENDER RESUME TO PDF
 class GeneratePdf(View):
     def get(self, request, pk, *args, **kwargs):
         mainuser = User.objects.get(username=request.user)
@@ -58,6 +59,7 @@ class GeneratePdf(View):
         return HttpResponse("Not Found")
         """
 
+#HOMEPAGE
 def home(request):
     context ={
         'user':request.user
@@ -65,6 +67,7 @@ def home(request):
     return render(request, 'home.html', context)
 
 
+#CREATE REUSUME
 class AddResumeView(View):
     def get(self, *args, **kwargs):
         form = ResumeForm()
@@ -80,18 +83,20 @@ class AddResumeView(View):
                 body = form.save(commit=False)
                 body.user = self.request.user
                 body.save()
-                return redirect('resume:add_project', pk=body.pk)
+                return redirect(body.add_project())
             else:
                 return redirect('resume:home')
 
         except ObjectDoesNotExist:
             return redirect('resume:home')
 
+#ADD PROJECT TO RESUME
 class AddProjectView(View):
     def get(self, request, pk,  *args, **kwargs):
         resume = Resume.objects.get(user=request.user, pk=pk)
         form = ProjectForm()
         context = {
+            'resume':resume,
             'form': form,
         }
         return render (self.request, 'resume/addproject.html', context)
@@ -112,7 +117,30 @@ class AddProjectView(View):
         except ObjectDoesNotExist:
             return redirect('resume:home')
 
+#ADD EXPERIENCED YOU GAINED WHILE WORKING ON PROJECT
+def experience(request, pk):
+    project = get_object_or_404(Project, pk=pk)
+    resume = Resume.objects.get(pk=project.resume.pk)
+    if request.method == "POST":
+        form = ExperienceForm(request.POST)
+        if form.is_valid:
+            body = form.save(commit=False)
+            body.project = project
+            body.user = request.user
+            body.save()
+            return redirect(resume.add_work())
+        form = ExperienceForm()
+    else:
+        form = ExperienceForm()
 
+    context = {
+        'form': form,
+        'project':project,
+    }
+    return render(request, 'resume/addexperience.html', context)
+
+
+#ADD WORK EXPERIENCE
 class AddWorkView(View):
     def get(self, request, pk,  *args, **kwargs):
         resume = Resume.objects.get(user=request.user, pk=pk)
@@ -138,29 +166,10 @@ class AddWorkView(View):
         except ObjectDoesNotExist:
             return redirect('resume:home')
 
-def experience(request, pk):
-    project = get_object_or_404(Project, pk=pk)
-    if request.method == "POST":
-        form = ExperienceForm(request.POST)
-        if form.is_valid:
-            body = form.save(commit=False)
-            body.project = project
-            body.user = request.user
-            body.save()
-            return redirect('resume:home')
-        form = ExperienceForm()
-    else:
-        form = ExperienceForm()
-
-    context = {
-        'form': form,
-        'project':project,
-    }
-    return render(request, 'resume/addexperience.html', context)
-
-
+#ADD EXPERIENCE YOU GAINED AND YOUR RESPONSIBILITY ON THE JOB
 def responsibility(request, pk):
     work = get_object_or_404(Work, pk=pk)
+    resume = Resume.objects.get(pk=work.resume.pk)
     if request.method == "POST":
         form = ResponsibilityForm(request.POST)
         if form.is_valid:
@@ -168,7 +177,7 @@ def responsibility(request, pk):
             body.work = work
             body.user = request.user
             body.save()
-            return redirect('resume:home')
+            return redirect('resume:preview_resume', pk=resume.pk)
         form = ResponsibilityForm()
     else:
         form = ResponsibilityForm()
@@ -179,7 +188,8 @@ def responsibility(request, pk):
     }
     return render(request, 'resume/addresponsibility.html', context)
 
-class ResumeView(View):
+#PREVIEW RESUME
+class ResumePreviewView(View):
     def get(self, request, pk,  *args, **kwargs):
         mainuser = User.objects.get(username=request.user)
         userprofile = Userprofile.objects.get(user=request.user)
@@ -193,9 +203,36 @@ class ResumeView(View):
             'projects':project,
             'works':work
         }
-        return render (self.request, 'resume/resume.html', context)
+        return render (self.request, 'resume/resume_review.html', context)
 
+#GENERATE RESUME LINK
+def generate_link(request, pk):
+    resume = get_object_or_404(Resume, pk=pk)
+    code = resume.slug
+    user = resume.user.username
+    name = resume.name
+    link = str('http://127.0.0.1:8000/resume/' + user + '/' + name + '/' + code + '/')
+    resume.resume_link = link
+    return redirect(resume.get_resume())
 
+#PREVIEW RESUME
+class ResumeView(View):
+    def get(self, request, user, name, slug,  *args, **kwargs):
+        resume = Resume.objects.get(slug=slug, name=name)
+        mainuser = User.objects.get(username=resume.user.username)
+        userprofile = Userprofile.objects.get(user=resume.user)
+        project = Project.objects.filter(resume=resume)
+        work = Work.objects.filter(resume=resume)
+        context =  {
+            'user':mainuser,
+            'userp':userprofile,
+            'resume':resume,
+            'projects':project,
+            'works':work
+        }
+        return render (self.request, 'resume/resumeview.html', context)
+
+# AUTHORIZATION
 def signup_view(request):
     if request.method == 'POST':
         form = NewUSerForm(request.POST)
@@ -295,7 +332,7 @@ class CreateProfileView(LoginRequiredMixin, View):
 
         except ObjectDoesNotExist:
             return redirect('resume:sign_up')
-        
+
 def profile_edit(request):
     user_profile = get_object_or_404(Userprofile, user=request.user, has_profile=True)
     if request.method == "POST":
