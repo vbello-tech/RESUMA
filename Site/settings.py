@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY= 'django-insecure-1#-z82+g4&3js^0q6q8p5k+q8u_a&!qwh+a0d8ybc(@c$%h0ka'
-flyctl secrets set SECRET_KEY='django-insecure-1#-z82+g4&3js^0q6q8p5k+q8u_a&!qwh+a0d8ybc(@c$%h0ka'
+#flyctl secrets set SECRET_KEY='django-insecure-1#-z82+g4&3js^0q6q8p5k+q8u_a&!qwh+a0d8ybc(@c$%h0ka'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
