@@ -1,0 +1,20 @@
+databases:
+  - name: NEWBIE-RESUME
+    databaseName: newbie_resume
+    user: newbie_resume_user
+
+services:
+  - type: web
+    name: site
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn site.wsgi:application"
+    envVars:
+      - key: postgres://newbie_resume_user:o8OlUyyTUs7RHEjk8Ldaq1FptApX4h3U@dpg-ccdsi8mn6mpt4gqp6ui0-a/newbie_resume
+        fromDatabase:
+          name:  NEWBIE-RESUME
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
