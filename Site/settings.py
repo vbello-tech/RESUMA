@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY= 'django-insecure-1#-z82+g4&3js^0q6q8p5k+q8u_a&!qwh+a0d8ybc(@c$%h0ka'
-#flyctl secrets set SECRET_KEY='django-insecure-1#-z82+g4&3js^0q6q8p5k+q8u_a&!qwh+a0d8ybc(@c$%h0ka'
+#flyctl secrets set DATABASE_URL= postgres://newbie_resume_user:o8OlUyyTUs7RHEjk8Ldaq1FptApX4h3U@dpg-ccdsi8mn6mpt4gqp6ui0-a.oregon-postgres.render.com/newbie_resume
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
