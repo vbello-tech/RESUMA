@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="container">
+  <br><br>
+<center><h2>THESE ARE ALL THE RESUME YOU HAVE CREATED WITH US.</h2></center>
+  {% for resume in resumes %}
+    <h2>{{ resume.name }}<a href="{{ resume.getresume }}">view</a> </h2>
+  {% endfor %}
+
+</div>
+
+
+{% endblock content %}

@@ -216,6 +216,44 @@ section .reason .text p{
   margin-top: 20px;
 }
 
+.submit {
+    margin-top: 40px;
+}
+
+.submit a{
+  background-color: black;
+  color: #ffffff;
+  border-radius: 10px;
+  -webkit-transition: all 0.3s;
+  padding: 10px 20px;
+  transition: all 0.3s;
+  border: 1px solid black;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+
+.spread {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.spread a {
+    background-color: black;
+    color: #ffffff;
+    border-radius: 10px;
+    -webkit-transition: all 0.3s;
+    padding: 10px 50px;
+    transition: all 0.3s;
+    border: 1px solid black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 footer {
   background-color: rgb(20, 20, 20);
   color: rgb(185, 184, 184);
@@ -553,5 +591,23 @@ footer p{
     margin: 20px 5px;
     font-size: 30px;
   }
+    .spread {
+        display: flexbox;
+        align-items: left;
+        justify-content: space-around;
+        margin: auto;
+    }
 
+    .spread a {
+        background-color: black;
+        color: #ffffff;
+        border-radius: 10px;
+        -webkit-transition: all 0.3s;
+        padding: 6px 15px;
+        transition: all 0.3s;
+        border: 1px solid black;
+        text-decoration: none;
+        cursor: pointer;
+        font-weight: bold;
+    }
 }

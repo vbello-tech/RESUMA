@@ -19,7 +19,7 @@ class ResumeForm(forms.ModelForm):
             'name': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    "placeholder": '',
+                    "placeholder": 'e.g BACKEND DEVELOPER, FULLSTACK DEVELOPER',
                 }
             ),
         }
@@ -36,12 +36,29 @@ class ProjectForm(forms.ModelForm):
         )
 
         widgets = {
+            'name': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    "placeholder": 'PROJECT NAME',
+                }
+            ),
             'description': forms.Textarea(
                 attrs={
                     'class': 'form-control',
-                    "placeholder": 'Enter your address',
-                    'rows': 10,
-                    'cols': 70,
+                    "placeholder": 'PROJECT DESCRIPTION',
+                    'rows': 3,
+                }
+            ),
+            'github': forms.URLInput(
+                attrs={
+                    'class': 'form-control',
+                    "placeholder": 'PROJECT SOURCE CODE',
+                }
+            ),
+            'link': forms.URLInput(
+                attrs={
+                    'class': 'form-control',
+                    "placeholder": 'PROJECT LINK',
                 }
             ),
         }
@@ -57,6 +74,34 @@ class WorkForm(forms.ModelForm):
             'end_date',
         )
 
+        widgets = {
+            'company_name': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    "placeholder": 'COMPANY NAME',
+                }
+            ),
+            'company_description': forms.Textarea(
+                attrs={
+                    'class': 'form-control',
+                    "placeholder": 'A BRIEF DESCRIPTION OF WHAT THE COMAPNY IS.',
+                    'rows': 3,
+                }
+            ),
+            'start_date': forms.DateInput(
+                attrs={
+                    'class': 'form-control',
+                    "placeholder": 'FORMAT YYYY-MM-DD(2002-02-20)',
+                }
+            ),
+            'end_date': forms.DateInput(
+                attrs={
+                    'class': 'form-control',
+                    "placeholder": 'FORMAT YYYY-MM-DD(2002-02-20)',
+                }
+            ),
+        }
+
 
 class ExperienceForm(forms.ModelForm):
     class Meta:
@@ -67,9 +112,8 @@ class ExperienceForm(forms.ModelForm):
             'body': forms.Textarea(
                 attrs={
                     'class': 'form-control',
-                    "placeholder": 'Enter your comment here',
-                    'rows': 10,
-                    'cols': 80,
+                    "placeholder": 'e.g I WORKED WITH AND LEARNT HOW TO USE STRIPE PAYMENT API',
+                    'rows': 5,
                 }
             )
         }
@@ -85,8 +129,7 @@ class ResponsibilityForm(forms.ModelForm):
                 attrs={
                     'class': 'form-control',
                     "placeholder": 'Enter your comment here',
-                    'rows': 10,
-                    'cols': 80,
+                    'rows': 5,
                 }
             )
         }

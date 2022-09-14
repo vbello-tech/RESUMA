@@ -67,6 +67,16 @@ def home(request):
     return render(request, 'home.html', context)
 
 
+#HOMEPAGE
+@login_required
+def user_resume(request):
+    resume = Resume.objects.filter(user=request.user)
+    context ={
+        'user':request.user,
+        'resumes':resume,
+    }
+    return render(request, 'resume/user_resume.html', context)
+
 #CREATE REUSUME
 class AddResumeView(View, LoginRequiredMixin):
     def get(self, *args, **kwargs):
@@ -79,13 +89,16 @@ class AddResumeView(View, LoginRequiredMixin):
     def post(self, *args, **kwargs):
         try:
             form = ResumeForm(self.request.POST or None)
-            if form.is_valid:
-                body = form.save(commit=False)
-                body.user = self.request.user
-                body.save()
-                return redirect(body.add_project())
+            if self.request.user.is_authenticated:
+                if form.is_valid:
+                    body = form.save(commit=False)
+                    body.user = self.request.user
+                    body.save()
+                    return redirect(body.add_project())
+                else:
+                    return redirect('resume:home')
             else:
-                return redirect('resume:home')
+                return redirect('resume:login')
 
         except ObjectDoesNotExist:
             return redirect('resume:home')
@@ -103,25 +116,32 @@ class AddProjectView(View, LoginRequiredMixin):
 
     def post(self, request, pk, *args, **kwargs):
         try:
-            resume = Resume.objects.get(user=request.user, pk=pk)
-            form = ProjectForm(self.request.POST or None)
-            if form.is_valid:
-                body = form.save(commit=False)
-                body.user = self.request.user
-                body.resume = resume
-                body.save()
-                return redirect('resume:add_experience', pk=body.pk)
+            if self.request.user.is_authenticated:
+                resume = Resume.objects.get(user=request.user, pk=pk)
+                form = ProjectForm(self.request.POST or None)
+                if form.is_valid:
+                    body = form.save(commit=False)
+                    body.user = self.request.user
+                    body.resume = resume
+                    body.save()
+                    return redirect('resume:add_experience', pk=body.pk)
+                else:
+                    return redirect('resume:home')
             else:
-                return redirect('resume:home')
-
+                return redirect('resume:login')
         except ObjectDoesNotExist:
             return redirect('resume:home')
+
+@login_required
+def redirect_to_work(request, pk):
+    project = get_object_or_404(Project, pk=pk)
+    resume = Resume.objects.get(pk=project.resume.pk)
+    return redirect(resume.add_work())
 
 #ADD EXPERIENCED YOU GAINED WHILE WORKING ON PROJECT
 @login_required
 def experience(request, pk):
     project = get_object_or_404(Project, pk=pk)
-    resume = Resume.objects.get(pk=project.resume.pk)
     if request.method == "POST":
         form = ExperienceForm(request.POST)
         if form.is_valid:
@@ -129,7 +149,7 @@ def experience(request, pk):
             body.project = project
             body.user = request.user
             body.save()
-            return redirect(resume.add_work())
+            return redirect('resume:add_experience', pk=project.pk)
         form = ExperienceForm()
     else:
         form = ExperienceForm()
@@ -148,6 +168,7 @@ class AddWorkView(View, LoginRequiredMixin):
         form = WorkForm()
         context = {
             'form': form,
+            'resume':resume,
         }
         return render (self.request, 'resume/addwork.html', context)
 
@@ -171,7 +192,6 @@ class AddWorkView(View, LoginRequiredMixin):
 @login_required
 def responsibility(request, pk):
     work = get_object_or_404(Work, pk=pk)
-    resume = Resume.objects.get(pk=work.resume.pk)
     if request.method == "POST":
         form = ResponsibilityForm(request.POST)
         if form.is_valid:
@@ -179,7 +199,7 @@ def responsibility(request, pk):
             body.work = work
             body.user = request.user
             body.save()
-            return redirect('resume:preview_resume', pk=resume.pk)
+            return redirect('resume:add_responsibility', pk=work.pk)
         form = ResponsibilityForm()
     else:
         form = ResponsibilityForm()

@@ -1,19 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
 
-what did you gain while working on project {{ project.name }}
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
+{% block content %}
+<br>
+<div class="container">
+			<div class="row ">
+						<form  method="POST">
+                            {% csrf_token %}
+                                <h2 class="text-center">
+                                    MENTION SOMETHINGS YOU DID WHILE WORKING ON PROJECT <b><em>{{ project.name }}</em></b>
+                                </h2>
+                                <div class="col-md-12">
+                                        {{ form.body }}
+                                </div>
+                            <br>
+                            <div class="col-md-12">
+                                <div class="submit-button text-center">
+                                    <button class="btn btn-primary"  type="submit">ADD MORE</button>
+                                    <div id="msgSubmit" class="h3 text-center hidden"></div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+						</form>
+                <div class="spread">
+                    <a href="{% url 'resume:add_project' pk=project.resume.pk %}">ADD PROJECT</a>
+                    <a href="{% url 'resume:redirect_work' pk=project.pk %}">ADD WORK EXPERIENCE.</a>
+                </div>
 
-     <button type="submit">ADD MORE.</button>
+                <div class="col-md-12">
+                    <div class="submit text-center">
+                            <a href="{% url 'resume:preview_resume' pk=project.resume.pk %}">PREVIEW RESUME</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-</form>
+{% endblock content %}
 
-</body>
-</html>

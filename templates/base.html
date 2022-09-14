@@ -21,9 +21,13 @@
                 <span class="bar"></span>
             </div>
             <ul class="nav-menu">
-                <li><a href="#" class="nav-links">HOME</a></li>
-                <li><a href="#" class="nav-links">RESUME</a></li>
-                <li><a href="#" class="nav-links nav-links-btn">Sign Up</a></li>
+                <li><a href="{% url 'resume:home' %}" class="nav-links">HOME</a></li>
+                <li><a href="{% url 'resume:user_resume' %}" class="nav-links">RESUME</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'resume:logout' %}" class="nav-links nav-links-btn">LOGOUT</a></li>
+                {% else %}
+                <li><a href="{% url 'resume:login' %}" class="nav-links nav-links-btn">LOGIN</a></li>
+                {% endif %}
             </ul>
         </nav>
     </div>

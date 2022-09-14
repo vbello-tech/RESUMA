@@ -1,25 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
 
-work experience for {{ resume.name }} resume
+{% block content %}
+<br>
+<div class="container">
+			<div class="row ">
+						<form  method="POST">
+                            {% csrf_token %}
+                            <h2 class="text-center">ADD A WORK EXPERIENCE TO BOOST YOUR <b><em>{{ resume.name }}</em></b> RESUME</h2>
+                                <div class="col-md-12">
+                                        {{ form.as_p }}
+                                </div>
+                                <h4>Dont worry about putting the correct day if you dont remeber, only the year and month will be displayed.</h4>
 
-  <form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-
-      <div class="col-md-12">
-            <div class="submit-button text-center">
-                <button class="btn btn-common"  type="submit">SUBMIT</button>
-                <div id="msgSubmit" class="h3 text-center hidden"></div>
-                <div class="clearfix"></div>
+                            <br>
+                            <div class="col-md-12">
+                                <div class="submit text-center">
+                                    <button class="btn btn-primary"  type="submit">ADD</button>
+                                    <div id="msgSubmit" class="h3 text-center hidden"></div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+						</form>
+                <div class="col-md-12">
+                    <div class="submit text-center">
+                            <a href="{% url 'resume:preview_resume' pk=resume.pk %}">PREVIEW RESUME</a>
+                    </div>
+                </div>
             </div>
         </div>
 
-  </form>
-</body>
-</html>
+
+
+{% endblock content %}

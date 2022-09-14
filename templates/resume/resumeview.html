@@ -2,23 +2,25 @@
 {% load static %}
 
 {% block content %}
-    <br><br><br>
+
+{{ resume.resume_link }}
 <div class="container">
         <div class="developer">
             <ul>
-                <li class="dev"><b>BELLO VICTOR</b></li>
-                <li class="dev"><b>SOFTWARE ENGINER</b></li>
-                <li>vbellotech@gmail.com </li>
-                <li><a href="vbellotech.herokuapp.com">PORTFOLIO</a></li>
-                <li><a href="#">GITHUB </a></li>
-                <li><a href="#">LINKEDIN</a></li>
+                <li class="dev"><b>{{ user.last_name }} {{ user.first_name }}</b></li>
+                <li class="dev"><b>{{ resume.name }}</b></li>
+                <li>{{ user.email }} </li>
+                <li><a href="{{ userp.portfolio }}">PORTFOLIO</a></li>
+                <li><a href="{{ userp.github }}">GITHUB </a></li>
+                <li><a href="{{ userp.linkedin }}">LINKEDIN</a></li>
             </ul>
         </div>
 <hr>
         <div class="resume">
             <span>BIO</span>
             <p>
-               A VERY INTERESTING YOUNG MAN READY TO WORK FOR YOUR COMPANY.
+                  {{ userp.bio|linebreaksbr	}}
+
             </p>
 
         </div>
@@ -28,20 +30,19 @@
         {% endif %}
         {% for project in projects %}
         <div class="portfolio">
-            <h1>RENDAPP</h1>
-            <p>
-                <em>A WEBSITE WHERE YOU CAN FIND AND CONNECT TO SERVICE PROVIDERS IN YOUR AREA</em>
+           <h1>{{ project.name }}</h1>
+           <p>
+                <em>{{ project.description|linebreaksbr	}}</em>
             </p>
             <ul>
                 {% for item in project.project.all %}
-                <li>I WORKED WITH A LOT OF LIBRARIES</li>
-                <li>I WORKED WITH A LOT OF APIS</li>
+                <li>{{ item.body }}</li>
                 {% endfor%}
             </ul>
             <div class="pr_li">
-                <a href="#">github link</a>
+                <a href="{{ project.github }}">github link</a>
                 {% if project.link %}
-                <a href="#">project link</a>
+                <a href="{{ project.link }}">project link</a>
                 {% endif %}
             </div>
         </div>
@@ -56,17 +57,16 @@
         <div class="portfolio">
 
             {% if work.end_date %}
-            <h1>CLEMENT ( MAY 2017-MAY 2019 )</h1>
+            <h1>{{ work.company_name }} ( {{ work.start_date }}-{{ work.end_date }} )</h1>
             {% else %}
-            <h1>CLEMENT ( MAY 2017-CURRENT )</h1>
+            <h1>{{ work.company_name }} ( {{ work.start_date }}- CURRENT )</h1>
             {% endif %}
             <p>
-                <em>WE REAPIR PHONES HERE</em>
+                <em>{{ work.company_description|linebreaksbr	}}</em>
             </p>
             <ul>
                 {% for item in work.work.all %}
-                <li>HOW TO REPAIR PHONE</li>
-                <li>HOW TO REPAIR LAPTOP</li>
+                <li>{{ item.body }}</li>
                 {% endfor%}
             </ul>
         </div>
@@ -74,7 +74,7 @@
         {% endfor %}
 
         <div class="tech">
-             <h1>SKILLS (languages, frameworks, library, databases)</h1>
+             <h1>DEVELOPER SKILLS (languages, frameworks, library, databases)</h1>
                 <ul>
                     <li>PYTHON</li>
                     <li>HTML</li>
@@ -91,7 +91,9 @@
                     <li>HTML</li>
                 </ul>
         </div>
+    </div>
 
-</div>
+
+
 
 {% endblock content %}
