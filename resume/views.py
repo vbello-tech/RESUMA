@@ -74,7 +74,7 @@ class AddResumeView(View, LoginRequiredMixin):
         context = {
             'form': form,
         }
-        return render (self.request, 'resume/addproject.html', context)
+        return render (self.request, 'resume/addresume.html', context)
 
     def post(self, *args, **kwargs):
         try:
