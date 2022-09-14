@@ -343,11 +343,35 @@ footer p{
   margin-left: 70px;
 }
 
+.form-group {
+    margin: 0 80px 0 80px;
+    font-weight: 600;
+}
+
+.form-group .form-control {
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.form-group button {
+    display: inline-block;
+    color: #ffffff;
+    border-radius: 10px;
+    -webkit-transition: all 0.3s;
+    padding: 10px 15px;
+    transition: all 0.3s;
+    text-decoration: none;
+    font-size: 20px;
+}
+
 @media screen and (max-width: 768px) {
   .nav-container {
     position: relative;
   }
 
+    .form-group {
+        margin: 0 10px 0 10px;
+    }
   .nav-menu {
     display: grid;
     grid-template-columns: auto;

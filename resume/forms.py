@@ -19,7 +19,7 @@ class ResumeForm(forms.ModelForm):
             'name': forms.TextInput(
                 attrs={
                     'class': 'form-control',
-                    "placeholder": 'Enter your address',
+                    "placeholder": '',
                 }
             ),
         }
