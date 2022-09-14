@@ -1,135 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+{% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web navbar</title>
-    <style>
-
-        .newbie {
-          margin: 5px 5px;
-        }
-
-        .newbie .developer ul {
-          margin-left: 20px;
-          list-style: none;
-        }
-
-        .newbie .developer ul li{
-          list-style: none;
-          font-weight: 500;
-        }
-
-        .newbie span {
-          font-size: 20px;
-          font-weight: 600;
-        }
-
-        .newbie p {
-          font-size: 17px;
-          margin-left: 20px;
-        }
-
-        .newbie .resume{
-            margin-left: 20px;
-            margin-top: 10px;
-        }
-
-        .newbie .resume p{
-        font-size: 15px;
-        }
-
-        .newbie .tech ul{
-            margin-left: 22px;
-        }
-
-        .newbie .tech ul li{
-            margin-left: 40px;
-            font-size: 18px;
-        }
-
-        .newbie .portfolio{
-          margin-left: 20px;
-        }
-
-        .newbie .portfolio p{
-            font-size: 15px;
-        }
-
-        .newbie .portfolio .pr_li{
-          margin-left: 60px;
-          display: flex;
-        }
-
-        .newbie .portfolio .pr_li a{
-          font-size: 20px;
-          font-weight: 200;
-          margin-right: 20px;
-        }
-
-        .newbie .portfolio .pr_li p{
-          font-size: 10px;
-          font-weight: 200;
-          margin-right: 20px;
-        }
-
-        .newbie .portfolio ul{
-          margin-left: 80px;
-          font-size: 15px;
-        }
-
-        footer{
-            margin: 40px;
-            bottom: 0;
-            left: 50;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-    </style>
-</head>
-
-<body>
-    <div class="newbie">
+{% block content %}
+    <br><br><br>
+<div class="container">
         <div class="developer">
-            <ul style="float: left;">
-                <li style="font-size:18px;">{{ user.first_name }} {{ user.last_name }}</li>
-                <li style="font-size:18px;">{{ resume.name }}</li>
-                <li style="font-size:15px;">{{ user.email }} </li>
-                <li style="font-size:12px;"><a href="{{ userp.portfolio }}">PORTFOLIO</a></li>
-                <li style="font-size:12px;"><a href="{{ userp.github }}">GITHUB </a></li>
-                <li style="font-size:12px;"><a href="{{ userp.linkedin }}">LINKEDIN</a></li>
+            <ul>
+                <li class="dev"><b>BELLO VICTOR</b></li>
+                <li class="dev"><b>SOFTWARE ENGINER</b></li>
+                <li>vbellotech@gmail.com </li>
+                <li><a href="vbellotech.herokuapp.com">PORTFOLIO</a></li>
+                <li><a href="#">GITHUB </a></li>
+                <li><a href="#">LINKEDIN</a></li>
             </ul>
         </div>
 <hr>
         <div class="resume">
             <span>BIO</span>
             <p>
-               {{ userp.bio|linebreaksbr	}}
+               A VERY INTERESTING YOUNG MAN READY TO WORK FOR YOUR COMPANY.
             </p>
 
         </div>
         <hr>
         {% if projects %}
-        <span>PORTFOLIO</span>
+        <span class="topic">PORTFOLIO</span>
         {% endif %}
         {% for project in projects %}
         <div class="portfolio">
-            <h1>{{ project.name }}</h1>
+            <h1>RENDAPP</h1>
             <p>
-                <em>{{ project.description|linebreaksbr	}}</em>
+                <em>A WEBSITE WHERE YOU CAN FIND AND CONNECT TO SERVICE PROVIDERS IN YOUR AREA</em>
             </p>
             <ul>
                 {% for item in project.project.all %}
-                <li>{{ item.body }}</li>
+                <li>I WORKED WITH A LOT OF LIBRARIES</li>
+                <li>I WORKED WITH A LOT OF APIS</li>
                 {% endfor%}
             </ul>
             <div class="pr_li">
-                <a href="{{ project.github }}">github link</a>
+                <a href="#">github link</a>
                 {% if project.link %}
-                <a href="{{ project.link }}">project link</a>
+                <a href="#">project link</a>
                 {% endif %}
             </div>
         </div>
@@ -138,22 +50,23 @@
 <hr>
 
         {% if works %}
-        <span>WORK HISTORY</span>
+        <span class="topic">WORK HISTORY</span>
         {% endif %}
         {% for work in works %}
         <div class="portfolio">
 
             {% if work.end_date %}
-            <h1>{{ work.company_name }} ( {{ work.start_date }}-{{ work.end_date }} )</h1>
+            <h1>CLEMENT ( MAY 2017-MAY 2019 )</h1>
             {% else %}
-            <h1>{{ work.company_name }} ( {{ work.start_date }}- CURRENT )</h1>
+            <h1>CLEMENT ( MAY 2017-CURRENT )</h1>
             {% endif %}
             <p>
-                <em>{{ work.company_description|linebreaksbr	}}</em>
+                <em>WE REAPIR PHONES HERE</em>
             </p>
             <ul>
                 {% for item in work.work.all %}
-                <li>{{ item.body }}</li>
+                <li>HOW TO REPAIR PHONE</li>
+                <li>HOW TO REPAIR LAPTOP</li>
                 {% endfor%}
             </ul>
         </div>
@@ -161,7 +74,7 @@
         {% endfor %}
 
         <div class="tech">
-             <h1>DEVELOPER SKILLS (languages, frameworks, library, databases)</h1>
+             <h1>SKILLS (languages, frameworks, library, databases)</h1>
                 <ul>
                     <li>PYTHON</li>
                     <li>HTML</li>
@@ -178,12 +91,7 @@
                     <li>HTML</li>
                 </ul>
         </div>
-    </div>
 
-<footer>
-    <span>NEWBIE RESUME BUILDER BUILT BY:</span> <a href="#">VBELLOTECH</a>
-</footer>
+</div>
 
-</body>
-
-</html>
+{% endblock content %}

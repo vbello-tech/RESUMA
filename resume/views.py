@@ -30,7 +30,7 @@ def html_to_pdf(template_src, context_dict={}):
     return None
 
 #RENDER RESUME TO PDF
-class GeneratePdf(View):
+class GeneratePdf(View, LoginRequiredMixin):
     def get(self, request, pk, *args, **kwargs):
         mainuser = User.objects.get(username=request.user)
         userprofile = Userprofile.objects.get(user=request.user)
@@ -68,7 +68,7 @@ def home(request):
 
 
 #CREATE REUSUME
-class AddResumeView(View):
+class AddResumeView(View, LoginRequiredMixin):
     def get(self, *args, **kwargs):
         form = ResumeForm()
         context = {
@@ -91,7 +91,7 @@ class AddResumeView(View):
             return redirect('resume:home')
 
 #ADD PROJECT TO RESUME
-class AddProjectView(View):
+class AddProjectView(View, LoginRequiredMixin):
     def get(self, request, pk,  *args, **kwargs):
         resume = Resume.objects.get(user=request.user, pk=pk)
         form = ProjectForm()
@@ -118,6 +118,7 @@ class AddProjectView(View):
             return redirect('resume:home')
 
 #ADD EXPERIENCED YOU GAINED WHILE WORKING ON PROJECT
+@login_required
 def experience(request, pk):
     project = get_object_or_404(Project, pk=pk)
     resume = Resume.objects.get(pk=project.resume.pk)
@@ -141,7 +142,7 @@ def experience(request, pk):
 
 
 #ADD WORK EXPERIENCE
-class AddWorkView(View):
+class AddWorkView(View, LoginRequiredMixin):
     def get(self, request, pk,  *args, **kwargs):
         resume = Resume.objects.get(user=request.user, pk=pk)
         form = WorkForm()
@@ -167,6 +168,7 @@ class AddWorkView(View):
             return redirect('resume:home')
 
 #ADD EXPERIENCE YOU GAINED AND YOUR RESPONSIBILITY ON THE JOB
+@login_required
 def responsibility(request, pk):
     work = get_object_or_404(Work, pk=pk)
     resume = Resume.objects.get(pk=work.resume.pk)
@@ -189,7 +191,7 @@ def responsibility(request, pk):
     return render(request, 'resume/addresponsibility.html', context)
 
 #PREVIEW RESUME
-class ResumePreviewView(View):
+class ResumePreviewView(View, LoginRequiredMixin):
     def get(self, request, pk,  *args, **kwargs):
         mainuser = User.objects.get(username=request.user)
         userprofile = Userprofile.objects.get(user=request.user)
@@ -216,7 +218,7 @@ def generate_link(request, pk):
     return redirect(resume.get_resume())
 
 #PREVIEW RESUME
-class ResumeView(View):
+class ResumeView(View, LoginRequiredMixin):
     def get(self, request, user, name, slug,  *args, **kwargs):
         resume = Resume.objects.get(slug=slug, name=name)
         mainuser = User.objects.get(username=resume.user.username)
@@ -271,7 +273,7 @@ def logout(request):
     auth.logout(request)
     return redirect ('resume:home')
 
-
+@login_required
 def user_edit(request, pk):
     d_user = get_object_or_404(User, pk=pk)
     if request.method == "POST":
@@ -333,6 +335,7 @@ class CreateProfileView(LoginRequiredMixin, View):
         except ObjectDoesNotExist:
             return redirect('resume:sign_up')
 
+@login_required
 def profile_edit(request):
     user_profile = get_object_or_404(Userprofile, user=request.user, has_profile=True)
     if request.method == "POST":

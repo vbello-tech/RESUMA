@@ -1,14 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'styling/style.css' %}">
+    <link rel="stylesheet" href="{% static 'styling/bootstrap.css' %}"/>
+    <link rel="stylesheet" href="{% static 'styling/bootstrap.min.css' %}"/>
+    <title>Web navbar</title>
 </head>
+
 <body>
+    <div class="nav-container">
+        <nav class="navbar">
+            <h1 id="navbar-logo">NEWBIE RESUME</h1>
+            <div class="menu-togle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-links">HOME</a></li>
+                <li><a href="#" class="nav-links">RESUME</a></li>
+                <li><a href="#" class="nav-links nav-links-btn">Sign Up</a></li>
+            </ul>
+        </nav>
+    </div>
 
 
 {% block content %}
 
 {% endblock content %}
+
+
+<footer>
+    <div class="foot">
+        <ul>
+            <li>
+                <a href="#">LINKEDIN</a>
+            </li>
+            <li>
+                <a href="#">Github</a>
+            </li>
+            <li>
+                <a href="#">TWITTER</a>
+            </li>
+        </ul>
+    </div>
+    <hr>
+    <p>
+        Copyright  ©  vbellotech
+    </p>
+</footer>
+
+    <script src="{% static 'js/app.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
+
 </html>

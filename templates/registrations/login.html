@@ -1,44 +1,30 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-	<!-- Start All Pages -->
-	<div class="all-page-title page-breadcrumb">
-		<div class="container text-center">
-			<div class="row">
-				<div class="col-lg-12">
-					<h1>LOGIN</h1>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End All Pages -->
-      <h2>LOGIN..</h2>
 
-            {% if user.is_authenticated %}
-                YOU ARE SIGNED IN ...
-            {% else %}
-            <form id="comment" action="{% url 'resume:login' %}" method="POST">
-                {% csrf_token %}
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
-                        {{ form.username }}
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
-                        {{ form.password }}
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
-                        <button class="red-bg brd-rd3" type="submit">SIGN IN</button>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
-                        <a class="sign-btn" href="#" title="" itemprop="url">Not a member? Sign up</a>
-                        <a class="recover-btn" href="#" title="" itemprop="url">Recover my password</a>
-                    </div>
-                </div>
+<br><br>
+<div class="form-group">
+     <div class="container " >
+            <div class="row">
+
+                {% if user.is_authenticated %}
+                    YOU ARE SIGNED IN ...
+                {% else %}
+
+                <form  class="form-control" method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <br>
+                     <center><button type="submit" id="form-submit" class="btn btn-primary">SIGNUP</button></center>
+                </form>
+                <center><a href="{% url 'resume:password_reset' %}">Forget Password ?</a><a  href="{% url 'resume:sign_up' %}">SIGN UP</a></center>
+
+                {% endif %}
             </div>
-            </form>
-            <a  href="#">Forget Password ?</a><a  href="#">SIGN UP</a>
-            {% endif %}
+     </div>
+</div>
+
 
 {% endblock content %}
