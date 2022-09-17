@@ -66,7 +66,6 @@ def home(request):
     }
     return render(request, 'home.html', context)
 
-
 #HOMEPAGE
 @login_required
 def user_resume(request):
@@ -119,12 +118,26 @@ class AddProjectView(View, LoginRequiredMixin):
             if self.request.user.is_authenticated:
                 resume = Resume.objects.get(user=request.user, pk=pk)
                 form = ProjectForm(self.request.POST or None)
-                if form.is_valid:
-                    body = form.save(commit=False)
-                    body.user = self.request.user
-                    body.resume = resume
-                    body.save()
-                    return redirect('resume:add_experience', pk=body.pk)
+                if form.is_valid():
+                    name = form.cleaned_data.get('name')
+                    description = form.cleaned_data.get('description')
+                    github = form.cleaned_data.get('github')
+                    link = form.cleaned_data.get('link')
+                    experience = form.cleaned_data.get('experience')
+                    project = Project.objects.create(
+                        resume = resume,
+                        user=request.user,
+                        name=name,
+                        description=description,
+                        github=github,
+                        link=link,
+                    )
+                    exp = Experience.objects.create(
+                        project=project,
+                        user=request.user,
+                        body=experience
+                    )
+                    return redirect(resume.add_project())
                 else:
                     return redirect('resume:home')
             else:
@@ -149,7 +162,7 @@ def experience(request, pk):
             body.project = project
             body.user = request.user
             body.save()
-            return redirect('resume:add_experience', pk=project.pk)
+            return redirect('resume:preview_resume', pk=project.resume.pk)
         form = ExperienceForm()
     else:
         form = ExperienceForm()
@@ -176,12 +189,26 @@ class AddWorkView(View, LoginRequiredMixin):
         try:
             resume = Resume.objects.get(user=request.user, pk=pk)
             form = WorkForm(self.request.POST or None)
-            if form.is_valid:
-                body = form.save(commit=False)
-                body.user = self.request.user
-                body.resume = resume
-                body.save()
-                return redirect('resume:add_responsibility', pk=body.pk)
+            if form.is_valid():
+                company_name = form.cleaned_data.get('company_name')
+                company_description = form.cleaned_data.get('company_description')
+                responsibility = form.cleaned_data.get('responsibility')
+                start_date = form.cleaned_data.get('start_date')
+                end_date = form.cleaned_data.get('end_date')
+                work = Work.objects.create(
+                    resume=resume,
+                    user=request.user,
+                    company_name=company_name,
+                    company_description=company_description,
+                    start_date=start_date,
+                    end_date=end_date,
+                )
+                res = Responsibility.objects.create(
+                    work=work,
+                    user=request.user,
+                    body=responsibility
+                )
+                return redirect(resume.add_work())
             else:
                 return redirect('resume:home')
 
@@ -199,7 +226,7 @@ def responsibility(request, pk):
             body.work = work
             body.user = request.user
             body.save()
-            return redirect('resume:add_responsibility', pk=work.pk)
+            return redirect('resume:preview_resume', pk=work.resume.pk)
         form = ResponsibilityForm()
     else:
         form = ResponsibilityForm()

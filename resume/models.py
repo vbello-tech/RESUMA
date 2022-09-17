@@ -35,6 +35,25 @@ class Resume(models.Model):
     def __str__(self):
         return self.name
 
+
+Field_chioce = (
+    ('BACHELORS OF SCIENCE', 'BACHELORS OF SCIENCE'),
+    ('BACHELORS OF ENGINEERING', 'BACHELORS OF ENGINEERING')
+)
+
+class Education(models.Model):
+    user = models.ForeignKey('auth.user', on_delete=models.CASCADE)
+    resume = models.ForeignKey('Resume', related_name="resume_edu", null=True, on_delete=models.CASCADE)
+    school_name = models.CharField(max_length=300, blank=True, null=True)
+    location = models.CharField(max_length=300, blank=True, null=True)
+    field = models.CharField(max_length=300, choices=Field_chioce, blank=True, null=True)
+    course = models.CharField(max_length=300, blank=True, null=True)
+    enrollment_date = models.DateField(blank=True, null=True)
+    graduation_date = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        return self.school_name
+
 class Project(models.Model):
     user = models.ForeignKey('auth.user', on_delete=models.CASCADE)
     resume = models.ForeignKey('Resume', related_name="resume", null=True, on_delete=models.CASCADE)

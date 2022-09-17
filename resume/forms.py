@@ -8,99 +8,103 @@ from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberInternationalFallbackWidget, PhoneNumberPrefixWidget
 
 
-class ResumeForm(forms.ModelForm):
-    class Meta:
-        model = Resume
-        fields = (
-            'name',
-        )
+class ResumeForm(forms.Form):
+    name = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        "placeholder": 'e.g BACKEND DEVELOPER, FULLSTACK DEVELOPER',
+    }))
 
-        widgets = {
-            'name': forms.TextInput(
-                attrs={
-                    'class': 'form-control',
-                    "placeholder": 'e.g BACKEND DEVELOPER, FULLSTACK DEVELOPER',
-                }
-            ),
-        }
+    school_name = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        "placeholder": 'NAME OF THE SCHOOL YOU ATTENED',
+    }))
+
+    location = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        "placeholder": 'SCHOOL LOCATION',
+    }))
+
+    field = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        "placeholder": 'FIELD OF STUDY',
+    }))
+
+    course = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        "placeholder": 'COURSES OF STUDY',
+    }))
+
+    name = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        "placeholder": 'e.g BACKEND DEVELOPER, FULLSTACK DEVELOPER',
+    }))
+
+    enrollment_date = forms.DateField(required=False, widget=forms.DateInput(attrs={
+        'class': 'form-control',
+        "placeholder": 'FORMAT YYYY-MM-DD (2002-02-20)',
+    }))
+
+    graduation_date = forms.DateField(required=False, widget=forms.DateInput(attrs={
+        'class': 'form-control',
+        "placeholder": 'FORMAT YYYY-MM-DD (2002-02-20)',
+    }))
+
+class ProjectForm(forms.Form):
+    name = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        "placeholder": 'PROJECT NAME',
+    }))
+
+    description = forms.CharField(required=False, widget=forms.Textarea(attrs={
+        'class': 'form-control',
+        "placeholder": 'PROJECT DESCRIPTION',
+        'rows': 3,
+    }))
+
+    github = forms.URLField(required=False, widget=forms.URLInput(attrs={
+        'class': 'form-control',
+        "placeholder": 'PROJECT SOURCE CODE',
+    }))
+
+    link = forms.URLField(required=False, widget=forms.URLInput(attrs={
+        'class': 'form-control',
+        "placeholder": 'PROJECT LINK',
+    }))
+
+    experience = forms.CharField(required=False, widget=forms.Textarea(attrs={
+        'class': 'form-control',
+        "placeholder": 'TELL US SOME EXPERIENCE YOU GAINED WHILE WORKING ON THIS PROJECT',
+        'rows': 3,
+    }))
 
 
-class ProjectForm(forms.ModelForm):
-    class Meta:
-        model = Project
-        fields = (
-            'name',
-            'description',
-            'github',
-            'link',
-        )
+class WorkForm(forms.Form):
+    company_name = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        "placeholder": 'COMPANY NAME',
+    }))
 
-        widgets = {
-            'name': forms.TextInput(
-                attrs={
-                    'class': 'form-control',
-                    "placeholder": 'PROJECT NAME',
-                }
-            ),
-            'description': forms.Textarea(
-                attrs={
-                    'class': 'form-control',
-                    "placeholder": 'PROJECT DESCRIPTION',
-                    'rows': 3,
-                }
-            ),
-            'github': forms.URLInput(
-                attrs={
-                    'class': 'form-control',
-                    "placeholder": 'PROJECT SOURCE CODE',
-                }
-            ),
-            'link': forms.URLInput(
-                attrs={
-                    'class': 'form-control',
-                    "placeholder": 'PROJECT LINK',
-                }
-            ),
-        }
+    company_description = forms.CharField(required=False, widget=forms.Textarea(attrs={
+        'class': 'form-control',
+        "placeholder": 'A BRIEF DESCRIPTION OF WHAT THE COMAPNY IS.',
+        'rows': 3,
+    }))
 
+    start_date = forms.DateField(required=False, widget=forms.DateInput(attrs={
+        'class': 'form-control',
+        "placeholder": 'FORMAT YYYY-MM-DD (2002-02-20)',
+    }))
 
-class WorkForm(forms.ModelForm):
-    class Meta:
-        model = Work
-        fields = (
-            'company_name',
-            'company_description',
-            'start_date',
-            'end_date',
-        )
+    end_date = forms.DateField(required=False, widget=forms.DateInput(attrs={
+        'class': 'form-control',
+        "placeholder": 'FORMAT YYYY-MM-DD (2002-02-20)',
+    }))
 
-        widgets = {
-            'company_name': forms.TextInput(
-                attrs={
-                    'class': 'form-control',
-                    "placeholder": 'COMPANY NAME',
-                }
-            ),
-            'company_description': forms.Textarea(
-                attrs={
-                    'class': 'form-control',
-                    "placeholder": 'A BRIEF DESCRIPTION OF WHAT THE COMAPNY IS.',
-                    'rows': 3,
-                }
-            ),
-            'start_date': forms.DateInput(
-                attrs={
-                    'class': 'form-control',
-                    "placeholder": 'FORMAT YYYY-MM-DD(2002-02-20)',
-                }
-            ),
-            'end_date': forms.DateInput(
-                attrs={
-                    'class': 'form-control',
-                    "placeholder": 'FORMAT YYYY-MM-DD(2002-02-20)',
-                }
-            ),
-        }
+    responsibility = forms.CharField(required=False, widget=forms.Textarea(attrs={
+        'class': 'form-control',
+        "placeholder": 'TELL US SOME OF YOUR RESPONSIBILITY AND EXPERIENCE WHILE WORKING IN THIS COMPANY',
+        'rows': 3,
+    }))
 
 
 class ExperienceForm(forms.ModelForm):

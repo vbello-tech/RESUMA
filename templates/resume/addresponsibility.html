@@ -16,15 +16,16 @@
                             <br>
                             <div class="col-md-12">
                                 <div class="submit-button text-center">
-                                    <button class="btn btn-primary"  type="submit">ADD MORE</button>
+                                    <button class="btn btn-primary"  type="submit">ADD</button>
                                     <div id="msgSubmit" class="h3 text-center hidden"></div>
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
 						</form>
-                <div class="spread">
-                     <a href="{% url 'resume:add_work' pk=work.resume.pk %}">ADD WORK EXPERIENCE</a>
-                    <a href="{% url 'resume:preview_resume' pk=work.resume.pk %}">PREVIEW RESUME</a>
+               <div class="col-md-12">
+                    <div class="submit text-center">
+                            <a href="{% url 'resume:preview_resume' pk=work.resume.pk %}">PREVIEW RESUME</a>
+                    </div>
                 </div>
 
             </div>

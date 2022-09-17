@@ -36,7 +36,7 @@
         </div>
         <hr>
         {% if projects %}
-        <span class="topic">PORTFOLIO</span>
+        <span class="topic">PORTFOLIO</span><a href="{{ resume.add_project }}">ADD PROJECT</a>
         {% endif %}
         {% for project in projects %}
         <div class="portfolio">
@@ -48,6 +48,7 @@
                 {% for item in project.project.all %}
                 <li>{{ item.body }}</li>
                 {% endfor%}
+
             </ul>
             <div class="pr_li">
                 <a href="{{ project.github }}">github link</a>
@@ -55,13 +56,14 @@
                 <a href="{{ project.link }}">project link</a>
                 {% endif %}
             </div>
+             <a href="{% url 'resume:add_experience' pk=project.pk %}">ADD MORE EXPERIENCE YOU GAINED ON THIS PROJECT.</a>
         </div>
         <hr>
         {% endfor %}
 <hr>
 
         {% if works %}
-        <span class="topic">WORK HISTORY</span>
+        <span class="topic">WORK HISTORY</span><a href="{{ resume.add_work }}">ADD WORK EXPERIENCE</a>
         {% endif %}
         {% for work in works %}
         <div class="portfolio">
@@ -78,6 +80,7 @@
                 {% for item in work.work.all %}
                 <li>{{ item.body }}</li>
                 {% endfor%}
+                <a href="{% url 'resume:add_responsibility' pk=work.pk %}">ADD MORE RESPONSIBILITY AND EXPERIENCE YOU GAINED ON THE JOB.</a>
             </ul>
         </div>
         <hr>
