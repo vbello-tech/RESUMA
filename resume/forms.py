@@ -6,7 +6,12 @@ from django.contrib.auth.models import User
 from .models import Userprofile
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberInternationalFallbackWidget, PhoneNumberPrefixWidget
+from datetime import datetime
 
+Field_chioce = (
+    ('BACHELORS OF SCIENCE', 'BACHELORS OF SCIENCE'),
+    ('BACHELORS OF ENGINEERING', 'BACHELORS OF ENGINEERING')
+)
 
 class ResumeForm(forms.Form):
     name = forms.CharField(required=False, widget=forms.TextInput(attrs={
@@ -24,9 +29,9 @@ class ResumeForm(forms.Form):
         "placeholder": 'SCHOOL LOCATION',
     }))
 
-    field = forms.CharField(required=False, widget=forms.TextInput(attrs={
+    field = forms.ChoiceField(choices=Field_chioce, widget=forms.Select(attrs={
         'class': 'form-control',
-        "placeholder": 'FIELD OF STUDY',
+        "placeholder": 'COURSES OF STUDY',
     }))
 
     course = forms.CharField(required=False, widget=forms.TextInput(attrs={
@@ -34,19 +39,18 @@ class ResumeForm(forms.Form):
         "placeholder": 'COURSES OF STUDY',
     }))
 
-    name = forms.CharField(required=False, widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        "placeholder": 'e.g BACKEND DEVELOPER, FULLSTACK DEVELOPER',
+    enrollment_date = forms.DateField(required=False, widget=forms.SelectDateWidget(empty_label=('Year', 'Month', 'Day'),
+        years=range(1990, datetime.now().year),
+        attrs={
+            'data-date-format': 'dd/mm/yyyy',
+            "placeholder": 'FORMAT YYYY-MM-DD (2002-02-20)',
     }))
 
-    enrollment_date = forms.DateField(required=False, widget=forms.DateInput(attrs={
-        'class': 'form-control',
-        "placeholder": 'FORMAT YYYY-MM-DD (2002-02-20)',
-    }))
-
-    graduation_date = forms.DateField(required=False, widget=forms.DateInput(attrs={
-        'class': 'form-control',
-        "placeholder": 'FORMAT YYYY-MM-DD (2002-02-20)',
+    graduation_date = forms.DateField(required=False, widget=forms.SelectDateWidget(empty_label=('Year', 'Month', 'Day'),
+        years=range(1990, datetime.now().year),
+        attrs={
+            'data-date-format': 'dd/mm/yyyy',
+            "placeholder": 'FORMAT YYYY-MM-DD (2002-02-20)',
     }))
 
 class ProjectForm(forms.Form):

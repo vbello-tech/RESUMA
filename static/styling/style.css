@@ -234,6 +234,22 @@ section .reason .text p{
   margin-top: 20px;
 }
 
+.selectdatewidget {
+    display: inline-block;
+}
+
+select[name$="_day"].selectdatewidget {
+    width: 30%;
+    color: red;
+}
+select[name$="_month"].selectdatewidget {
+    width: 40%;
+    color: green;
+}
+select[name$="_year"].selectdatewidget {
+    width: 45%;
+    color: blue;
+}
 
 .spread {
     display: flex;
@@ -268,7 +284,7 @@ footer {
   padding-bottom: 15px;
   float: center;
   font-size: 15px;
-  position: relative;
+  position: absolute;
   margin-top: 30vh;
 }
 
