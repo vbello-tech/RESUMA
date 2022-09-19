@@ -89,11 +89,31 @@ class AddResumeView(View, LoginRequiredMixin):
         try:
             form = ResumeForm(self.request.POST or None)
             if self.request.user.is_authenticated:
-                if form.is_valid:
-                    body = form.save(commit=False)
-                    body.user = self.request.user
-                    body.save()
-                    return redirect(body.add_project())
+                if form.is_valid():
+                    name = form.cleaned_data.get('name')
+                    tech_skill = form.cleaned_data.get('tech_skill')
+                    school_name = form.cleaned_data.get('school_name')
+                    location = form.cleaned_data.get('location')
+                    field = form.cleaned_data.get('field')
+                    course = form.cleaned_data.get('course')
+                    enrollment_date = form.cleaned_data.get('enrollment_date')
+                    graduation_date = form.cleaned_data.get('graduation_date')
+                    resume =Resume.objects.create(
+                        user=self.request.user,
+                        name=name,
+                        tech_skill=tech_skill,
+                    )
+                    education = Education.objects.create(
+                        user=self.request.user,
+                        resume=resume,
+                        school_name=school_name,
+                        course = course,
+                        location = location,
+                        field = field,
+                        enrollment_date = enrollment_date,
+                        graduation_date = graduation_date,
+                    )
+                    return redirect(resume.add_project())
                 else:
                     return redirect('resume:home')
             else:

@@ -16,7 +16,12 @@ Field_chioce = (
 class ResumeForm(forms.Form):
     name = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'class': 'form-control',
-        "placeholder": 'e.g BACKEND DEVELOPER, FULLSTACK DEVELOPER',
+        "placeholder": 'ENTER NAME OF THE ROLE YOU ARE APPLYING FOR, e.g BACKEND DEVELOPER, FULLSTACK DEVELOPER',
+    }))
+
+    tech_skill = forms.TypedMultipleChoiceField(required=False, widget=forms.Textarea(attrs={
+        'class': 'form-control',
+        "placeholder": 'ENTER NAME OF THE ROLE YOU ARE APPLYING FOR, e.g BACKEND DEVELOPER, FULLSTACK DEVELOPER',
     }))
 
     school_name = forms.CharField(required=False, widget=forms.TextInput(attrs={

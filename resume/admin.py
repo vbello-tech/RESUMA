@@ -11,5 +11,6 @@ admin.site.register(Resume)
 admin.site.register(Work)
 admin.site.register(Responsibility)
 admin.site.register(Education)
+admin.site.register(Tech)
 
 
