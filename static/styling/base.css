@@ -79,7 +79,7 @@
   transition: all 0.3s ease-out;
   background: var(--white);
 }
- 
+
 .welcome {
   display: flex;
   justify-content: space-between;
@@ -502,7 +502,7 @@ footer p{
   #mobile-menu.is-active .bar:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
   }
-  
+
   footer {
     text-align: left;
     font-size: 15px;
@@ -525,7 +525,7 @@ footer p{
     font-size: 15px;
   }
 
-  
+
   .welcome {
     width: 100%;
     height: 80vh;
@@ -565,7 +565,7 @@ footer p{
       justify-content: space-between;
       padding: 0;
   }
-    
+
   section .reason {
     width: 100%;
     height: 70vh;
@@ -573,10 +573,10 @@ footer p{
     justify-content: space-evenly;
     margin: 50px 5px;
   }
-    
+
   section {
     margin:20vh 50px ;
-  } 
+  }
   section .reason img{
     height: 50vh;
     width: 100%;
@@ -592,7 +592,7 @@ footer p{
     padding: 10px;
     height: 20vh;
   }
-    
+
   section .reason .text h2{
     margin: 20px 5px;
     font-size: 30px;
