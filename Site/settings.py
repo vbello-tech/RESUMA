@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'Site.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-"""
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -101,7 +101,7 @@ DATABASES = {
         default=config('DATABASE_URL')
     )
 }
-
+"""
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -163,6 +163,10 @@ PASSWORD_RESET_TIMEOUT = 360
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#phonenumberfield
+PHONENUMBER_DB_FORMAT = 'E164'
+PHONENUMBER_DEFAULT_FORMAT = 'E164'
+PHONENUMBER_DEFAULT_REGION = 'NG'
 
 db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
 DATABASES['default'].update(db_from_env)

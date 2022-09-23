@@ -1,47 +1,45 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block body %}
-	<!-- Start All Pages -->
-	<div class="all-page-title page-breadcrumb">
-		<div class="container text-center">
-			<div class="row">
-				<div class="col-lg-12">
-					<h1>USER</h1>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End All Pages -->
+{% block content %}
+
+<div class="container">
+    <div class="row">
+<br><br><br>
+
+       <div class="profile">
+            <span>
+                <h3>{{ object.username }}'s profile</h3>
+                <a class="nav-link" href="{% url 'resume:change_password' %}">CHANGE PASSWORD</a>
+            </span>
+            <ul>
+                <li><b>{{ object.first_name }} {{ object.last_name }}</b></li>
+                <li>{{ object.email }}</li>
+                <a href="{% url 'resume:user_edit' pk=object.pk %}">edit user</a>
+            </ul>
+
+           <ul>
+               <li><a href="{{ object.userprofile.portfolio }}">PORTFOLIO</a></li>
+                <li><a href="{{ object.userprofile.github }}">GITHUB </a></li>
+                <li><a href="{{ object.userprofile.linkedin }}">LINKEDIN</a></li>
+               <li>{{ object.userprofile.phone }}</li>
+               <a href="{% url 'resume:profile_edit' %}">edit profile</a>
+           </ul>
+        </div>
+<hr>
+        <div class="resume">
+            <span>BIO</span>
+            <p>
+                  {{ object.userprofile.bio }}
+
+            </p>
+
+        </div>
+                       <a href="{% url 'resume:user_resume' %}" class="text-center btn btn-primary">YOUR RESUMES</a>
+
+    </div>
+</div>
 
 
 
-
-	<!-- Start Menu -->
-	<div class="menu-box">
-                <div class="container">
-                            <div class="row">
-
-                              <div class="col-xs-6 col-md-4">
-                                  <br><br><br>
-                                  <div>
-                                      <h2>USERNAME: {{ object.username }}</h2>
-                                      <h2>FIRST NAME: {{ object.first_name }}</h2>
-									  <h2>LAST NAME: {{ object.last_name }}</h2>
-                                      <h2>EMAIL: ${{ object.email }}</h2>
-									  <h2>BIO: {{ object.userprofile.bio }}</h2>
-									  <h2>BIO: {{ object.userprofile.phone }}</h2>
-                                  </div>
-
-								  {% if user.is_authenticated %}
-										<a href="{% url 'account:user_edit' pk=object.pk %}">u edit.</a>
-								  		<a href="{% url 'account:profile_edit' pk=object.pk %}">p dit.</a>
-										<a class="nav-link" href="{% url 'account:change_password' %}">CHANGE PASSWORD</a>
-								{% endif %}
-							  </div>
-                    </div>
-                </div>
-	</div>
-	<!-- End Menu -->
-
-{% endblock body %}
+{% endblock content %}

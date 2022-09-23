@@ -115,6 +115,7 @@ class Work(models.Model):
     user = models.ForeignKey('auth.user', on_delete=models.CASCADE)
     resume = models.ForeignKey('Resume', related_name="resume_work", null=True, on_delete=models.CASCADE)
     company_name = models.CharField(max_length=300)
+    role = models.CharField(max_length=300, blank=True, null=True)
     company_description = models.CharField(max_length=250, blank=False, null=False)
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)

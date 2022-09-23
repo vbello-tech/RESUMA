@@ -109,6 +109,11 @@ class WorkForm(forms.Form):
         "placeholder": 'COMPANY NAME',
     }))
 
+    role = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        "placeholder": 'YOUR ROLE IN THE COMPANY',
+    }))
+
     company_description = forms.CharField(required=False, widget=forms.Textarea(attrs={
         'class': 'form-control',
         "placeholder": 'A BRIEF DESCRIPTION OF WHAT THE COMAPNY IS.',
@@ -211,11 +216,14 @@ class ProfileForm(forms.Form):
         'placeholder': 'ABOUT YOU',
         'aria-describedby': 'basic-addon2'
     }))
-    phone = PhoneNumberField(required=False, widget=PhoneNumberPrefixWidget(attrs={
-        'class': 'form-control',
-        'placeholder': 'PHONE NUMBER',
-        'aria-describedby': 'basic-addon2'
-    }))
+    phone = PhoneNumberField(required=False, widget=PhoneNumberPrefixWidget(
+        initial='NG',
+         attrs={
+            'class': 'form-control',
+            'placeholder': 'PHONE NUMBER',
+            'aria-describedby': 'basic-addon2'
+        }
+    ))
     github = forms.URLField(required=False, widget=forms.URLInput(attrs={
         'class': 'form-control',
         'placeholder': 'GITHUB PROFILE LINK',
@@ -232,6 +240,17 @@ class EditProfileForm(forms.ModelForm):
     class Meta:
         model = Userprofile
         fields = ('bio', 'phone', 'github', 'linkedin',)
+
+        widgets = {
+            'phone': PhoneNumberPrefixWidget(
+                initial='NG',
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'PHONE NUMBER',
+                    'aria-describedby': 'basic-addon2'
+                }
+            )
+        }
 
 
 class LoginForm(forms.Form):

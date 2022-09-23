@@ -11,28 +11,9 @@
 <h4>RESUME LINK:<a href="{{ resume.resume_link }}">{{ resume.resume_link }}</a></h4>
 
 <div class="container">
-        <div class="developer">
-            <ul>
-                <li class="dev"><b>{{ user.last_name }} {{ user.first_name }}</b></li>
-                <li class="dev"><b>{{ resume.name }}</b></li>
-                <li>{{ user.email }} </li>
-                <li><a href="{{ userp.portfolio }}">PORTFOLIO</a></li>
-                <li><a href="{{ userp.github }}">GITHUB </a></li>
-                <li><a href="{{ userp.linkedin }}">LINKEDIN</a></li>
-            </ul>
-        </div>
-<hr>
-        <div class="resume">
-            <span>BIO</span>
-            <p>
-                  {{ userp.bio|linebreaksbr	}}
 
-            </p>
-
-        </div>
-<hr>
     {% if education %}
-        <span class="topic">EDUCATION</span><a href="{{ resume.add_education }}">ADD EDUCATION</a>
+        <span class="topic">EDUCATION</span>
         {% for school in education %}
         <div class="portfolio">
 
@@ -44,10 +25,11 @@
         </div>
         <hr>
         {% endfor %}
+    <a href="{{ resume.add_education }}">ADD EDUCATION</a>
     {% endif %}
 <hr>
     {% if projects %}
-        <span class="topic">PORTFOLIO</span><a href="{{ resume.add_project }}">ADD PROJECT</a>
+        <span class="topic">PORTFOLIO</span>
         {% for project in projects %}
         <div class="portfolio">
            <h1>{{ project.name }}</h1>
@@ -70,18 +52,19 @@
         </div>
         <hr>
         {% endfor %}
+    <a href="{{ resume.add_project }}">ADD PROJECT</a>
     {% endif %}
 <hr>
 
     {% if works %}
-        <span class="topic">WORK HISTORY</span><a href="{{ resume.add_work }}">ADD WORK EXPERIENCE</a>
+        <span class="topic">WORK HISTORY</span>
         {% for work in works %}
         <div class="portfolio">
 
             {% if work.end_date %}
-            <h1>{{ work.company_name }} ( {{ work.start_date }}-{{ work.end_date }} )</h1>
+            <h1>{{ work.company_name }} ( {{ work.role }} {{ work.start_date }}-{{ work.end_date }} )</h1>
             {% else %}
-            <h1>{{ work.company_name }} ( {{ work.start_date }}- CURRENT )</h1>
+            <h1>{{ work.company_name }} ( {{ work.role }} {{ work.start_date }}- CURRENT )</h1>
             {% endif %}
             <p>
                 <em>{{ work.company_description|linebreaksbr	}}</em>
@@ -95,6 +78,7 @@
         </div>
         <hr>
         {% endfor %}
+    <a href="{{ resume.add_work }}">ADD WORK EXPERIENCE</a>
     {% endif %}
 <hr>
 

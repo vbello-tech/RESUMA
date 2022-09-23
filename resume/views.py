@@ -195,6 +195,7 @@ class AddWorkView(View, LoginRequiredMixin):
             if form.is_valid():
                 company_name = form.cleaned_data.get('company_name')
                 company_description = form.cleaned_data.get('company_description')
+                role = form.cleaned_data.get('role')
                 responsibility = form.cleaned_data.get('responsibility')
                 start_date = form.cleaned_data.get('start_date')
                 end_date = form.cleaned_data.get('end_date')
@@ -203,6 +204,7 @@ class AddWorkView(View, LoginRequiredMixin):
                     user=request.user,
                     company_name=company_name,
                     company_description=company_description,
+                    role=role,
                     start_date=start_date,
                     end_date=end_date,
                 )
@@ -371,7 +373,7 @@ def signup_view(request):
         if form.is_valid():
             user = form.save()
             Userprofile.objects.create(user=user)
-            return redirect('resume:home')
+            return redirect('resume:create_profile')
     else:
         form = NewUSerForm()
 
@@ -412,7 +414,7 @@ def user_edit(request, pk):
             user = form.save(commit=False)
             user.user = request.user
             user.save()
-            return redirect('account:user_detail', pk=user.pk)
+            return redirect('resume:user_detail', pk=user.pk)
         form = EditUserForm()
     else:
         form = EditUserForm(instance=d_user)
@@ -458,7 +460,7 @@ class CreateProfileView(LoginRequiredMixin, View):
                     userprofile.linkedin = linkedin
                     userprofile.has_profile = True
                     userprofile.save()
-                    return redirect('resume:home')
+                    return redirect('resume:user_detail')
                 else:
                     return redirect('resume:sign_up')
 
@@ -475,7 +477,7 @@ def profile_edit(request):
             user.user = request.user
             user.created_date = timezone.now()
             user.save()
-            return redirect('resume:home')
+            return redirect('resume:user_detail')
         form = EditProfileForm()
     else:
         form = EditProfileForm(instance=user_profile)
@@ -484,3 +486,23 @@ def profile_edit(request):
         'form': form
     }
     return render(request, 'registrations/profile_edit.html', context)
+
+
+class UserDetailView(DetailView):
+    model = User
+    template_name = "registrations/user_detail.html"
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect('resume:user_detail')
+    else:
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+
+    context = {
+        'form': form
+    }
+    return render(request, 'registrations/change_password.html', context)

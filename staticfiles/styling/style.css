@@ -37,6 +37,12 @@
   cursor: pointer;
 }
 
+.profile{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0;
+}
 .nav-menu {
   display: grid;
   grid-template-columns: repeat(5, auto);
