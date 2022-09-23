@@ -102,8 +102,6 @@ DATABASES = {
     )
 }
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -146,6 +144,9 @@ STATICFILES_DIRS = (
 )
 
 CRISPY_TEMPLATE_PACK ="bootstrap4"
+
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 #AUTHENTICATION
 
