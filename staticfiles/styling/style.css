@@ -234,6 +234,22 @@ section .reason .text p{
   margin-top: 20px;
 }
 
+.selectdatewidget {
+    display: inline-block;
+}
+
+select[name$="_day"].selectdatewidget {
+    width: 30%;
+    color: red;
+}
+select[name$="_month"].selectdatewidget {
+    width: 40%;
+    color: green;
+}
+select[name$="_year"].selectdatewidget {
+    width: 45%;
+    color: blue;
+}
 
 .spread {
     display: flex;
@@ -255,40 +271,29 @@ section .reason .text p{
 }
 
 footer {
-  background-color: rgb(20, 20, 20);
-  color: rgb(185, 184, 184);
-  text-decoration: none;
-  overflow: hidden;
-  bottom: 0;
-  text-align: center;
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  float: center;
-  font-size: 15px;
-  position: relative;
-  margin-top: 30vh;
+   width: 100%;
+    background-color: black;
+    height: 30vh;
+    color: white;
+    align-items: center;
+    padding: 20px 50px;
+    bottom: 0;
+    margin-top: 60px;
 }
 
-footer .foot{
-  padding: 2.5em;
-}
 
-footer .foot ul{
+footer  ul{
   display: flex;
   justify-content: center;
   align-content: space-between;
 }
 
-footer .foot ul li{
-  padding-right: 60px;
+footer ul li{
   list-style: none;
   font-size: 20px;
 }
 
-footer .foot ul li a{
+footer ul li a{
   text-decoration: none;
   color:whitesmoke;
   font-family: Georgia, 'Times New Roman', Times, serif;
@@ -501,14 +506,15 @@ footer p{
   footer {
     text-align: left;
     font-size: 15px;
+    height: 60vh;
   }
-  footer .foot ul{
+  footer ul{
     display: inline;
     justify-content: center;
     align-content: space-around;
   }
 
-  footer .foot ul li{
+  footer ul li{
     padding: 20px 6px;
     list-style: none;
     font-size: 15px;
