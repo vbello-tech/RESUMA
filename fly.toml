@@ -41,6 +41,10 @@ processes = []
     restart_limit = 0
     timeout = "2s"
 
+[mounts]
+source="myapp_data"
+destination="/app/static"
+
 [[statics]]
   guest_path = "/app/staticfiles"
   url_prefix = "/static/"
