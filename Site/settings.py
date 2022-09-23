@@ -28,7 +28,7 @@ SECRET_KEY= 'django-insecure-1#-z82+g4&3js^0q6q8p5k+q8u_a&!qwh+a0d8ybc(@c$%h0ka'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     '0.0.0.0',
@@ -146,7 +146,7 @@ STATICFILES_DIRS = (
 CRISPY_TEMPLATE_PACK ="bootstrap4"
 
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 #AUTHENTICATION
 
