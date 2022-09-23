@@ -22,7 +22,7 @@ Type_chioce = (
 
 class Tech(models.Model):
     name = models.CharField(max_length=150, unique=True)
-    type = models.CharField(max_length=200, choices=Type_chioce)
+    type = models.CharField(max_length=200, choices=Type_chioce, blank=True, null=True)
 
     def __str__(self):
         return self.name
