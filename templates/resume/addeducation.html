@@ -7,21 +7,21 @@
 			<div class="row ">
 						<form  method="POST">
                             {% csrf_token %}
-                            <h5 class="text-center">ADD A PROJECT TO BOOST YOUR <b>"{{ resume.name }}"</b> RESUME</h5>
+                            <h5 class="text-center">ADD AN EDUCATIONAL DETAIL TO BOOST YOUR <b>"{{ resume.name }}"</b> RESUME</h5>
                                 <div class="col-md-12">
                                         {{ form.as_p }}
                                 </div>
                             <br>
                             <div class="col-md-12">
                                 <div class="submit-button text-center">
-                                    <button class="btn btn-primary" type="submit">ADD ANOTHER PROJECT</button>
+                                    <button class="btn btn-primary" type="submit">ADD</button>
                                     <div id="msgSubmit" class="h3 text-center hidden"></div>
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
 						</form>
                  <div class="spread">
-                    <a href="{{ resume.add_work }}">ADD WORK EXPERIENCE</a>
+                    <a href="{{ resume.add_skills }}">ADD TECH SKILLS</a>
                    <a href="{{ resume.get_preview }}">PREVIEW RESUME</a>
                 </div>
             </div>

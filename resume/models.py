@@ -10,14 +10,19 @@ def create_code():
     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
 
 
-class Tech(models.Model):
-    ROLE_CHOICES = [
-        ('Part-time' , 'Part-time'),
-        ('Full-time' , 'Full-time'),
-        ('Contract' , 'Contract'),
+Type_chioce = (
+    ('LANGUAGE', 'LANGUAGE'),
+    ('DATABASE', 'DATABASE'),
+    ('FRAMEWORK', 'FRAMEWORK'),
+    ('LIBRARY', 'LIBRARY'),
+    ('SOFTWARE', 'SOFTWARE'),
+    ('CLOUD_PLATFORM', 'CLOUD_PLATFORM'),
+    ('PARADIGM', 'PARADIGM'),
+)
 
-    ]
-    name = models.CharField(max_length=50, choices=ROLE_CHOICES, unique=True)
+class Tech(models.Model):
+    name = models.CharField(max_length=150, unique=True)
+    type = models.CharField(max_length=200, choices=Type_chioce)
 
     def __str__(self):
         return self.name
@@ -26,8 +31,8 @@ class Resume(models.Model):
     user = models.ForeignKey('auth.user', on_delete=models.CASCADE)
     name = models.CharField(max_length=60)
     resume_link = models.URLField(blank=True, null=True)
+    skills = models.ManyToManyField("Tech", related_name="techskill", blank=True)
     slug = models.SlugField(default=create_code())
-    tech_skill = models.CharField(max_length=300, blank=True, null=True)
 
     def add_project(self):
         return reverse("resume:add_project", kwargs={
@@ -36,6 +41,21 @@ class Resume(models.Model):
 
     def add_work(self):
         return reverse("resume:add_work", kwargs={
+            'pk': self.pk,
+        })
+
+    def add_education(self):
+        return reverse("resume:add_education", kwargs={
+            'pk': self.pk,
+        })
+
+    def add_skills(self):
+        return reverse("resume:add_skills", kwargs={
+            'pk': self.pk,
+        })
+
+    def get_preview(self):
+        return reverse("resume:preview_resume", kwargs={
             'pk': self.pk,
         })
 

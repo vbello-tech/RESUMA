@@ -10,20 +10,34 @@ from datetime import datetime
 
 Field_chioce = (
     ('BACHELORS OF SCIENCE', 'BACHELORS OF SCIENCE'),
-    ('BACHELORS OF ENGINEERING', 'BACHELORS OF ENGINEERING')
+    ('BACHELORS OF ENGINEERING', 'BACHELORS OF ENGINEERING'),
 )
 
-class ResumeForm(forms.Form):
-    name = forms.CharField(required=False, widget=forms.TextInput(attrs={
-        'class': 'form-control',
-        "placeholder": 'ENTER NAME OF THE ROLE YOU ARE APPLYING FOR, e.g BACKEND DEVELOPER, FULLSTACK DEVELOPER',
-    }))
 
-    tech_skill = forms.TypedMultipleChoiceField(required=False, widget=forms.Textarea(attrs={
-        'class': 'form-control',
-        "placeholder": 'ENTER NAME OF THE ROLE YOU ARE APPLYING FOR, e.g BACKEND DEVELOPER, FULLSTACK DEVELOPER',
-    }))
+class ResumeForm(forms.ModelForm):
+    class Meta:
+        model = Resume
+        fields = ('name',)
 
+        widgets = {
+            'name': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    "placeholder": 'NAME OF THE POSITION YOU ARE APLLYING TO WITH THIS RESUME,. e.g, FULLSTACK DEVELOPER, BACKEND DEVELOPER',
+                }
+            )
+        }
+
+class SkillsForm(forms.Form):
+    tech = forms.ModelMultipleChoiceField(
+        required=False,
+        queryset = Tech.objects.all(),
+        initial=0,
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'mt-2 mb-3 focus:border-blue-600 px-3',})
+    )
+
+
+class EducationForm(forms.Form):
     school_name = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'class': 'form-control',
         "placeholder": 'NAME OF THE SCHOOL YOU ATTENED',
@@ -34,15 +48,17 @@ class ResumeForm(forms.Form):
         "placeholder": 'SCHOOL LOCATION',
     }))
 
-    field = forms.ChoiceField(choices=Field_chioce, widget=forms.Select(attrs={
-        'class': 'form-control',
-        "placeholder": 'COURSES OF STUDY',
-    }))
-
     course = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'class': 'form-control',
         "placeholder": 'COURSES OF STUDY',
     }))
+
+    field = forms.ChoiceField(
+        required=False,
+        choices=Field_chioce,
+        initial=0,
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'mt-2 mb-3 focus:border-blue-600 px-3', })
+    )
 
     enrollment_date = forms.DateField(required=False, widget=forms.SelectDateWidget(empty_label=('Year', 'Month', 'Day'),
         years=range(1990, datetime.now().year),
@@ -99,20 +115,23 @@ class WorkForm(forms.Form):
         'rows': 3,
     }))
 
-    start_date = forms.DateField(required=False, widget=forms.DateInput(attrs={
-        'class': 'form-control',
-        "placeholder": 'FORMAT YYYY-MM-DD (2002-02-20)',
-    }))
-
-    end_date = forms.DateField(required=False, widget=forms.DateInput(attrs={
-        'class': 'form-control',
-        "placeholder": 'FORMAT YYYY-MM-DD (2002-02-20)',
-    }))
 
     responsibility = forms.CharField(required=False, widget=forms.Textarea(attrs={
         'class': 'form-control',
         "placeholder": 'TELL US SOME OF YOUR RESPONSIBILITY AND EXPERIENCE WHILE WORKING IN THIS COMPANY',
         'rows': 3,
+    }))
+
+    start_date = forms.DateField(required=False, widget=forms.SelectDateWidget(empty_label=('Year', 'Month', 'Day'),
+        years=range(1990, datetime.now().year),
+        attrs={
+            'data-date-format': 'dd/mm/yyyy',
+    }))
+
+    end_date = forms.DateField(required=False, widget=forms.SelectDateWidget(empty_label=('Year', 'Month', 'Day'),
+        years=range(1990, datetime.now().year + 1),
+        attrs={
+            'data-date-format': 'dd/mm/yyyy',
     }))
 
 
@@ -217,11 +236,9 @@ class EditProfileForm(forms.ModelForm):
 
 class LoginForm(forms.Form):
     username = forms.CharField(required=True, widget=forms.TextInput(attrs={
-        'class': 'form-control',
         'placeholder': 'USERNAME',
     }))
     password = forms.CharField(required=True, widget=forms.PasswordInput(attrs={
-        'class': 'form-control',
         'placeholder': 'PASSWORD',
     }))
 

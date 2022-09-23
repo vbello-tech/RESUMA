@@ -10,6 +10,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, update_session_auth_hash
+import urllib.parse
 
 # Create your vie
 #PDF
@@ -36,14 +37,16 @@ class GeneratePdf(View, LoginRequiredMixin):
         userprofile = Userprofile.objects.get(user=request.user)
         resume = Resume.objects.get(user=request.user, pk=pk)
         project = Project.objects.filter(user=request.user, resume=resume)
-        work = Work.objects.filter(user=request.user, resume=resume)
+        work = Work.objects.filter(user=request.user, resume=resume),
+        education = Education.objects.filter(user=request.user, resume=resume),
         open('templates/resume/resumepdf.html', "w").write(render_to_string('resume/resume.html',
                                                                             {
                                                                                 'user': mainuser,
                                                                                 'userp': userprofile,
                                                                                 'resume': resume,
                                                                                 'projects': project,
-                                                                                'works': work
+                                                                                'works': work,
+                                                                                'education':education,
                                                                             }))
         pdf = html_to_pdf('resume/resumepdf.html')
         return HttpResponse(pdf, content_type='application/pdf')
@@ -90,29 +93,9 @@ class AddResumeView(View, LoginRequiredMixin):
             form = ResumeForm(self.request.POST or None)
             if self.request.user.is_authenticated:
                 if form.is_valid():
-                    name = form.cleaned_data.get('name')
-                    tech_skill = form.cleaned_data.get('tech_skill')
-                    school_name = form.cleaned_data.get('school_name')
-                    location = form.cleaned_data.get('location')
-                    field = form.cleaned_data.get('field')
-                    course = form.cleaned_data.get('course')
-                    enrollment_date = form.cleaned_data.get('enrollment_date')
-                    graduation_date = form.cleaned_data.get('graduation_date')
-                    resume =Resume.objects.create(
-                        user=self.request.user,
-                        name=name,
-                        tech_skill=tech_skill,
-                    )
-                    education = Education.objects.create(
-                        user=self.request.user,
-                        resume=resume,
-                        school_name=school_name,
-                        course = course,
-                        location = location,
-                        field = field,
-                        enrollment_date = enrollment_date,
-                        graduation_date = graduation_date,
-                    )
+                    resume = form.save(commit=False)
+                    resume.user = self.request.user
+                    resume.save()
                     return redirect(resume.add_project())
                 else:
                     return redirect('resume:home')
@@ -257,6 +240,73 @@ def responsibility(request, pk):
     }
     return render(request, 'resume/addresponsibility.html', context)
 
+
+#ADD EDUCATION HISTORY
+class AddEducationView(View, LoginRequiredMixin):
+    def get(self, request, pk,  *args, **kwargs):
+        resume = Resume.objects.get(user=request.user, pk=pk)
+        form = EducationForm()
+        context = {
+            'form': form,
+            'resume':resume,
+        }
+        return render (self.request, 'resume/addeducation.html', context)
+
+    def post(self, request, pk, *args, **kwargs):
+        try:
+            resume = Resume.objects.get(user=request.user, pk=pk)
+            form = EducationForm(self.request.POST or None)
+            if form.is_valid():
+                school_name = form.cleaned_data.get('school_name')
+                location = form.cleaned_data.get('location')
+                field = form.cleaned_data.get('field')
+                course = form.cleaned_data.get('course')
+                enrollment_date = form.cleaned_data.get('enrollment_date')
+                graduation_date = form.cleaned_data.get('graduation_date')
+                education = Education.objects.create(
+                    resume=resume,
+                    user=request.user,
+                    school_name=school_name,
+                    location=location,
+                    field=field,
+                    course=course,
+                    enrollment_date=enrollment_date,
+                    graduation_date=graduation_date,
+                )
+                return redirect(resume.add_education())
+            else:
+                return redirect('resume:home')
+
+        except ObjectDoesNotExist:
+            return redirect('resume:home')
+
+
+# ADD EDUCATION HISTORY
+class AddSkillsView(View, LoginRequiredMixin):
+    def get(self, request, pk, *args, **kwargs):
+        resume = Resume.objects.get(user=request.user, pk=pk)
+        form = SkillsForm()
+        context = {
+            'form': form,
+            'resume': resume,
+        }
+        return render(self.request, 'resume/addskills.html', context)
+
+    def post(self, request, pk, *args, **kwargs):
+        try:
+            resume = Resume.objects.get(user=request.user, pk=pk)
+            form = SkillsForm(self.request.POST or None)
+            if form.is_valid():
+                tech = form.cleaned_data.get('tech')
+                resume.skills.set(tech),
+                return redirect(resume.get_preview())
+            else:
+                return redirect('resume:home')
+
+        except ObjectDoesNotExist:
+            return redirect('resume:home')
+
+
 #PREVIEW RESUME
 class ResumePreviewView(View, LoginRequiredMixin):
     def get(self, request, pk,  *args, **kwargs):
@@ -265,24 +315,35 @@ class ResumePreviewView(View, LoginRequiredMixin):
         resume = Resume.objects.get(user=self.request.user, pk=pk)
         project = Project.objects.filter(user=request.user, resume=resume)
         work = Work.objects.filter(user=request.user, resume=resume)
+        education = Education.objects.filter(user=request.user, resume=resume)
         context =  {
             'user':mainuser,
             'userp':userprofile,
             'resume':resume,
             'projects':project,
-            'works':work
+            'works':work,
+            'education':education,
         }
         return render (self.request, 'resume/resume_review.html', context)
 
 #GENERATE RESUME LINK
+@login_required
 def generate_link(request, pk):
     resume = get_object_or_404(Resume, pk=pk)
-    code = resume.slug
-    user = resume.user.username
-    name = resume.name
-    link = str('http://127.0.0.1:8000/resume/' + user + '/' + name + '/' + code + '/')
-    resume.resume_link = link
-    return redirect(resume.get_resume())
+    if resume.resume_link:
+        return redirect(resume.get_preview())
+    else:
+        code = resume.slug
+        user = resume.user.username
+        name = resume.name
+        link = str (user+'/'+name+'/'+code)
+        query = urllib.parse.quote(link)
+        url = 'http://127.0.0.1:8000/resume/'+query
+        print(query)
+        print(url)
+        resume.resume_link = url
+        resume.save()
+        return redirect(resume.get_preview())
 
 #PREVIEW RESUME
 class ResumeView(View, LoginRequiredMixin):
@@ -292,12 +353,14 @@ class ResumeView(View, LoginRequiredMixin):
         userprofile = Userprofile.objects.get(user=resume.user)
         project = Project.objects.filter(resume=resume)
         work = Work.objects.filter(resume=resume)
+        education = Education.objects.filter(user=request.user, resume=resume)
         context =  {
             'user':mainuser,
             'userp':userprofile,
             'resume':resume,
             'projects':project,
-            'works':work
+            'works':work,
+            'education':education,
         }
         return render (self.request, 'resume/resumeview.html', context)
 

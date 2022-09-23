@@ -8,7 +8,7 @@
   <br><br>
 <center><h2>THESE ARE ALL THE RESUME YOU HAVE CREATED WITH US.</h2></center>
   {% for resume in resumes %}
-    <h2>{{ resume.name }}<a href="{{ resume.getresume }}">view</a> </h2>
+    <h2>{{ resume.name }}<a href="{{ resume.get_resume }}">view</a> </h2>
   {% endfor %}
 
 </div>

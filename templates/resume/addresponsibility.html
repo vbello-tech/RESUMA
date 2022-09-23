@@ -7,9 +7,9 @@
 			<div class="row ">
 						<form  method="POST">
                             {% csrf_token %}
-                                <h2 class="text-center">
-                                    MENTION SOMETHINGS YOU DID WHILE WORKING IN <b><em>{{ work.company_name }}</em></b>
-                                </h2>
+                                <h5 class="text-center">
+                                    MENTION SOMETHINGS YOU DID WHILE WORKING IN <b>"{{ work.company_name }}"</b>
+                                </h5>
                                 <div class="col-md-12">
                                         {{ form.body }}
                                 </div>
@@ -24,7 +24,7 @@
 						</form>
                <div class="col-md-12">
                     <div class="submit text-center">
-                            <a href="{% url 'resume:preview_resume' pk=work.resume.pk %}">PREVIEW RESUME</a>
+                            <a href="{{ resume.get_preview }}">PREVIEW RESUME</a>
                     </div>
                 </div>
 

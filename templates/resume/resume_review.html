@@ -3,17 +3,13 @@
 
 {% block content %}
 
+                 <div class="spread">
+                    <a href="{% url 'resume:generate_link' pk=resume.pk %}">GENERATE LINK</a>
+                   <a href="{% url 'resume:generate_pdf' pk=resume.pk %}">GENERATE PDF</a>
+                </div>
 
-     <div class="col-md-12">
-        <div class="submit text-center">
-                <a href="{% url 'resume:generate_link' pk=resume.pk %}">GENERATE LINK</a>
-        </div>
-    </div>
- <div class="col-md-12">
-        <div class="submit text-center">
-                <a href="{% url 'resume:generate_pdf' pk=resume.pk %}">GENERATE PDF</a>
-        </div>
-    </div>
+<h4>RESUME LINK:<a href="{{ resume.resume_link }}">{{ resume.resume_link }}</a></h4>
+
 <div class="container">
         <div class="developer">
             <ul>
@@ -34,10 +30,24 @@
             </p>
 
         </div>
+<hr>
+    {% if education %}
+        <span class="topic">EDUCATION</span><a href="{{ resume.add_education }}">ADD EDUCATION</a>
+        {% for school in education %}
+        <div class="portfolio">
+
+            <h1>{{ school.school_name }} ( {{ school.enrollment_date }}-{{ school.graduation_date }} )</h1>
+            <ul>
+                <li>Course: {{ school.course }} ({{ school.field }})</li>
+                <li>Location: {{ school.location }}</li>
+            </ul>
+        </div>
         <hr>
-        {% if projects %}
+        {% endfor %}
+    {% endif %}
+<hr>
+    {% if projects %}
         <span class="topic">PORTFOLIO</span><a href="{{ resume.add_project }}">ADD PROJECT</a>
-        {% endif %}
         {% for project in projects %}
         <div class="portfolio">
            <h1>{{ project.name }}</h1>
@@ -60,11 +70,11 @@
         </div>
         <hr>
         {% endfor %}
+    {% endif %}
 <hr>
 
-        {% if works %}
+    {% if works %}
         <span class="topic">WORK HISTORY</span><a href="{{ resume.add_work }}">ADD WORK EXPERIENCE</a>
-        {% endif %}
         {% for work in works %}
         <div class="portfolio">
 
@@ -85,28 +95,18 @@
         </div>
         <hr>
         {% endfor %}
+    {% endif %}
+<hr>
 
         <div class="tech">
-             <h1>DEVELOPER SKILLS (languages, frameworks, library, databases)</h1>
+             <h4>SKILLS </h4>
                 <ul>
-                    <li>PYTHON</li>
-                    <li>HTML</li>
-                    <li>PYTHON</li>
-                    <li>HTML</li>
-                </ul>
-        </div>
-         <div class="tech">
-             <h1>OTHER SKILLS</h1>
-                <ul>
-                    <li>PYTHON</li>
-                    <li>HTML</li>
-                    <li>PYTHON</li>
-                    <li>HTML</li>
+                    {% for item in resume.skills.all %}
+                    <li>{{ item.name }}</li>
+                    {% endfor %}
                 </ul>
         </div>
     </div>
-
-
 
 
 {% endblock content %}
