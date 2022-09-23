@@ -41,9 +41,6 @@ processes = []
     restart_limit = 0
     timeout = "2s"
 
-[mounts]
-source="Site/static"
-destination="/app/static"
 
 [[statics]]
   guest_path = "/app/staticfiles"
