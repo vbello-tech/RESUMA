@@ -42,7 +42,7 @@ processes = []
     timeout = "2s"
 
 [mounts]
-source="myapp_data"
+source="app"
 destination="/app/static"
 
 [[statics]]
