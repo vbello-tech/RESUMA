@@ -9,8 +9,13 @@ from phonenumber_field.widgets import PhoneNumberInternationalFallbackWidget, Ph
 from datetime import datetime
 
 Field_chioce = (
-    ('BACHELORS OF SCIENCE', 'BACHELORS OF SCIENCE'),
-    ('BACHELORS OF ENGINEERING', 'BACHELORS OF ENGINEERING'),
+    ('BSC SCIENCE', 'BSC SCIENCE'),
+    ('BSC ENGINEERING', 'BSC ENGINEERING'),
+    ('BSC FINANCE', 'BSC FINANCE'),
+    ('BSC ECONOMICS AND BUSINESS', 'BSC ECONOMICS AND BUSINESS'),
+    ('BSC APPLIED SCIENCES', 'BSC APPLIED SCIENCES'),
+    ('BOOTCAMP', 'BOOTCAMP'),
+    ('BSC LAW', 'BSC LAW'),
 )
 
 
