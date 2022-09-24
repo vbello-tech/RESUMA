@@ -20,3 +20,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('resume.urls', namespace="resume")),
 ]
+
+
+handler404 = 'resume.views.handler404'
+handler500 = 'resume.views.handler500'

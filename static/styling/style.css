@@ -626,4 +626,15 @@ footer p{
         cursor: pointer;
         font-weight: bold;
     }
+
+    .profile{
+            display: inline-block;
+            align-items: left;
+            justify-content: space-evenly;
+            float: left;
+            margin-top: 10vh;
+            margin-left: 0;
+            margin-right: 20px;
+        }
+
 }

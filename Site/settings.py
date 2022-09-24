@@ -24,16 +24,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY= 'django-insecure-1#-z82+g4&3js^0q6q8p5k+q8u_a&!qwh+a0d8ybc(@c$%h0ka'
-
+SECRET_KEY= config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = [
     '0.0.0.0',
     'localhost',
-    'resumebuilder.fly.dev',
+    'resumebuilder.fly.dev/',
     '127.0.0.1',
 ]
 
@@ -88,19 +87,19 @@ WSGI_APPLICATION = 'Site.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-"""
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-"""
-DATABASES = {
-    'default':  dj_database_url.config(
-        default=config('DATABASE_URL')
-    )
-}
+if DEBUG == False:
+    DATABASES = {
+        'default':  dj_database_url.config(
+            default=config('DATABASE_URL')
+        )
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -146,7 +145,7 @@ STATICFILES_DIRS = (
 CRISPY_TEMPLATE_PACK ="bootstrap4"
 
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 #AUTHENTICATION
 
