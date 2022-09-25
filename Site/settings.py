@@ -32,7 +32,7 @@ DEBUG = config('DEBUG', cast=bool)
 ALLOWED_HOSTS = [
     '0.0.0.0',
     'localhost',
-    'resumebuilder.fly.dev/',
+    'resumebuilder.fly.dev',
     '127.0.0.1',
 ]
 
