@@ -469,7 +469,7 @@ class CreateProfileView(LoginRequiredMixin, View):
 
 @login_required
 def profile_edit(request):
-    user_profile = get_object_or_404(Userprofile, user=request.user, has_profile=True)
+    user_profile = get_object_or_404(Userprofile, user=request.user)
     if request.method == "POST":
         form = EditProfileForm(request.POST, instance=user_profile)
         if form.is_valid:
