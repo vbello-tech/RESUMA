@@ -453,10 +453,12 @@ class CreateProfileView(LoginRequiredMixin, View):
                     bio = form.cleaned_data.get('bio')
                     phone = form.cleaned_data.get('phone')
                     github = form.cleaned_data.get('github')
+                    portfolio = form.cleaned_data.get('portfolio')
                     linkedin = form.cleaned_data.get('linkedin')
                     userprofile.bio = bio
                     userprofile.phone = phone
                     userprofile.github = github
+                    userprofile.portfolio = portfolio
                     userprofile.linkedin = linkedin
                     userprofile.has_profile = True
                     userprofile.save()

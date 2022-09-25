@@ -229,6 +229,11 @@ class ProfileForm(forms.Form):
             'aria-describedby': 'basic-addon2'
         }
     ))
+    portfolio = forms.URLField(required=False, widget=forms.URLInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'GITHUB PROFILE LINK',
+        'aria-describedby': 'basic-addon2'
+    }))
     github = forms.URLField(required=False, widget=forms.URLInput(attrs={
         'class': 'form-control',
         'placeholder': 'GITHUB PROFILE LINK',
