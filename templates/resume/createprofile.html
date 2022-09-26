@@ -1,16 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">CREATE.</button>
-</form>
+{% block content %}
 
-</body>
-</html>
+<br><br>
+<div class="form-group">
+     <div class="container " >
+            <div class="row">
+                <form  class="form-control" method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <br>
+                     <center><button type="submit" id="form-submit" class="btn btn-primary">CREATE...</button></center>
+                </form>
+                {% endif %}
+            </div>
+     </div>
+</div>
+
+
+{% endblock content %}
