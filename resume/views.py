@@ -395,7 +395,8 @@ class UserLogin(View):
             user = auth.authenticate(username=username, password=password)
         if user is not None and user.is_active:
             auth.login(self.request, user)
-            if user.has_profile:
+            user_p = Userprofile.objects.get(user=user)
+            if user_p.has_profile:
                 return redirect ('resume:home')
             else:
                 return redirect('resume:create_profile')
