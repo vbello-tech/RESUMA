@@ -11,6 +11,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, update_session_auth_hash
 import urllib.parse
+from django.conf import settings
 
 # Create your vie
 #PDF
@@ -340,7 +341,10 @@ def generate_link(request, pk):
         name = resume.name
         link = str (user+'/'+name+'/'+code)
         query = urllib.parse.quote(link)
-        url = 'http://127.0.0.1:8000/resume/'+query
+        if settings.DEBUG:
+            url = 'http://127.0.0.1:8000/resume/'+query
+        else:
+            url = 'https://resumebuilder.fly.dev/'+query
         resume.resume_link = url
         resume.save()
         return redirect(resume.get_preview())
