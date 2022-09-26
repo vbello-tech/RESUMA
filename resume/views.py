@@ -149,11 +149,6 @@ class AddProjectView(View, LoginRequiredMixin):
         except ObjectDoesNotExist:
             return redirect('resume:home')
 
-@login_required
-def redirect_to_work(request, pk):
-    project = get_object_or_404(Project, pk=pk)
-    resume = Resume.objects.get(pk=project.resume.pk)
-    return redirect(resume.add_work())
 
 #ADD EXPERIENCED YOU GAINED WHILE WORKING ON PROJECT
 @login_required
@@ -336,11 +331,8 @@ def generate_link(request, pk):
     if resume.resume_link:
         return redirect(resume.get_preview())
     else:
-        code = resume.slug
-        user = resume.user.username
-        name = resume.name
-        link = str (user+'/'+name+'/'+code)
-        query = urllib.parse.quote(link)
+        r_code = resume.slug
+        query = urllib.parse.quote(r_code)
         if settings.DEBUG:
             url = 'http://127.0.0.1:8000/resume/'+query
         else:
@@ -348,6 +340,10 @@ def generate_link(request, pk):
         resume.resume_link = url
         resume.save()
         return redirect(resume.get_preview())
+
+def redirect_to_resume(request, slug):
+    resume = Resume.objects.get(slug=slug)
+    return redirect(resume.get_resume())
 
 #PREVIEW RESUME
 class ResumeView(View):
