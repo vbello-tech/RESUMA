@@ -216,10 +216,11 @@ class EditUserForm(UserChangeForm):
 
 
 class ProfileForm(forms.Form):
-    bio = forms.CharField(required=True, widget=forms.TextInput(attrs={
+    bio = forms.CharField(required=True, widget=forms.Textarea(attrs={
         'class': 'form-control',
         'placeholder': 'ABOUT YOU',
-        'aria-describedby': 'basic-addon2'
+        'aria-describedby': 'basic-addon2',
+        'rows': 5,
     }))
     phone = PhoneNumberField(required=False, widget=PhoneNumberPrefixWidget(
         initial='NG',
@@ -231,7 +232,7 @@ class ProfileForm(forms.Form):
     ))
     portfolio = forms.URLField(required=False, widget=forms.URLInput(attrs={
         'class': 'form-control',
-        'placeholder': 'GITHUB PROFILE LINK',
+        'placeholder': 'PORTFOLIO LINK',
         'aria-describedby': 'basic-addon2'
     }))
     github = forms.URLField(required=False, widget=forms.URLInput(attrs={
