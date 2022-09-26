@@ -350,7 +350,7 @@ def generate_link(request, pk):
         return redirect(resume.get_preview())
 
 #PREVIEW RESUME
-class ResumeView(View, LoginRequiredMixin):
+class ResumeView(View):
     def get(self, request, user, name, slug,  *args, **kwargs):
         resume = Resume.objects.get(slug=slug, name=name)
         mainuser = User.objects.get(username=resume.user.username)
