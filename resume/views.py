@@ -357,7 +357,7 @@ class ResumeView(View):
         userprofile = Userprofile.objects.get(user=resume.user)
         project = Project.objects.filter(resume=resume)
         work = Work.objects.filter(resume=resume)
-        education = Education.objects.filter(user=request.user, resume=resume)
+        education = Education.objects.filter(resume=resume)
         context =  {
             'user':mainuser,
             'userp':userprofile,
