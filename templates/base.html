@@ -44,6 +44,9 @@
       color: var(--white);
       justify-self: start;
       margin-left: 20px;
+      margin-top: 0;
+      font-size: 22px;
+      font-weight: bolder;
     }
 
     #navbar-logo {
@@ -110,7 +113,7 @@
       height: 80vh;
       align-items: center;
       padding: 0 30px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: "Nunito", sans-serif;
     }
 
     .welcome .welcome-speech {
@@ -121,6 +124,7 @@
       margin-right: 20px;
       padding: 20px 0px;
       text-align: left;
+
     }
 
     .welcome .welcome-speech .welcome-intro{
@@ -135,6 +139,8 @@
       font-weight: bolder;
       text-transform: uppercase;
       text-align: left;
+      font-weight: bolder;
+      font-size: 25px;
     }
 
     .welcome .welcome-speech .welcome-intro p{
@@ -551,7 +557,7 @@
 
       .welcome {
         width: 100%;
-        height: 80vh;
+        height: 70vh;
         display: inline-block;
         justify-content: space-evenly;
         color: black;
@@ -583,7 +589,7 @@
       .welcome .welcome-speech .welcome-intro{
           width: 100%;
           height: 50%;
-          margin-top: 150px;
+          margin-top: 70px;
           display: inline-block;
           justify-content: space-between;
           padding: 0;
@@ -658,7 +664,7 @@
 <body>
     <div class="nav-container">
         <nav class="navbar">
-            <h1 id="navbar-logo">RESUME</h1>
+            <h1 id="navbar-logo">RESUME BUILDER</h1>
             <div class="menu-togle" id="mobile-menu">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -677,11 +683,11 @@
         </nav>
     </div>
 
+<div class="container-fluid">
+    {% block content %}
 
-{% block content %}
-
-{% endblock content %}
-
+    {% endblock content %}
+</div>
 
 <footer>
         <ul>

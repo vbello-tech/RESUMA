@@ -2,16 +2,37 @@
 {% load static %}
 
 {% block content %}
-
+<br>
                  <div class="spread">
                     <a href="{% url 'resume:generate_link' pk=resume.pk %}">GENERATE LINK</a>
                    <a href="{% url 'resume:generate_pdf' pk=resume.pk %}">GENERATE PDF</a>
                 </div>
-
+<br>
 <h4>RESUME LINK:<a href="{{ resume.resume_link }}">{{ resume.resume_link }}</a></h4>
-
+<br>
 <div class="container">
+<div class="developer">
+            <ul>
+                <li class="dev"><b>{{ user.last_name }} {{ user.first_name }}</b></li>
+                <li class="dev"><b>{{ resume.name }}</b></li>
+                <li>{{ user.email }} </li>
+                <li>{{ userp.phone }}</li>
+                <li><a href="{{ userp.portfolio }}">PORTFOLIO</a></li>
+                <li><a href="{{ userp.github }}">GITHUB </a></li>
+                <li><a href="{{ userp.linkedin }}">LINKEDIN</a></li>
+            </ul>
+    <a href="{% url 'resume:profile_edit' %}">edit profile</a>
+        </div>
+<hr>
+        <div class="resume">
+            <span>BIO</span>
+            <p>
+                  {{ userp.bio|linebreaksbr	}}
 
+            </p>
+
+        </div>
+    <hr>
     {% if education %}
         <span class="topic">EDUCATION</span>
         {% for school in education %}

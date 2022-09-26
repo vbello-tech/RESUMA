@@ -249,7 +249,7 @@ class EditProfileForm(forms.ModelForm):
 
     class Meta:
         model = Userprofile
-        fields = ('bio', 'phone', 'github', 'linkedin',)
+        fields = ('bio', 'phone', 'portfolio', 'github', 'linkedin',)
 
         widgets = {
             'phone': PhoneNumberPrefixWidget(

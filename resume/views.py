@@ -35,32 +35,32 @@ class GeneratePdf(View, LoginRequiredMixin):
     def get(self, request, pk, *args, **kwargs):
         mainuser = User.objects.get(username=request.user)
         userprofile = Userprofile.objects.get(user=request.user)
-        resume = Resume.objects.get(user=request.user, pk=pk)
+        resume = Resume.objects.get(user=self.request.user, pk=pk)
         project = Project.objects.filter(user=request.user, resume=resume)
-        work = Work.objects.filter(user=request.user, resume=resume),
-        education = Education.objects.filter(user=request.user, resume=resume),
+        work = Work.objects.filter(user=request.user, resume=resume)
+        education = Education.objects.filter(user=request.user, resume=resume)
         open('templates/resume/resumepdf.html', "w").write(render_to_string('resume/resume.html',
                                                                             {
-                                                                                'user': mainuser,
-                                                                                'userp': userprofile,
-                                                                                'resume': resume,
-                                                                                'projects': project,
-                                                                                'works': work,
-                                                                                'education':education,
-                                                                            }))
+            'user':mainuser,
+            'userp':userprofile,
+            'resume':resume,
+            'projects':project,
+            'works':work,
+            'education':education,
+        }))
         pdf = html_to_pdf('resume/resumepdf.html')
-        return HttpResponse(pdf, content_type='application/pdf')
+        #return HttpResponse(pdf, content_type='application/pdf')
 
-        """
+
         if pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
-            filename = "%s %s CV" % (self.request.user, resume.name)
+            filename = "%s %s %s RESUME" % (self.request.user.last_name, self.request.user.first_name, resume.name)
             #content = "inline; filename=%s" % (filename)
             content = "attachment; filename=%s" %(filename)
             response['Content-disposition']=content
             return response
         return HttpResponse("Not Found")
-        """
+
 
 #HOMEPAGE
 def home(request):
@@ -341,8 +341,6 @@ def generate_link(request, pk):
         link = str (user+'/'+name+'/'+code)
         query = urllib.parse.quote(link)
         url = 'http://127.0.0.1:8000/resume/'+query
-        print(query)
-        print(url)
         resume.resume_link = url
         resume.save()
         return redirect(resume.get_preview())
@@ -490,7 +488,7 @@ def profile_edit(request):
     return render(request, 'registrations/profile_edit.html', context)
 
 
-class UserDetailView(DetailView):
+class UserDetailView(DetailView, LoginRequiredMixin):
     model = User
     template_name = "registrations/user_detail.html"
 
