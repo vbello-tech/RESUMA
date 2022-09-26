@@ -336,7 +336,7 @@ def generate_link(request, pk):
         if settings.DEBUG:
             url = 'http://127.0.0.1:8000/resume/'+query
         else:
-            url = 'https://resumebuilder.fly.dev/'+query
+            url = 'https://resumebuilder.fly.dev/resume/'+query
         resume.resume_link = url
         resume.save()
         return redirect(resume.get_preview())
