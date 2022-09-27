@@ -673,16 +673,18 @@
             <ul class="nav-menu">
                 <li><a href="{% url 'resume:home' %}" class="nav-links">HOME</a></li>
                 {% if user.is_authenticated %}
+                <li><a href="{% url 'resume:add_resume' %}" class="nav-links">CREATE RESUME</a></li>
                 <li><a href="{% url 'resume:user_detail' pk=request.user.pk %}" class="nav-links">Profile</a></li>
                 <li><a href="{% url 'resume:logout' %}" class="nav-links nav-links-btn">LOGOUT</a></li>
                 {% else %}
+                <li><a href="{% url 'resume:login' %}" class="nav-links">CREATE RESUME</a></li>
                 <li><a href="{% url 'resume:login' %}" class="nav-links">Profile</a></li>
                 <li><a href="{% url 'resume:login' %}" class="nav-links nav-links-btn">LOGIN</a></li>
                 {% endif %}
             </ul>
         </nav>
     </div>
-
+<a href="{% url 'resume:add_resume' %}">CREATE RESUME</a>
 <div class="container-fluid">
     {% block content %}
 
