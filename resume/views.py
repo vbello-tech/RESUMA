@@ -57,7 +57,7 @@ class GeneratePdf(View, LoginRequiredMixin):
             response = HttpResponse(pdf, content_type='application/pdf')
             filename = "%s %s %s RESUME" % (self.request.user.last_name, self.request.user.first_name, resume.name)
             #content = "inline; filename=%s" % (filename)
-            content = "attachment; filename=%s" %(filename)
+            content = "attachment; filename=%s.pdf" %(filename)
             response['Content-disposition']=content
             return response
         return HttpResponse("Not Found")
