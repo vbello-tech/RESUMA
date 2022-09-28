@@ -481,7 +481,7 @@ def profile_edit(request):
             user.user = request.user
             user.created_date = timezone.now()
             user.save()
-            return redirect('resume:user_detail')
+            return redirect('resume:user_detail', pk=request.user.pk)
         form = EditProfileForm()
     else:
         form = EditProfileForm(instance=user_profile)
