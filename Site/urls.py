@@ -22,5 +22,5 @@ urlpatterns = [
 ]
 
 
-handler404 = 'resume.views.handler404'
-handler500 = 'resume.views.handler500'
+#handler404 = 'resume.views.handler404'
+#handler500 = 'resume.views.handler500'
