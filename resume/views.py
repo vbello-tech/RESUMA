@@ -341,9 +341,6 @@ def generate_link(request, pk):
         resume.save()
         return redirect(resume.get_preview())
 
-def redirect_to_resume(request, slug):
-    resume = Resume.objects.get(slug=slug)
-    return redirect(resume.get_resume())
 
 #PREVIEW RESUME
 class ResumeView(View):
@@ -521,7 +518,7 @@ def handler404(request, exception):
 
 
 def handler500(request):
-    context =  {'word':"<h1>OOPS !!! <br> SEVER ERROR!!! <br> </h1>"}
+    context = {'word':"<h1>OOPS !!! <br> SEVER ERROR!!! <br> </h1>"}
     response = render(request, "500.html", context)
     response.status_code = 500
     return response

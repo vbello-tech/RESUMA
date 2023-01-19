@@ -113,10 +113,10 @@ ll
         {% for school in education %}
         <div class="portfolio">
 
-            <h1>{{ school.school_name }} ( {{ school.enrollment_date.year }}-{{ school.graduation_date }} )</h1>
+            <em><h3>{{ school.school_name }} ( {{ school.enrollment_date.year }}-{{ school.graduation_date }} )</h3></em>
             <ul>
-                <li>Course: {{ school.course }} ({{ school.field }})</li>
-                <li>Address: {{ school.location }}</li>
+                <li><h5>Course: {{ school.course }} ({{ school.field }})</h5></li>
+                <li><h5>Address: {{ school.location }}</h5></li>
             </ul>
         </div>
         <hr>

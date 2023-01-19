@@ -38,10 +38,10 @@
         {% for school in education %}
         <div class="portfolio">
 
-            <h1>{{ school.school_name }} ( {{ school.enrollment_date }}-{{ school.graduation_date }} )</h1>
+            <em><h3>{{ school.school_name }} ( {{ school.enrollment_date }}-{{ school.graduation_date }} )</h3></em>
             <ul>
-                <li>Course: {{ school.course }} ({{ school.field }})</li>
-                <li>Location: {{ school.location }}</li>
+                <li><h5>Course: {{ school.course }} ({{ school.field }})</h5></li>
+                <li><h5>Location: {{ school.location }}</h5></li>
             </ul>
         </div>
         <hr>
@@ -69,7 +69,7 @@
                 <a href="{{ project.link }}">project link</a>
                 {% endif %}
             </div>
-             <a href="{% url 'resume:add_experience' pk=project.pk %}">ADD MORE EXPERIENCE YOU GAINED ON THIS PROJECT.</a>
+             <a href="{% url 'resume:add_experience' pk=project.pk %}">ADD PROJECT EXPERIENCE.</a>
         </div>
         <hr>
         {% endfor %}
@@ -94,7 +94,7 @@
                 {% for item in work.work.all %}
                 <li>{{ item.body }}</li>
                 {% endfor%}
-                <a href="{% url 'resume:add_responsibility' pk=work.pk %}">ADD MORE RESPONSIBILITY AND EXPERIENCE YOU GAINED ON THE JOB.</a>
+                <a href="{% url 'resume:add_responsibility' pk=work.pk %}">ADD JOB RESPONSIBILITY.</a>
             </ul>
         </div>
         <hr>

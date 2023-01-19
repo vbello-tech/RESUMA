@@ -18,7 +18,6 @@ urlpatterns =[
     path('resume/user/resume/', user_resume, name="user_resume"),
     path('add-resume/add-project/<int:pk>', AddProjectView.as_view(), name="add_project"),
     path('add-resume/add-project/experience/<int:pk>/', experience, name="add_experience"),
-    path('resume/<str:slug>/', redirect_to_resume, name="redirect_work"),
     path('add-resume/add-work/<int:pk>', AddWorkView.as_view(), name="add_work"),
     path('add-resume/add-work/responsibility/<int:pk>/', responsibility, name="add_responsibility"),
     path('add-resume/add-education/<int:pk>', AddEducationView.as_view(), name="add_education"),
