@@ -33,6 +33,7 @@
 
         </div>
     <hr>
+    <a href="{{ resume.add_education }}">ADD EDUCATION</a>
     {% if education %}
         <span class="topic">EDUCATION</span>
         {% for school in education %}
@@ -46,7 +47,6 @@
         </div>
         <hr>
         {% endfor %}
-    <a href="{{ resume.add_education }}">ADD EDUCATION</a>
     {% endif %}
 <hr>
     {% if projects %}
@@ -73,8 +73,8 @@
         </div>
         <hr>
         {% endfor %}
-    <a href="{{ resume.add_project }}">ADD PROJECT</a>
     {% endif %}
+    <a href="{{ resume.add_project }}">ADD PROJECT</a>
 <hr>
 
     {% if works %}
@@ -99,8 +99,8 @@
         </div>
         <hr>
         {% endfor %}
-    <a href="{{ resume.add_work }}">ADD WORK EXPERIENCE</a>
     {% endif %}
+    <a href="{{ resume.add_work }}">ADD WORK EXPERIENCE</a>
 <hr>
 
         <div class="tech">
@@ -111,6 +111,7 @@
                     {% endfor %}
                 </ul>
         </div>
+        <a href="{{ resume.add_skills }}">ADD TECH SKILLS</a>
     </div>
 
 
