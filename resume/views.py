@@ -251,32 +251,32 @@ class AddEducationView(View, LoginRequiredMixin):
         return render (self.request, 'resume/addeducation.html', context)
 
     def post(self, request, pk, *args, **kwargs):
-        try:
-            resume = Resume.objects.get(user=request.user, pk=pk)
-            form = EducationForm(self.request.POST or None)
-            if form.is_valid():
-                school_name = form.cleaned_data.get('school_name')
-                location = form.cleaned_data.get('location')
-                field = form.cleaned_data.get('field')
-                course = form.cleaned_data.get('course')
-                enrollment_date = form.cleaned_data.get('enrollment_date')
-                graduation_date = form.cleaned_data.get('graduation_date')
-                education = Education.objects.create(
-                    resume=resume,
-                    user=request.user,
-                    school_name=school_name,
-                    location=location,
-                    field=field,
-                    course=course,
-                    enrollment_date=enrollment_date,
-                    graduation_date=graduation_date,
-                )
-                return redirect(resume.add_education())
-            else:
-                return redirect('resume:home')
-
-        except ObjectDoesNotExist:
+        resume = Resume.objects.get(user=request.user, pk=pk)
+        form = EducationForm(self.request.POST or None)
+        if request.method == "POST" and form.is_valid():
+            #if form.is_valid():
+            print(resume)
+            school_name = form.cleaned_data.get('school_name')
+            location = form.cleaned_data.get('location')
+            field = form.cleaned_data.get('field')
+            course = form.cleaned_data.get('course')
+            enrollment_date = form.cleaned_data.get('enrollment_date')
+            graduation_date = form.cleaned_data.get('graduation_date')
+            education = Education.objects.create(
+                resume=resume,
+                user=request.user,
+                school_name=school_name,
+                location=location,
+                field=field,
+                course=course,
+                enrollment_date=enrollment_date,
+                graduation_date=graduation_date,
+            )
+            print(school_name)
+            return redirect(resume.add_education())
+        else:
             return redirect('resume:home')
+
 
 
 # ADD EDUCATION HISTORY
