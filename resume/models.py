@@ -96,7 +96,7 @@ class Project(models.Model):
     user = models.ForeignKey('auth.user', on_delete=models.CASCADE)
     resume = models.ForeignKey('Resume', related_name="resume", null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=60)
-    description = models.CharField(max_length=250, blank=False, null=False)
+    description = models.CharField(max_length=300, blank=False, null=False)
     github = models.URLField(blank=True, null=True)
     link = models.URLField(blank=True, null=True)
     date_added = models.DateTimeField(default=timezone.now)
