@@ -101,12 +101,6 @@ class ProjectForm(forms.Form):
         "placeholder": 'PROJECT LINK',
     }))
 
-    experience = forms.CharField(required=False, widget=forms.Textarea(attrs={
-        'class': 'form-control',
-        "placeholder": 'TELL US SOME EXPERIENCE YOU GAINED WHILE WORKING ON THIS PROJECT',
-        'rows': 3,
-    }))
-
 
 class WorkForm(forms.Form):
     company_name = forms.CharField(required=False, widget=forms.TextInput(attrs={
@@ -125,13 +119,6 @@ class WorkForm(forms.Form):
         'rows': 3,
     }))
 
-
-    responsibility = forms.CharField(required=False, widget=forms.Textarea(attrs={
-        'class': 'form-control',
-        "placeholder": 'TELL US SOME OF YOUR RESPONSIBILITY AND EXPERIENCE WHILE WORKING IN THIS COMPANY',
-        'rows': 3,
-    }))
-
     start_date = forms.DateField(required=False, widget=forms.SelectDateWidget(empty_label=('Year', 'Month', 'Day'),
         years=range(1990, datetime.now().year),
         attrs={
@@ -144,37 +131,6 @@ class WorkForm(forms.Form):
             'data-date-format': 'dd/mm/yyyy',
     }))
 
-
-class ExperienceForm(forms.ModelForm):
-    class Meta:
-        model = Experience
-        fields = ('body',)
-
-        widgets = {
-            'body': forms.Textarea(
-                attrs={
-                    'class': 'form-control',
-                    "placeholder": 'e.g I WORKED WITH AND LEARNT HOW TO USE STRIPE PAYMENT API',
-                    'rows': 5,
-                }
-            )
-        }
-
-
-class ResponsibilityForm(forms.ModelForm):
-    class Meta:
-        model = Responsibility
-        fields = ('body',)
-
-        widgets = {
-            'body': forms.Textarea(
-                attrs={
-                    'class': 'form-control',
-                    "placeholder": 'Enter your comment here',
-                    'rows': 5,
-                }
-            )
-        }
 
 class NewUSerForm(UserCreationForm):
     email = forms.EmailField(required=True)

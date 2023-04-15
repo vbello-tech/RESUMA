@@ -105,15 +105,6 @@ class Project(models.Model):
         return self.name
 
 
-class Experience(models.Model):
-    project = models.ForeignKey('Project', related_name="project", on_delete=models.CASCADE)
-    user = models.ForeignKey('auth.user', related_name="experience_gainer", on_delete=models.CASCADE)
-    body = models.CharField(max_length=500, blank=False, null=False)
-    date_added = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return 'EXPERIENCE "%s" GAINED FROM  project "%s"-(%s)' % (self.user, self.project.name, self.project.resume)
-
 
 class Work(models.Model):
     user = models.ForeignKey('auth.user', on_delete=models.CASCADE)
@@ -127,15 +118,6 @@ class Work(models.Model):
     def __str__(self):
         return self.company_name
 
-
-class Responsibility(models.Model):
-    work = models.ForeignKey('Work', related_name="work", on_delete=models.CASCADE)
-    user = models.ForeignKey('auth.user', related_name="responsibilty_owner", on_delete=models.CASCADE)
-    body = models.CharField(max_length=500, blank=False, null=False)
-    date_added = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return 'EXPERIENCE "%s" GAINED FROM  work "%s"-(%s)' % (self.user, self.work.company_name, self.work.resume)
 
 class Userprofile(models.Model):
     user = models.OneToOneField('auth.user', on_delete=models.CASCADE)

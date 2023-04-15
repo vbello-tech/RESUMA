@@ -127,7 +127,6 @@ class AddProjectView(View, LoginRequiredMixin):
                     description = form.cleaned_data.get('description')
                     github = form.cleaned_data.get('github')
                     link = form.cleaned_data.get('link')
-                    experience = form.cleaned_data.get('experience')
                     project = Project.objects.create(
                         resume = resume,
                         user=request.user,
@@ -136,11 +135,6 @@ class AddProjectView(View, LoginRequiredMixin):
                         github=github,
                         link=link,
                     )
-                    exp = Experience.objects.create(
-                        project=project,
-                        user=request.user,
-                        body=experience
-                    )
                     return redirect(resume.add_project())
                 else:
                     return redirect('resume:home')
@@ -148,29 +142,6 @@ class AddProjectView(View, LoginRequiredMixin):
                 return redirect('resume:login')
         except ObjectDoesNotExist:
             return redirect('resume:home')
-
-
-#ADD EXPERIENCED YOU GAINED WHILE WORKING ON PROJECT
-@login_required
-def experience(request, pk):
-    project = get_object_or_404(Project, pk=pk)
-    if request.method == "POST":
-        form = ExperienceForm(request.POST)
-        if form.is_valid:
-            body = form.save(commit=False)
-            body.project = project
-            body.user = request.user
-            body.save()
-            return redirect('resume:preview_resume', pk=project.resume.pk)
-        form = ExperienceForm()
-    else:
-        form = ExperienceForm()
-
-    context = {
-        'form': form,
-        'project':project,
-    }
-    return render(request, 'resume/addexperience.html', context)
 
 
 #ADD WORK EXPERIENCE
@@ -192,7 +163,6 @@ class AddWorkView(View, LoginRequiredMixin):
                 company_name = form.cleaned_data.get('company_name')
                 company_description = form.cleaned_data.get('company_description')
                 role = form.cleaned_data.get('role')
-                responsibility = form.cleaned_data.get('responsibility')
                 start_date = form.cleaned_data.get('start_date')
                 end_date = form.cleaned_data.get('end_date')
                 work = Work.objects.create(
@@ -204,40 +174,12 @@ class AddWorkView(View, LoginRequiredMixin):
                     start_date=start_date,
                     end_date=end_date,
                 )
-                res = Responsibility.objects.create(
-                    work=work,
-                    user=request.user,
-                    body=responsibility
-                )
                 return redirect(resume.add_work())
             else:
                 return redirect('resume:home')
 
         except ObjectDoesNotExist:
             return redirect('resume:home')
-
-#ADD EXPERIENCE YOU GAINED AND YOUR RESPONSIBILITY ON THE JOB
-@login_required
-def responsibility(request, pk):
-    work = get_object_or_404(Work, pk=pk)
-    if request.method == "POST":
-        form = ResponsibilityForm(request.POST)
-        if form.is_valid:
-            body = form.save(commit=False)
-            body.work = work
-            body.user = request.user
-            body.save()
-            return redirect('resume:preview_resume', pk=work.resume.pk)
-        form = ResponsibilityForm()
-    else:
-        form = ResponsibilityForm()
-
-    context = {
-        'form': form,
-        'work': work,
-    }
-    return render(request, 'resume/addresponsibility.html', context)
-
 
 #ADD EDUCATION HISTORY
 class AddEducationView(View, LoginRequiredMixin):
@@ -256,12 +198,12 @@ class AddEducationView(View, LoginRequiredMixin):
         if request.method == "POST" and form.is_valid():
             #if form.is_valid():
             print(resume)
-            school_name = form.cleaned_data.get('school_name')
-            location = form.cleaned_data.get('location')
-            field = form.cleaned_data.get('field')
-            course = form.cleaned_data.get('course')
-            enrollment_date = form.cleaned_data.get('enrollment_date')
-            graduation_date = form.cleaned_data.get('graduation_date')
+            school_name = form.cleaned_data.get['school_name']
+            location = form.cleaned_data.get['location']
+            field = form.cleaned_data.get['field']
+            course = form.cleaned_data.get['course']
+            enrollment_date = form.cleaned_data.get['enrollment_date']
+            graduation_date = form.cleaned_data.get['graduation_date']
             education = Education.objects.create(
                 resume=resume,
                 user=request.user,
