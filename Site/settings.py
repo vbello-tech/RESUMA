@@ -50,6 +50,7 @@ INSTALLED_APPS = [
 
     'phonenumber_field',
     'crispy_forms',
+    'crispy_bootstrap4',
 ]
 
 MIDDLEWARE = [
@@ -152,8 +153,6 @@ CRISPY_TEMPLATE_PACK ="bootstrap4"
 #AUTHENTICATION
 
 LOGIN_URL = 'resume:login'
-
-LOGIN_REDIRECT_URL = 'resume:home'
 
 LOGOUT_REDIRECT_URL = 'resume:home'
 

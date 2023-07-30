@@ -12,8 +12,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, update_session_auth_hash
 import urllib.parse
 from django.conf import settings
+from django.contrib import messages
 
-# Create your vie
+# Create your vieWS HERE
 #PDF
 from io import BytesIO
 from django.http import HttpResponse
@@ -333,11 +334,11 @@ class UserLogin(View):
             password = form.cleaned_data.get('password')
             user = auth.authenticate(username=username, password=password)
         if user is not None and user.is_active:
-            auth.login(self.request, user)
-            user_p = Userprofile.objects.get(user=user)
-            if user_p.has_profile:
-                return redirect ('resume:home')
-            else:
+            try:
+                user_p = Userprofile.objects.get(user=user)
+                auth.login(self.request, user)
+                return redirect('resume:home')
+            except ObjectDoesNotExist:
                 return redirect('resume:create_profile')
         else:
             return redirect ('resume:login')

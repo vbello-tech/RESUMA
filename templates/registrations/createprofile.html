@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<br><br>
+<div class="form-group">
+     <div class="container " >
+            <div class="row">
+
+<h2 class="btn btn-primary">YOU ARE ABOUT TO CHANGE YOUR USER DETAILS</h2>
+                <form  class="form-control" method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <br>
+                     <center><button type="submit" id="form-submit" class="btn btn-primary">EDIT...</button></center>
+                <a class="text-center" href="{% url 'resume:change_password' %}">CLICK HERE TO CHANGE PASSWORD</a>
+                </form>
+            </div>
+     </div>
+</div>
+
+
+{% endblock content %}
