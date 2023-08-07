@@ -40,6 +40,7 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     'resume.apps.ResumeConfig',
+    'accounts.apps.AccountsConfig',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -152,7 +153,7 @@ CRISPY_TEMPLATE_PACK ="bootstrap4"
 
 #AUTHENTICATION
 
-LOGIN_URL = 'resume:login'
+LOGIN_URL = 'user:login'
 
 LOGOUT_REDIRECT_URL = 'resume:home'
 
