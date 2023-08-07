@@ -54,27 +54,27 @@ class EducationForm(forms.Form):
 
     course = forms.CharField(required=False, widget=forms.TextInput(attrs={
         'class': 'form-control',
-        "placeholder": 'COURSES OF STUDY',
+        "placeholder": 'Course of study',
     }))
 
     field = forms.ChoiceField(
         required=False,
         choices=Field_chioce,
         initial=0,
-        widget=forms.CheckboxSelectMultiple(attrs={'class': 'mt-2 mb-3 focus:border-blue-600 px-3', })
+        widget=forms.RadioSelect(attrs={'class': 'mt-2 mb-3 focus:border-blue-600 px-3', })
     )
 
     enrollment_date = forms.DateField(required=False, widget=forms.SelectDateWidget(empty_label=('Year', 'Month', 'Day'),
         years=range(1990, datetime.now().year),
         attrs={
-            'data-date-format': 'dd/mm/yyyy',
+            'data-date-format': 'mm/yyyy',
             "placeholder": 'FORMAT YYYY-MM-DD (2002-02-20)',
     }))
 
     graduation_date = forms.DateField(required=False, widget=forms.SelectDateWidget(empty_label=('Year', 'Month', 'Day'),
         years=range(1990, datetime.now().year),
         attrs={
-            'data-date-format': 'dd/mm/yyyy',
+            'data-date-format': 'mm/yyyy',
             "placeholder": 'FORMAT YYYY-MM-DD (2002-02-20)',
     }))
 

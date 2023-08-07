@@ -192,17 +192,19 @@ class AddEducationView(View, LoginRequiredMixin):
     def post(self, request, pk, *args, **kwargs):
         resume = Resume.objects.get(user=request.user, pk=pk)
         form = EducationForm(self.request.POST or None)
-        if request.method == "POST" and form.is_valid():
+        if form.is_valid():
             print(resume)
-            """school_name = form.cleaned_data.get['school_name']
+            school_name = form.cleaned_data.get('school_name')
             print(school_name)
-            location = form.cleaned_data.get['location']
+            location = form.cleaned_data.get('location')
             print(location)
-            field = form.cleaned_data.get['field']
+            field = form.cleaned_data.get('field')
             print(field)
-            course = form.cleaned_data.get['course']
-            enrollment_date = form.cleaned_data.get['enrollment_date']
-            graduation_date = form.cleaned_data.get['graduation_date']
+            course = form.cleaned_data.get('course')
+            print(course)
+            enrollment_date = form.cleaned_data.get('enrollment_date')
+            graduation_date = form.cleaned_data.get('graduation_date')
+            print(enrollment_date, graduation_date)
             education = Education.objects.create(
                 resume=resume,
                 user=request.user,
@@ -212,7 +214,7 @@ class AddEducationView(View, LoginRequiredMixin):
                 course=course,
                 enrollment_date=enrollment_date,
                 graduation_date=graduation_date,
-            )"""
+            )
             return redirect(resume.add_education())
         else:
             return redirect('resume:home')

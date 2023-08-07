@@ -10,12 +10,12 @@
        <div class="profile">
             <span>
                 <h3>{{ object.username }}'s profile</h3>
-                <a class="nav-link" href="{% url 'resume:change_password' %}">CHANGE PASSWORD</a>
+                <a class="nav-link" href="{% url 'user:change_password' %}">CHANGE PASSWORD</a>
             </span>
             <ul>
                 <li><b>{{ object.first_name }} {{ object.last_name }}</b></li>
                 <li>{{ object.email }}</li>
-                <a href="{% url 'resume:user_edit' pk=object.pk %}">edit user</a>
+                <a href="{% url 'user:user_edit' pk=object.pk %}">edit user</a>
             </ul>
 
            <ul>
@@ -23,7 +23,7 @@
                 <li><a href="{{ object.userprofile.github }}">GITHUB </a></li>
                 <li><a href="{{ object.userprofile.linkedin }}">LINKEDIN</a></li>
                <li>{{ object.userprofile.phone }}</li>
-               <a href="{% url 'resume:profile_edit' %}">edit profile</a>
+               <a href="{% url 'user:profile_edit' %}">edit profile</a>
            </ul>
         </div>
 <hr>

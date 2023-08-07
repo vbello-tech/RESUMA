@@ -32,6 +32,6 @@ urlpatterns =[
          name="password_reset_complete"),
     path('user/<int:pk>/user_edit/', user_edit, name="user_edit"),
     path('user/profile_edit/', profile_edit, name="profile_edit"),
-    path('user/<int:pk>/', UserDetailView.as_view(), name="user_detail"),
+    path('<int:pk>/', UserDetailView.as_view(), name="user_detail"),
     path('user/change-password/', change_password, name="change_password"),
 ]

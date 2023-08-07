@@ -79,25 +79,25 @@ def user_edit(request, pk):
 
 
 # CHECK OUT VIEW
-class CreateProfileView(View):
+class CreateProfileView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
-        userprofile = Userprofile.objects.get(user=self.request.user)
-        if userprofile and not userprofile.has_profile:
-            form = ProfileForm()
-        else:
-            return redirect('resume:home')
-        context = {
-            'form': form,
-            'userprofile':userprofile
-        }
-        return render (self.request, 'resume/createprofile.html', context)
+        try:
+            if Userprofile.objects.get(user=self.request.user).has_profile:
+                return redirect('user:sign_up')
+        except ObjectDoesNotExist:
+            n_profile = Userprofile.objects.create(
+                user=self.request.user
+            )
+        return render (self.request, 'resume/createprofile.html', context = {
+                'form': ProfileForm(),
+            })
 
     def post(self, *args, **kwargs):
         try:
             userprofile = Userprofile.objects.get(user=self.request.user)
             form = ProfileForm(self.request.POST or None)
             if userprofile.has_profile:
-                return redirect('resume:profile_edit')
+                return redirect('user:profile_edit')
             else:
                 if form.is_valid():
                     bio = form.cleaned_data.get('bio')
