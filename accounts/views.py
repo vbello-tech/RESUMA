@@ -44,15 +44,51 @@ class UserLogin(View):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = auth.authenticate(username=username, password=password)
-        if user is not None and user.is_active:
-            try:
-                user_p = Userprofile.objects.get(user=user)
-                auth.login(self.request, user)
+            auth.login(self.request, user)
+            if Userprofile.objects.get(user=user).has_profile:
                 return redirect('resume:home')
-            except ObjectDoesNotExist:
+            else:
                 return redirect('user:create_profile')
         else:
             return redirect ('user:login')
+
+class CreateProfileView(LoginRequiredMixin, View):
+    def get(self, *args, **kwargs):
+        if Userprofile.objects.get(user=self.request.user).has_profile:
+                return redirect('user:sign_up')
+        else:
+            context = {
+                'form': ProfileForm(),
+            }
+            return render (self.request, 'resume/createprofile.html', context)
+
+    def post(self, *args, **kwargs):
+        user_p = Userprofile.objects.get(user=self.request.user)
+        if user_p.has_profile:
+            return redirect('user:profile_edit')
+        else:
+            try:
+                form = ProfileForm(self.request.POST or None)
+                if form.is_valid():
+                    bio = form.cleaned_data.get('bio')
+                    phone = form.cleaned_data.get('phone')
+                    github = form.cleaned_data.get('github')
+                    experience_year = form.cleaned_data.get('experience_year')
+                    portfolio = form.cleaned_data.get('portfolio')
+                    linkedin = form.cleaned_data.get('linkedin')
+                    user_p.bio = bio
+                    user_p.phone = phone
+                    user_p.github = github
+                    user_p.experience_year = experience_year
+                    user_p.portfolio = portfolio
+                    user_p.linkedin = linkedin
+                    user_p.has_profile = True
+                    user_p.save()
+                    return redirect('user:user_detail', pk=self.request.user.pk)
+                else:
+                    return redirect('user:sign_up')
+            except ObjectDoesNotExist:
+                return redirect('user:sign_up')
 
 def logout(request):
     auth.logout(request)
@@ -77,46 +113,6 @@ def user_edit(request, pk):
     }
     return render(request, 'registrations/user_edit.html', context)
 
-
-# CHECK OUT VIEW
-class CreateProfileView(LoginRequiredMixin, View):
-    def get(self, *args, **kwargs):
-        try:
-            if Userprofile.objects.get(user=self.request.user).has_profile:
-                return redirect('user:sign_up')
-        except ObjectDoesNotExist:
-            n_profile = Userprofile.objects.create(
-                user=self.request.user
-            )
-        return render (self.request, 'resume/createprofile.html', context = {
-                'form': ProfileForm(),
-            })
-
-    def post(self, *args, **kwargs):
-        try:
-            userprofile = Userprofile.objects.get(user=self.request.user)
-            form = ProfileForm(self.request.POST or None)
-            if userprofile.has_profile:
-                return redirect('user:profile_edit')
-            else:
-                if form.is_valid():
-                    bio = form.cleaned_data.get('bio')
-                    phone = form.cleaned_data.get('phone')
-                    github = form.cleaned_data.get('github')
-                    portfolio = form.cleaned_data.get('portfolio')
-                    linkedin = form.cleaned_data.get('linkedin')
-                    userprofile.bio = bio
-                    userprofile.phone = phone
-                    userprofile.github = github
-                    userprofile.portfolio = portfolio
-                    userprofile.linkedin = linkedin
-                    userprofile.has_profile = True
-                    userprofile.save()
-                    return redirect('user:user_detail')
-                else:
-                    return redirect('user:sign_up')
-        except ObjectDoesNotExist:
-            return redirect('user:sign_up')
 
 @login_required
 def profile_edit(request):

@@ -23,5 +23,5 @@ urlpatterns =[
     path('resume/<int:pk>/generate-pdf/', GeneratePdf.as_view(), name="generate_pdf"),
     path('resume/<int:pk>/generate-link/', generate_link, name="generate_link"),
     path('resume/<int:pk>/preview/', ResumePreviewView.as_view(), name="preview_resume"),
-    path('resume/<str:user>/<str:name>/<str:slug>/', ResumeView.as_view(), name="resume"),
+    path('resume/<str:slug>/', ResumeView.as_view(), name="resume"),
 ]

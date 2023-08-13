@@ -286,8 +286,8 @@ def generate_link(request, pk):
 
 #PREVIEW RESUME
 class ResumeView(View):
-    def get(self, request, user, name, slug,  *args, **kwargs):
-        resume = Resume.objects.get(slug=slug, name=name)
+    def get(self, request, slug,  *args, **kwargs):
+        resume = Resume.objects.get(slug=slug)
         mainuser = User.objects.get(username=resume.user.username)
         userprofile = Userprofile.objects.get(user=resume.user)
         project = Project.objects.filter(resume=resume)

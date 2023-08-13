@@ -61,6 +61,11 @@ class ProfileForm(forms.Form):
             'aria-describedby': 'basic-addon2'
         }
     ))
+    experience_year = forms.IntegerField(required=True, widget=forms.NumberInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'How many years experience do you have',
+        'aria-describedby': 'basic-addon2'
+    }))
     portfolio = forms.URLField(required=False, widget=forms.URLInput(attrs={
         'class': 'form-control',
         'placeholder': 'PORTFOLIO LINK',
