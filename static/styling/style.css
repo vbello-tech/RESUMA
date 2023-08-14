@@ -89,159 +89,159 @@
   transition: all 0.3s ease-out;
   background: var(--white);
 }
- 
-.welcome {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 20px 40px 20px;
-  height: 80vh;
-  align-items: center;
-  padding: 0 30px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+
+.hero{
+    display: block;
+    margin: 80px 150px ;
+    align-items: center;
 }
 
-.welcome .welcome-speech {
-  display: inline-block;
-  justify-content: space-between;
-  width: 100%;
-  height: 100%;
-  margin-right: 20px;
-  padding: 20px 0px;
-  text-align: left;
+.hero h1{
+    text-align: center;
+    font-weight: bold;
 }
 
-.welcome .welcome-speech .welcome-intro{
-  width: 100%;
-  height: 50%;
-  margin-top: 150px;
-  padding: 0;
-  text-align: left;
+.hero .hero-intro {
+    display: flex;
+    justify-content: space-between;
+    height: 70vh;
+    margin-top: 60px;
 }
 
-.welcome .welcome-speech .welcome-intro h1{
-  font-weight: bolder;
-  text-transform: uppercase;
-  text-align: left;
+.hero .hero-intro .hero-text{
+    width: 50%;
+    height: 100%;
+    align-items: left;
+    margin-right: 20px;
+    padding: 100px 25px 0 2px;
 }
 
-.welcome .welcome-speech .welcome-intro p{
-  font-weight: bold;
+.hero .hero-intro .hero-text P{
+    font-weight: 700;
+    font-size: 20px;
 }
 
-.welcome .welcome-speech .welcome-intro a {
-  display: inline-block;
-  background-color: black;
-  color: #ffffff;
-  border-radius: 10px;
-  -webkit-transition: all 0.3s;
-  padding: 0px 10px;
-  transition: all 0.3s;
-  border: 1px solid black;
-  text-decoration: none;
-  margin-top: 40px;
-}
-
-.welcome .welcome-speech .welcome-intro a:hover {
-  color: #ffffff;
-  -webkit-transform: translateY(-3px);
-          transform: translateY(-3px);
-}
-
-.welcome .welcome-image {
-  width: 100%;
-  margin-left: 20px;
-  height: 100%;
-  padding: 2%;
-}
-
-.welcome .welcome-image img{
-  width: 100%;
-  height: 85vh;
-  border-radius: 20px 20px 0px 0px;
-}
-
-section {
-  margin:60px 50px ;
-}
-
-h1 {
-  text-align: center;
-  align-items: center;
-  margin-top: 80px;
-  font-size: 1em;
-}
-
-section .reason {
-  height: 70vh;
-  display: flex;
-  padding: 5px 20px;
-  justify-content: space-evenly;
-  align-items: center;
-  margin: 60px 20px;
-}
-
-section .reason img{
-  height: 60vh;
-  width: 50%;
-  object-fit: contain;
-  object-position: center;
-}
-
-section .reason .text{
-  display: inline-block;
-  justify-content: space-between;
-  align-items: left;
-  width: 50%;
-  padding: 40px;
-}
-
-section .reason .text h2{
-  margin: 40px 50px;
-  font-size: 30px;
-}
-
-section .reason .text p{
-  font-size: 20px;
-}
-
-.build {
-  align-items: center;
-  text-align: center;
-  font-size: 1.5em;
-  margin-top: 20vh;
-  font-weight: bold;
-}
-
-.build a{
-  background-color: black;
-  color: #ffffff;
-  border-radius: 10px;
-  -webkit-transition: all 0.3s;
-  padding: 10px 50px;
-  transition: all 0.3s;
-  border: 1px solid black;
-  text-decoration: none;
-  cursor: pointer;
-  font-weight: bold;
-  margin-top: 20px;
-}
-
-.submit {
+.hero .hero-intro .hero-text a{
+    display: inline-block;
+    background-color: black;
+    color: #ffffff;
+    border-radius: 10px;
+    -webkit-transition: all 0.3s;
+    padding: 8px 20px;
+    transition: all 0.3s;
+    border: 1px solid black;
+    text-decoration: none;
     margin-top: 40px;
 }
 
-.submit a{
-  background-color: black;
-  color: #ffffff;
-  border-radius: 10px;
-  -webkit-transition: all 0.3s;
-  padding: 10px 20px;
-  transition: all 0.3s;
-  border: 1px solid black;
-  text-decoration: none;
-  cursor: pointer;
-  font-weight: bold;
-  margin-top: 20px;
+.hero .hero-intro .hero-text a:hover{
+    color: #ffffff;
+    -webkit-transform: translateY(-5px);
+          transform: translateY(-5px);
+}
+
+.hero .hero-intro .hero-image{
+    width: 50%;
+    height: 100%;
+    align-items: right;
+    padding: 1%;
+}
+
+.hero .hero-intro .hero-image img{
+    object-fit: contain;
+    object-position: center;
+    height: 100%;
+    width: 100%;
+    border-radius: 20px 20px 0px 0px;
+}
+
+section {
+    height: 70vh;
+    width: 100%;
+    margin: 50px 0;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+section h1 {
+    text-align: center;
+    font-weight: 900;
+    font-size: 50px;
+}
+
+section .box{
+    height: 100%;
+    width: 100%;
+    display: inline-block;
+}
+
+section .box img{
+    object-fit: contain;
+    object-position: center;
+    height: 100%;
+    width: 100%;
+}
+
+
+.contact{
+    display: flex;
+    justify-content: space-between;
+    height: 50vh;
+    margin: 25vh 120px;
+    align-items: center;
+}
+
+.contact form{
+    height: 100%;
+    width: 50%;
+    margin-right: 30px;
+}
+
+.contact img{
+    height: 100%;
+    width: 50%;
+    object-fit: contain;
+    object-position: center;
+    padding: auto;
+    margin-left: 30px;
+}
+
+.about{
+    display: flex;
+    justify-content: space-between;
+    height: 40vh;
+    margin: 25vh 120px;
+    align-items: center;
+}
+
+.about .about-text{
+    height: 100%;
+    width: 50%;
+    margin-right: 30px;
+    font-size: 20px;
+}
+
+.about .about-text a{
+    display: inline-block;
+    background-color: black;
+    color: #ffffff;
+    border-radius: 10px;
+    -webkit-transition: all 0.3s;
+    padding: 8px 10px;
+    transition: all 0.3s;
+    text-decoration: none;
+    margin-top: 10px;
+    font-size:18px;
+}
+
+.about img{
+    height: 100%;
+    width: 50%;
+    object-fit: contain;
+    object-position: center;
+    padding: auto;
+    margin-left: 30px;
 }
 
 .selectdatewidget {
@@ -259,25 +259,6 @@ select[name$="_month"].selectdatewidget {
 select[name$="_year"].selectdatewidget {
     width: 45%;
     color: blue;
-}
-
-.spread {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin: 20px 0;
-}
-
-.spread a {
-    background-color: black;
-    color: #ffffff;
-    border-radius: 10px;
-    -webkit-transition: all 0.3s;
-    padding: 10px 50px;
-    transition: all 0.3s;
-    border: 1px solid black;
-    text-decoration: none;
-    cursor: pointer;
 }
 
 footer {
@@ -535,7 +516,7 @@ footer p{
     font-size: 15px;
   }
 
-  
+
   .welcome {
     width: 100%;
     height: 80vh;

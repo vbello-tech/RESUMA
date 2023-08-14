@@ -3,78 +3,140 @@
 
 {% block content %}
 
-<div class="container-fluid">
-    <div class="welcome">
-        <div class="welcome-speech">
-            <div class="welcome-intro">
-                <h1> CREATE ASTONISHING RESUME IN MINUTES.</h1>
-                <p>
-                    OUR AIM IS TO HELP THAT NEWBIE TECHIE LAND A ROLE IN TECH WITH A WELL STRUCTURED AND PROFESSIONAL RESUME.
-                </p>
-                 <a href="{% url 'user:sign_up' %}">
-                    <h3>SIGNUP</h3>
-                </a>
-           </div>
+        <div class="container-fluid">
+
+            <div class="hero">
+                <h1>EFFORTLESSLY CREATE, CONVERT, AND SHARE TECH RESUMES</h1>
+                <div class="hero-intro">
+                    <div class="hero-text">
+                        <p>
+                            Empower your career journey with our AI Resume Builder – the future of resume creation. Craft tailored, impactful resumes effortlessly and stand out in today's competitive job market.
+                        </p>
+                        <a href="{% url 'user:sign_up' %}">
+                            <h3>GET STARTED</h3>
+                        </a>
+                    </div>
+                    <div class="hero-image">
+                        <img src="{% static 'images/Img-CV-B_2x.png' %}" alt="no image"/>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="welcome-image">
-            <img src="{% static 'images/Img-CV-B_2x.png' %}" alt="no image"/>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <h1>FEATURES</h1>
+            <div class="col-sm-6 col-xl-3">
+                <div class="box">
+                    <img src="{% static 'images/Export_PDF_2x.png' %}">
+                    <h2>CONVERT TO PDF</h2>
+                    <p>
+                        Convert and download your resume in pdf format to aplly for jobs.
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="col-sm-6 col-xl-3">
+                <div class="box">
+                    <img src="{% static 'images/CV_Builder_2x.png' %}">
+                    <h2>AI ASSISTANCE</h2>
+                    <p>
+                        Convert and download your resume in pdf format to aplly for jobs.
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="col-sm-6 col-xl-3">
+                <div class="box">
+                    <img src="{% static 'images/share-2x.png' %}">
+                    <h2>SHARE RESUME</h2>
+                    <p>
+                        Convert and download your resume in pdf format to aplly for jobs.
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="col-sm-6 col-xl-3">
+                <div class="box">
+                    <img src="{% static 'images/Resources_2x.png' %}">
+                    <h2>EASY TO USE</h2>
+                    <p>
+                        Convert and download your resume in pdf format to aplly for jobs.
+                    </p>
+                </div>
+            </div>
+
+
+
         </div>
+    </div>
+</section>
+
+<div class="about">
+    <img src="{% static 'images/about.png' %}">
+    <div class="about-text">
+        <p>
+            Struggling to express your potential on your resume? Discover the future of resume building powered by AI.
+            Our technology simplifies crafting unique, precise, and impressive resumes.
+        </p>
+        <a href="{% url 'user:sign_up' %}">
+            LEARN MORE
+        </a>
     </div>
 </div>
 
- <div class="container-fluid">
-<div class="build">
-    START BUILDING YOUR RESUME TODAY AND LAND YOUR ROLE IN TECH.
-    <br><br>
-    <a href="{% url 'resume:add_resume' %}">CREATE RESUME</a>
-</div>
+<div class="contact">
+    <form method="POST" action="#">
+        <div class="heading-title text-left">
+            <h2>Contact US</h2>
+        </div>
+		{% csrf_token %}
+         <div class="col-md-12">
+            <div class="col-md-12">
+                <input type="text" placeholder="Your Name" id="name" class="form-control" name="name" required data-error="Please enter your name">
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
+        <br>
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <input type="text" placeholder="Your Email" id="email" class="form-control" name="email" required data-error="Please enter your email">
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
+        <br>
+        <div class="col-md-12">
+            <div class=class="col-md-12">
+                <textarea class="form-control" id="message" name="message" placeholder="Your Message" cols="15" data-error="Write your message" required></textarea>
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
+        <br>
+         <div class="col-md-12">
+             <div class="heading-title text-left">
+                <button type="submit" class="btn"
+                    style="
+                        background-color: black;
+                        color: #ffffff;
+                        border-radius: 6px;
+                        padding: 8px 20px;
+                        border: 1px solid black;
+                        text-decoration: none;
+                        margin-top: 5px;
+                    ">
+                    SEND EMAIL
+                </button>
+            </div>
+        </div>
+
+	</form>
+    <img src="{% static 'images/contact.png' %}">
  </div>
-    <div class="container">
-    <section>
-        <div class="reason">
-            <img src="{% static 'images/CV_Builder_2x.png' %}">
-            <div class="text">
-                <h2>EASY TO USE</h2>
-                <p>
-                    Our builder is well structured to give you ease while building your resume in lesser time.
-                </p>
-            </div>
-        </div>
-        <div class="reason">
-            <img src="{% static 'images/Export_PDF_2x.png' %}">
-            <div class="text">
-                <h2>CONVERT TO PDF</h2>
-                <p>
-                    Convert and download your resume in pdf format to aplly for jobs.
-                </p>
-            </div>
-        </div>
-        <div class="reason">
 
-            <img src="{% static 'images/Resources_2x.png' %}">
-            <div class="text">
-                <h2>MULTIPLE RESUME</h2>
-                <p>
-                    Create multiple instances of the same resume for multiple roles and interview.
-                </p>
-            </div>
-        </div>
-        <div class="reason">
-            <img src="{% static 'images/share-2x.png' %}">
-            <div class="text">
-                <h2>SHARE </h2>
-                <p>
-                    Generate resume link that you can share via email or through social media to land that tech role.
-                </p>
-            </div>
-        </div>
-    </section>
-</div>
-
-<div class="build">
-    START BUILDING YOUR RESUME TODAY AND LAND YOUR ROLE IN TECH.
-    <br><br>
-    <a href="{% url 'resume:add_resume' %}">CREATE RESUME</a>
-</div>
 
 {% endblock content %}
+
