@@ -169,5 +169,8 @@ PHONENUMBER_DB_FORMAT = 'E164'
 PHONENUMBER_DEFAULT_FORMAT = 'E164'
 PHONENUMBER_DEFAULT_REGION = 'NG'
 
+#gpt token
+gpt_token = config('gpt_key')
+
 db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
 DATABASES['default'].update(db_from_env)
