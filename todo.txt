@@ -1,0 +1,3 @@
+signup with github
+connect github account.
+query chatgpt for a well comprehensive bio.
