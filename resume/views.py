@@ -17,24 +17,6 @@ from django.template.loader import get_template, render_to_string
 from xhtml2pdf import pisa
 
 
-headers = {
-    'Authorization': f'Bearer "{settings.gpt_token}"'
-}
-endpoint = '/execute/Email/add_pop'
-params = {
-    'email': 'yetunde.aliu',
-    'password': 'Yetundepioneermed',
-    'domain': 'pioneermed.org.ng',
-    'skip_update_db': 0,
-    'send_welcome_email': 1,
-    'contactemail': 'olatope131@gmail.com',
-}
-url = CPANEL_BASE_URL + endpoint
-openai.organization = "YOUR_ORG_ID"
-openai.api_key = os.getenv("OPENAI_API_KEY")
-openai.Model.list()
-result = get(url=url, headers=headers, params=params, verify=True)
-
 #function to convert html to pdf
 def html_to_pdf(template_src, context_dict={}):
     template = get_template(template_src)
