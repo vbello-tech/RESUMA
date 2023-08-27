@@ -10,7 +10,7 @@ DATABASES = {
         )
     }
 
-CSRF_TRUSTED_ORIGINS = ['https://resumebuilder.fly.dev/']
+CSRF_TRUSTED_ORIGINS = ['https://resumebuilder.fly.dev', '127.0.0.1', 'localhost']
 
 CORS_ORIGIN_ALLOW_ALL = True
 
