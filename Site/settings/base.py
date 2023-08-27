@@ -17,7 +17,7 @@ from decouple import config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -84,24 +84,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Site.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-else:
-    DATABASES = {
-        'default':  dj_database_url.config(
-            default=config('DATABASE_URL')
-        )
-    }
 
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
@@ -172,17 +154,3 @@ PHONENUMBER_DEFAULT_REGION = 'NG'
 #gpt token
 gpt_token = config('OPENAI_API_KEY')
 
-CSRF_TRUSTED_ORIGINS = ['https://resumebuilder.fly.dev/']
-
-CORS_ORIGIN_ALLOW_ALL = True
-
-SECURE_SSL_REDIRECT = True
-
-SESSION_COOKIE_SECURE = True
-
-CSRF_COOKIE_SECURE = True
-
-SECURE_BROWSER_XSS_FILTER = True
-
-db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
-DATABASES['default'].update(db_from_env)
