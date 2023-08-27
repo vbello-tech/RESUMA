@@ -1,0 +1,6 @@
+
+venv/
+.gitignore
+db.sqlite3
+html starter.html
+todo.txt

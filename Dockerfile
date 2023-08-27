@@ -17,7 +17,7 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-RUN python manage.py collectstatic --noinput
+RUN python manage.py migrate && python manage.py collectstatic --noinput
 
 
 EXPOSE 8080
