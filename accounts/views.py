@@ -38,25 +38,23 @@ class UserLogin(View):
             'form': form,
         }
         return render(self.request, 'registrations/login.html', context)
-    def post(self, *args, **kwargs):
+    def post(self, backend='django.contrib.auth.backends.ModelBackend', *args, **kwargs):
         form = LoginForm(self.request.POST or None)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            user = auth.authenticate(username=username, password=password)
+            user = authenticate(self.request, username=username, password=password)
             auth.login(self.request, user)
-            if Userprofile.objects.get(user=user).has_profile:
-                return redirect('resume:home')
-            else:
-                return redirect('user:create_profile')
+            return redirect('resume:home')
         else:
             return redirect ('user:login')
 
 class CreateProfileView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
-        if Userprofile.objects.get(user=self.request.user).has_profile:
-                return redirect('user:sign_up')
-        else:
+        try:
+            if Userprofile.objects.get(user=self.request.user, has_profile=True):
+                return redirect('user:profile_edit')
+        except ObjectDoesNotExist:
             context = {
                 'form': ProfileForm(),
             }
@@ -64,31 +62,28 @@ class CreateProfileView(LoginRequiredMixin, View):
 
     def post(self, *args, **kwargs):
         user_p = Userprofile.objects.get(user=self.request.user)
-        if user_p.has_profile:
-            return redirect('user:profile_edit')
-        else:
-            try:
-                form = ProfileForm(self.request.POST or None)
-                if form.is_valid():
-                    bio = form.cleaned_data.get('bio')
-                    phone = form.cleaned_data.get('phone')
-                    github = form.cleaned_data.get('github')
-                    experience_year = form.cleaned_data.get('experience_year')
-                    portfolio = form.cleaned_data.get('portfolio')
-                    linkedin = form.cleaned_data.get('linkedin')
-                    user_p.bio = bio
-                    user_p.phone = phone
-                    user_p.github = github
-                    user_p.experience_year = experience_year
-                    user_p.portfolio = portfolio
-                    user_p.linkedin = linkedin
-                    user_p.has_profile = True
-                    user_p.save()
-                    return redirect('user:user_detail', pk=self.request.user.pk)
-                else:
-                    return redirect('user:sign_up')
-            except ObjectDoesNotExist:
+        try:
+            form = ProfileForm(self.request.POST or None)
+            if form.is_valid():
+                bio = form.cleaned_data.get('bio')
+                phone = form.cleaned_data.get('phone')
+                github = form.cleaned_data.get('github')
+                experience_year = form.cleaned_data.get('experience_year')
+                portfolio = form.cleaned_data.get('portfolio')
+                linkedin = form.cleaned_data.get('linkedin')
+                user_p.bio = bio
+                user_p.phone = phone
+                user_p.github = github
+                user_p.experience_year = experience_year
+                user_p.portfolio = portfolio
+                user_p.linkedin = linkedin
+                user_p.has_profile = True
+                user_p.save()
+                return redirect('user:user_detail', pk=self.request.user.pk)
+            else:
                 return redirect('user:sign_up')
+        except ObjectDoesNotExist:
+            return redirect('user:sign_up')
 
 def logout(request):
     auth.logout(request)
