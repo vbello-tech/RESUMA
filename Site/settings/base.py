@@ -16,6 +16,11 @@ from decouple import config
 #import dotenv
 from pathlib import Path
 
+# code to fix force_text error
+import django
+from django.utils.encoding import force_str
+django.utils.encoding.force_text = force_str
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 

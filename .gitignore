@@ -6,3 +6,7 @@ venv/
 db.sqlite3
 
 html starter.html
+
+__Pycache__/
+
+.Ds_store
