@@ -3,3 +3,6 @@ venv/
 db.sqlite3
 html starter.html
 todo.txt
+__Pycache__/
+.Ds_store
+README.md
