@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.username}} {{ resume.name }}</title>
+    <link rel="stylesheet" href="{% static 'styling/bootstrap.css' %}"/>
+    <link rel="stylesheet" href="{% static 'styling/bootstrap.min.css' %}"/>
+    <style>
+        p{
+        font-size: 15px;
+        }
+        .tech h1{
+          text-align: left;
+        }
+
+        .tech ul{
+          text-align: left;
+          font-size: 15px;
+          font-weight: 500;
+          margin-left: 70px;
+        }
+
+    </style>
+</head>
+<body style="margin: 50px 5%; padding: 5%;">
+
+    <h2 style="text-align: center; font-size: 18px;"><b>{{ resume.name }}</b></h2>
+ <hr>
+    <h2 style="text-align: center; font-size: 18px;">
+        {{ user.last_name }} {{ user.first_name }}
+    </h2>
+
+
+<ul style="margin-top: 0; font-size: 12px;">
+    <li style="margin: 0;">L 23, Olorunsogo Basiri Ado Ekiti, Ekiti.</li>
+    {% if userp.phone %}<li style="margin: 0;">{{ userp.phone }}</li>{% endif %}
+    {% if user.email %}<li style="margin: 0;">{{ user.email }} </li>{% endif %}
+    <li style="margin: 0;">P.O.BOX: 360101</li>
+    {% if userp.linkedin %}<li style="margin: 0;"><a href="{{ userp.linkedin }}">LINKEDIN</a></li>{% endif %}
+    {% if userp.github %}<li style="margin: 0;"><a href="{{ userp.github }}">GITHUB </a></li>{% endif %}
+    {% if userp.portfolio %}<li style="margin: 0;"><a href="{{ userp.portfolio }}">PORTFOLIO</a></li>{% endif %}
+</ul>
+<hr>
+<h3 style="text-align: center;">
+    PROFESSIONAL BIO
+</h3>
+<p style="font-size: 15px; letter-spacing: 1px;">
+    {{ userp.bio|linebreaksbr	}}
+</p>
+
+{% if works %}
+<hr>
+<h3 style="text-align: center;">
+    WORK HISTORY
+</h3>
+{% for work in works %}
+<p>
+    {% if work.end_date %}
+    <b>{{ work.role }},</b>  {{ work.start_date }}-{{ work.end_date }}
+    {% else %}
+    <b>{{ work.role }},</b>  {{ work.start_date }}-Current
+    {% endif %}
+    <br>
+    <b>{{ work.company_name }}</b> - Akure, Ondo State
+    <ul style="margin-top: 0; font-size: 15px;">
+        <li>
+            {{ work.company_description|linebreaksbr }}
+        </li>
+    </ul>
+</p>
+{% endfor %}
+{% endif %}
+
+{% if projects %}
+<hr>
+<h3 style="text-align: center;">
+    PROJECTS
+</h3>
+{% for project in projects %}
+<p>
+    <b>{{ project.name }}</b>
+    <br>
+    <a style="margin-right: 20px;" href="{{ project.github }}">SOURCE CODE</a>|{% if project.link %}<a style="margin-left: 20px;"  href="{{ project.link }}">PROJECT</a>{% endif %}
+    <ul style="margin-top: 0; font-size: 15px;">
+        <li>
+            {{ project.description|linebreaksbr	}}
+        </li>
+    </ul>
+</p>
+{% endfor %}
+{% endif %}
+<hr>
+
+
+{% if education %}
+        <span class="topic">EDUCATION</span>
+        {% for school in education %}
+        <div class="portfolio">
+
+            <em><h3>{{ school.school_name }} ( {{ school.enrollment_date.year }}-{{ school.graduation_date }} )</h3></em>
+            <ul>
+                <li><h5>Course: {{ school.course }} ({{ school.field }})</h5></li>
+                <li><h5>Address: {{ school.location }}</h5></li>
+            </ul>
+        </div>
+        <hr>
+        {% endfor %}
+    {% endif %}
+<hr>
+
+        <div class="tech">
+             <h4>SKILLS </h4>
+                <ul>
+                    {% for item in resume.skills.all %}
+                    <li>{{ item.name }}</li>
+                    {% endfor %}
+                </ul>
+        </div>
+
+
+<center><h2>THIS RESUME WAS CREATED WITH RESUME BUILDER BUILT BY: <a href="http://vbellotech.herokuapp.com/">VBELLOTECH</a></h2></center>
+
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+</body>
+</html>

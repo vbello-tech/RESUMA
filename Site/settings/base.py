@@ -32,7 +32,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY= 'django-insecure-1#-z82+g4&3js^0q6q8p5k+q8u_a&!qwh+a0d8ybc(@c$%h0ka'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', cast=bool)
+DEBUG = True
 
 ALLOWED_HOSTS = [
     '0.0.0.0',
@@ -60,14 +60,15 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+                 'django.middleware.security.SecurityMiddleware',
+                 # whitenoise middleware
+                 'whitenoise.middleware.WhiteNoiseMiddleware',
+                 'django.contrib.sessions.middleware.SessionMiddleware',
+                 'django.middleware.common.CommonMiddleware',
+                 'django.middleware.csrf.CsrfViewMiddleware',
+                 'django.contrib.auth.middleware.AuthenticationMiddleware',
+                 'django.contrib.messages.middleware.MessageMiddleware',
+                 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'Site.urls'
@@ -151,11 +152,11 @@ PASSWORD_RESET_TIMEOUT = 360
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#phonenumberfield
+# phonenumberfield
 PHONENUMBER_DB_FORMAT = 'E164'
 PHONENUMBER_DEFAULT_FORMAT = 'E164'
 PHONENUMBER_DEFAULT_REGION = 'NG'
 
-#gpt token
-gpt_token = config('OPENAI_API_KEY')
+# gpt token
+# gpt_token = config('OPENAI_API_KEY')
 

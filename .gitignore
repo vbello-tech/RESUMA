@@ -1,12 +1,15 @@
 # created by virtualenv automatically
 venv/
-
-.env
-
 db.sqlite3
-
-html starter.html
-
 __Pycache__/
-
 .Ds_store
+README.md
+./__pycache__/
+accounts/__pycache__/
+accounts/migrations/__pycache__/
+resume/__pycache__/
+resume/migrations/__pycache__/
+site/__pycache__/
+site/settings/__pycache__/
+/__pycache__/
+resume_template.html

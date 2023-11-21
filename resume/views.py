@@ -17,7 +17,7 @@ from django.template.loader import get_template, render_to_string
 from xhtml2pdf import pisa
 
 
-#function to convert html to pdf
+# function to convert html to pdf
 def html_to_pdf(template_src, context_dict={}):
     template = get_template(template_src)
     html = template.render(context_dict)
@@ -27,7 +27,8 @@ def html_to_pdf(template_src, context_dict={}):
         return HttpResponse(result.getvalue(), content_type='application/pdf')
     return None
 
-#RENDER RESUME TO PDF
+
+# RENDER RESUME TO PDF
 class GeneratePdf(View, LoginRequiredMixin):
     def get(self, request, pk, *args, **kwargs):
         mainuser = User.objects.get(username=request.user)
@@ -36,54 +37,55 @@ class GeneratePdf(View, LoginRequiredMixin):
         project = Project.objects.filter(user=request.user, resume=resume)
         work = Work.objects.filter(user=request.user, resume=resume)
         education = Education.objects.filter(user=request.user, resume=resume)
-        open('templates/resume/resumepdf.html', "w").write(render_to_string('resume/resume.html',
+        open('templates/resume/resumepdf.html', "w").write(render_to_string('resume/resumetemplate.html',
                                                                             {
-            'user':mainuser,
-            'userp':userprofile,
-            'resume':resume,
-            'projects':project,
-            'works':work,
-            'education':education,
-        }))
+                                                                                'user': mainuser,
+                                                                                'userp': userprofile,
+                                                                                'resume': resume,
+                                                                                'projects': project,
+                                                                                'works': work,
+                                                                                'education': education,
+                                                                            }))
         pdf = html_to_pdf('resume/resumepdf.html')
-        #return HttpResponse(pdf, content_type='application/pdf')
-
+        # return HttpResponse(pdf, content_type='application/pdf')
 
         if pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
             filename = "%s %s %s RESUME" % (self.request.user.last_name, self.request.user.first_name, resume.name)
-            #content = "inline; filename=%s" % (filename)
-            content = "attachment; filename=%s.pdf" %(filename)
-            response['Content-disposition']=content
+            # content = "inline; filename=%s" % (filename)
+            content = "attachment; filename=%s.pdf" % (filename)
+            response['Content-disposition'] = content
             return response
         return HttpResponse("Not Found")
 
 
-#HOMEPAGE
+# HOMEPAGE
 def home(request):
-    context ={
-        'user':request.user
+    context = {
+        'user': request.user
     }
     return render(request, 'home.html', context)
 
-#HOMEPAGE
+
+# HOMEPAGE
 @login_required
 def user_resume(request):
     resume = Resume.objects.filter(user=request.user)
-    context ={
-        'user':request.user,
-        'resumes':resume,
+    context = {
+        'user': request.user,
+        'resumes': resume,
     }
     return render(request, 'resume/user_resume.html', context)
 
-#CREATE REUSUME
+
+# CREATE REUSUME
 class AddResumeView(View, LoginRequiredMixin):
     def get(self, *args, **kwargs):
         form = ResumeForm()
         context = {
             'form': form,
         }
-        return render (self.request, 'resume/addresume.html', context)
+        return render(self.request, 'resume/addresume.html', context)
 
     def post(self, *args, **kwargs):
         try:
@@ -102,16 +104,17 @@ class AddResumeView(View, LoginRequiredMixin):
         except ObjectDoesNotExist:
             return redirect('resume:home')
 
-#ADD PROJECT TO RESUME
+
+# ADD PROJECT TO RESUME
 class AddProjectView(View, LoginRequiredMixin):
-    def get(self, request, pk,  *args, **kwargs):
+    def get(self, request, pk, *args, **kwargs):
         resume = Resume.objects.get(user=request.user, pk=pk)
         form = ProjectForm()
         context = {
-            'resume':resume,
+            'resume': resume,
             'form': form,
         }
-        return render (self.request, 'resume/addproject.html', context)
+        return render(self.request, 'resume/addproject.html', context)
 
     def post(self, request, pk, *args, **kwargs):
         try:
@@ -124,7 +127,7 @@ class AddProjectView(View, LoginRequiredMixin):
                     github = form.cleaned_data.get('github')
                     link = form.cleaned_data.get('link')
                     project = Project.objects.create(
-                        resume = resume,
+                        resume=resume,
                         user=request.user,
                         name=name,
                         description=description,
@@ -140,16 +143,16 @@ class AddProjectView(View, LoginRequiredMixin):
             return redirect('resume:home')
 
 
-#ADD WORK EXPERIENCE
+# ADD WORK EXPERIENCE
 class AddWorkView(View, LoginRequiredMixin):
-    def get(self, request, pk,  *args, **kwargs):
+    def get(self, request, pk, *args, **kwargs):
         resume = Resume.objects.get(user=request.user, pk=pk)
         form = WorkForm()
         context = {
             'form': form,
-            'resume':resume,
+            'resume': resume,
         }
-        return render (self.request, 'resume/addwork.html', context)
+        return render(self.request, 'resume/addwork.html', context)
 
     def post(self, request, pk, *args, **kwargs):
         try:
@@ -177,16 +180,17 @@ class AddWorkView(View, LoginRequiredMixin):
         except ObjectDoesNotExist:
             return redirect('resume:home')
 
-#ADD EDUCATION HISTORY
+
+# ADD EDUCATION HISTORY
 class AddEducationView(View, LoginRequiredMixin):
-    def get(self, request, pk,  *args, **kwargs):
+    def get(self, request, pk, *args, **kwargs):
         resume = Resume.objects.get(user=request.user, pk=pk)
         form = EducationForm()
         context = {
             'form': form,
-            'resume':resume,
+            'resume': resume,
         }
-        return render (self.request, 'resume/addeducation.html', context)
+        return render(self.request, 'resume/addeducation.html', context)
 
     def post(self, request, pk, *args, **kwargs):
         resume = Resume.objects.get(user=request.user, pk=pk)
@@ -219,7 +223,6 @@ class AddEducationView(View, LoginRequiredMixin):
             return redirect('resume:home')
 
 
-
 # ADD EDUCATION HISTORY
 class AddSkillsView(View, LoginRequiredMixin):
     def get(self, request, pk, *args, **kwargs):
@@ -246,26 +249,27 @@ class AddSkillsView(View, LoginRequiredMixin):
             return redirect('resume:home')
 
 
-#PREVIEW RESUME
+# PREVIEW RESUME
 class ResumePreviewView(View, LoginRequiredMixin):
-    def get(self, request, pk,  *args, **kwargs):
+    def get(self, request, pk, *args, **kwargs):
         mainuser = User.objects.get(username=request.user)
         userprofile = Userprofile.objects.get(user=request.user)
         resume = Resume.objects.get(user=self.request.user, pk=pk)
         project = Project.objects.filter(user=request.user, resume=resume)
         work = Work.objects.filter(user=request.user, resume=resume)
         education = Education.objects.filter(user=request.user, resume=resume)
-        context =  {
-            'user':mainuser,
-            'userp':userprofile,
-            'resume':resume,
-            'projects':project,
-            'works':work,
-            'education':education,
+        context = {
+            'user': mainuser,
+            'userp': userprofile,
+            'resume': resume,
+            'projects': project,
+            'works': work,
+            'education': education,
         }
-        return render (self.request, 'resume/resume_review.html', context)
+        return render(self.request, 'resume/resume_review.html', context)
 
-#GENERATE RESUME LINK
+
+# GENERATE RESUME LINK
 @login_required
 def generate_link(request, pk):
     resume = get_object_or_404(Resume, pk=pk)
@@ -275,46 +279,43 @@ def generate_link(request, pk):
         r_code = resume.slug
         query = urllib.parse.quote(r_code)
         if settings.DEBUG:
-            url = 'http://127.0.0.1:8000/resume/'+query
+            url = 'http://127.0.0.1:8000/resume/' + query
         else:
-            url = 'https://resumebuilder.fly.dev/resume/'+query
+            url = 'https://resumebuilder.fly.dev/resume/' + query
         resume.resume_link = url
         resume.save()
         return redirect(resume.get_preview())
 
 
-#PREVIEW RESUME
+# PREVIEW RESUME
 class ResumeView(View):
-    def get(self, request, slug,  *args, **kwargs):
+    def get(self, request, slug, *args, **kwargs):
         resume = Resume.objects.get(slug=slug)
         mainuser = User.objects.get(username=resume.user.username)
         userprofile = Userprofile.objects.get(user=resume.user)
         project = Project.objects.filter(resume=resume)
         work = Work.objects.filter(resume=resume)
         education = Education.objects.filter(resume=resume)
-        context =  {
-            'user':mainuser,
-            'userp':userprofile,
-            'resume':resume,
-            'projects':project,
-            'works':work,
-            'education':education,
+        context = {
+            'user': mainuser,
+            'userp': userprofile,
+            'resume': resume,
+            'projects': project,
+            'works': work,
+            'education': education,
         }
-        return render (self.request, 'resume/resumeview.html', context)
-
+        return render(self.request, 'resume/resumeview.html', context)
 
 
 def handler404(request, exception):
-    context = {'word':"<h1>PAGE NOT FOUND!! ARE YOU SURE YOU ARE NAVIGATING TO THE RIGHT PAGE?</h1>"}
+    context = {'word': "<h1>PAGE NOT FOUND!! ARE YOU SURE YOU ARE NAVIGATING TO THE RIGHT PAGE?</h1>"}
     response = render(request, "404.html", context)
     response.status_code = 404
     return response
 
 
 def handler500(request):
-    context = {'word':"<h1>OOPS !!! <br> SEVER ERROR!!! <br> </h1>"}
+    context = {'word': "<h1>OOPS !!! <br> SEVER ERROR!!! <br> </h1>"}
     response = render(request, "500.html", context)
     response.status_code = 500
     return response
-
-
