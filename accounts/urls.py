@@ -34,4 +34,5 @@ urlpatterns =[
     path('user/profile_edit/', profile_edit, name="profile_edit"),
     path('<int:pk>/', UserDetailView.as_view(), name="user_detail"),
     path('user/change-password/', change_password, name="change_password"),
+    path('send-contact-us-email/', send_mail, name="send_email"),
 ]

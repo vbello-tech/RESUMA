@@ -2,68 +2,142 @@
 <html lang="en">
 {% load static %}
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'styling/style.css' %}"/>
-    <link rel="stylesheet" href="{% static 'styling/bootstrap.css' %}"/>
-    <link rel="stylesheet" href="{% static 'styling/bootstrap.min.css' %}"/>
-    <title>RESUME BUILDER</title>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
+  <title>Resuma Homepage</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'styling/style.css' %}" rel="stylesheet">
 
 </head>
 
 <body>
-    <div class="nav-container">
-        <nav class="navbar">
-            <h1 id="navbar-logo">RESUMA</h1>
-            <div class="menu-togle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="{% url 'resume:home' %}" class="nav-links">HOME</a></li>
-                {% if user.is_authenticated %}
-                <li><a href="{% url 'resume:add_resume' %}" class="nav-links">CREATE RESUME</a></li>
-                <li><a href="{% url 'user:user_detail' pk=request.user.pk %}" class="nav-links">Profile</a></li>
-                <li><a href="{% url 'user:logout' %}" class="nav-links nav-links-btn">LOGOUT</a></li>
-                {% else %}
-                <li><a href="{% url 'user:login' %}" class="nav-links">CREATE RESUME</a></li>
-                <li><a href="{% url 'user:login' %}" class="nav-links">Profile</a></li>
-                <li><a href="{% url 'user:login' %}" class="nav-links nav-links-btn">LOGIN</a></li>
-                {% endif %}
-            </ul>
-        </nav>
-    </div>
 
-<div class="container-fluid">
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <div class="logo">
+        <h1 class="text-light"><a href="{% url 'resume:home' %}"><span>RESUMA</span></a></h1>
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link active" href="{% url 'resume:home' %}">Home</a></li>
+          <li><a class="nav-link" href="#about">About Us</a></li>
+          <li><a class="nav-link" href="#services">Challenges</a></li>
+           {% if user.is_authenticated %}
+          <li class="dropdown"><a href="#"><span>{{ request.user }}</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="{% url 'user:user_detail' pk=request.user.pk %}">Profile</a></li>
+              <li><a href="{% url 'user:logout' %}">Logout</a></li>
+              {% else %}
+            </ul>
+          </li>
+          <li><a class="getstarted" href="{% url 'user:sign_up' %}">Get Started</a></li>
+          {% endif %}
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+
     {% block content %}
 
     {% endblock content %}
-</div>
 
-<footer>
-        <ul>
-            <li>
-                <a href="https://www.linkedin.com/in/victor-bello-a36208213/">LINKEDIN</a>
-            </li>
-            <li>
-                <a href="https://github.com/vbello-tech">Github</a>
-            </li>
-            <li>
-                <a href="https://twitter.com/vbello_tech">TWITTER</a>
-            </li>
-        </ul>
-    <hr>
-    <p>
-        Copyright  ©  vbellotech
-    </p>
-</footer>
 
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+
+      <div class="footer-newsletter">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-6">
+              <h4>Join Our Newsletter</h4>
+              <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+              <form action="" method="post">
+                <input type="email" name="email"><input type="submit" value="Subscribe">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-top">
+        <div class="container">
+          <div class="row">
+
+            <div class="col-lg-3 col-md-6 footer-contact">
+              <h4>BackEndGuru</h4>
+              <p>
+                A108 Adam Street <br>
+                New York, NY 535022<br>
+                United States <br><br>
+                <strong>Phone:</strong> +1 5589 55488 55<br>
+                <strong>Email:</strong> info@example.com<br>
+              </p>
+            </div>
+
+
+            <div class="col-lg-3 col-md-6 footer-links">
+              <h4>Our Social Networks</h4>
+              <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
+              <div class="social-links mt-3">
+                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="container py-4">
+        <div class="copyright">
+          &copy; Copyright <strong><span>Ninestars</span></strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+          <!-- All the links in the footer should remain intact. -->
+          <!-- You can delete the links only if you purchased the pro version. -->
+          <!-- Licensing information: https://bootstrapmade.com/license/ -->
+          <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/ninestars-free-bootstrap-3-theme-for-creative/ -->
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+      </div>
+    </footer><!-- End Footer -->
+
+
+    <!-- Vendor JS Files -->
+    <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+    <!-- Template Main JS File -->
     <script src="{% static 'js/app.js' %}"></script>
-    <script src="{% static 'js/bootstrap.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
-
 </html>

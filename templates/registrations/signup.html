@@ -4,7 +4,7 @@
 
 {% block content %}
 <br><br>
-<div class="form-group">
+<div id="form">
      <div class="container " >
             <div class="row">
 
@@ -12,13 +12,16 @@
                     YOU ARE SIGNED IN ...
                 {% else %}
 
-                <form  class="form-control" method="POST">
+                <form  class="form-group" method="POST">
                     {% csrf_token %}
                     {{ form|crispy }}
+                <p class="text-center">
+                    <button type="submit" id="form-submit">SIGNUP</button>
+                    <br>
+                    Have an account? <a  href="{% url 'user:login' %}">LOGIN</a>
+                </p>
 
-                     <center><button type="submit" id="form-submit" class="btn btn-primary">SIGNUP</button></center>
                 </form>
-                <center>Have an account? <a  href="{% url 'user:login' %}">LOGIN</a></center>
 
                 {% endif %}
             </div>

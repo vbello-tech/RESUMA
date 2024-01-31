@@ -4,18 +4,19 @@
 
 {% block content %}
 
-<br><br>
-<div class="form-group">
+<div id="form">
      <div class="container " >
             <div class="row">
 
 <h2 class="btn btn-primary">YOU ARE ABOUT TO CHANGE YOUR USER DETAILS</h2>
-                <form  class="form-control" method="POST">
+                <form  class="form-group" method="POST">
                     {% csrf_token %}
                     {{ form|crispy }}
                     <br>
-                     <center><button type="submit" id="form-submit" class="btn btn-primary">EDIT...</button></center>
-                <a class="text-center" href="{% url 'user:change_password' %}">CLICK HERE TO CHANGE PASSWORD</a>
+                     <p class="text-center">
+                         <button type="submit" id="form-submit" class="btn btn-primary">EDIT...</button><br>
+                        <a class="text-center" href="{% url 'user:change_password' %}">CLICK HERE TO CHANGE PASSWORD</a>
+                     </p>
                 </form>
             </div>
      </div>

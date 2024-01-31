@@ -3,6 +3,8 @@ from django.utils import timezone
 from django.shortcuts import reverse
 from phonenumber_field.modelfields import PhoneNumberField
 import random, string
+
+
 # Create your models here.
 
 
@@ -19,12 +21,14 @@ Type_chioce = (
     ('PARADIGM', 'PARADIGM'),
 )
 
+
 class Tech(models.Model):
     name = models.CharField(max_length=150, unique=True)
     type = models.CharField(max_length=200, choices=Type_chioce, blank=True, null=True)
 
     def __str__(self):
         return self.name
+
 
 class Resume(models.Model):
     user = models.ForeignKey('auth.user', on_delete=models.CASCADE)
@@ -79,6 +83,7 @@ Field_chioce = (
     ('BSC LAW', 'BSC LAW'),
 )
 
+
 class Education(models.Model):
     user = models.ForeignKey('auth.user', on_delete=models.CASCADE)
     resume = models.ForeignKey('Resume', related_name="resume_edu", null=True, on_delete=models.CASCADE)
@@ -91,6 +96,7 @@ class Education(models.Model):
 
     def __str__(self):
         return self.school_name
+
 
 class Project(models.Model):
     user = models.ForeignKey('auth.user', on_delete=models.CASCADE)
@@ -105,7 +111,6 @@ class Project(models.Model):
         return self.name
 
 
-
 class Work(models.Model):
     user = models.ForeignKey('auth.user', on_delete=models.CASCADE)
     resume = models.ForeignKey('Resume', related_name="resume_work", null=True, on_delete=models.CASCADE)
@@ -117,5 +122,3 @@ class Work(models.Model):
 
     def __str__(self):
         return self.company_name
-
-

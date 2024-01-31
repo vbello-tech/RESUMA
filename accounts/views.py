@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import TemplateView, DetailView, View, ListView
+from django.views.generic import DetailView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from .forms import *
 from django.contrib import auth
 from django.contrib.auth.forms import PasswordChangeForm
-from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, update_session_auth_hash
 from django.core.exceptions import ObjectDoesNotExist
@@ -157,3 +157,18 @@ def change_password(request):
         'form': form
     }
     return render(request, 'registrations/change_password.html', context)
+
+
+def semd_email(request):
+    if request.method == "POST":
+        email = request.POST['email']
+        message = request.POST['message']
+        name = request.POST['name']
+        send_mail(
+            name,
+            message,
+            email,
+            ['vbellotech@gmail.com'],
+            fail_silently=False,
+        )
+        return redirect('service:home')
