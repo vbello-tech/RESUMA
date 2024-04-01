@@ -1,3 +1,5 @@
 signup with github
 connect github account.
 query chatgpt for a well comprehensive bio.
+change company description to duties in company
+make duties in company a rich text field

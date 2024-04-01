@@ -20,19 +20,15 @@
           font-size: 15px;
           font-weight: 500;
           margin-left: 70px;
+          margin-top: 0;
         }
 
     </style>
 </head>
-<body style="margin: 50px 5%; padding: 5%;">
-
-    <h2 style="text-align: center; font-size: 18px;"><b>{{ resume.name }}</b></h2>
- <hr>
-    <h2 style="text-align: center; font-size: 18px;">
-        {{ user.last_name }} {{ user.first_name }}
-    </h2>
-
-
+<body style="margin: 50px 10%; padding: 10%;">
+    <h4 style="text-align: center; font-size: 18px;">
+        {{ user.last_name }} {{ user.first_name }}, {{ resume.name }} RESUME
+    </h4>
 <ul style="margin-top: 0; font-size: 12px;">
     <li style="margin: 0;">L 23, Olorunsogo Basiri Ado Ekiti, Ekiti.</li>
     {% if userp.phone %}<li style="margin: 0;">{{ userp.phone }}</li>{% endif %}
@@ -46,25 +42,24 @@
 <h3 style="text-align: center;">
     PROFESSIONAL BIO
 </h3>
-<p style="font-size: 15px; letter-spacing: 1px;">
+<p style="font-size: 12px; letter-spacing: 0.5px; margin-right: 20px;">
     {{ userp.bio|linebreaksbr	}}
 </p>
-
 {% if works %}
 <hr>
 <h3 style="text-align: center;">
     WORK HISTORY
 </h3>
 {% for work in works %}
-<p>
+<p style="margin: 0;">
     {% if work.end_date %}
-    <b>{{ work.role }},</b>  {{ work.start_date }}-{{ work.end_date }}
+    <em>{{ work.role }},</em> {% with work.start_date as date %}{{ date|date:"M, Y" }}{% endwith %}-{% with work.end_date as date %}{{ date|date:"M, Y" }}{% endwith %}
     {% else %}
-    <b>{{ work.role }},</b>  {{ work.start_date }}-Current
+    <em>{{ work.role }},</em> {% with work.start_date as date %}{{ date|date:"M, Y" }}{% endwith %}-Current
     {% endif %}
     <br>
-    <b>{{ work.company_name }}</b> - Akure, Ondo State
-    <ul style="margin-top: 0; font-size: 15px;">
+    <em>{{ work.company_name }}</em> - Akure, Ondo State
+    <ul style="margin: 0; font-size: 12px;">
         <li>
             {{ work.company_description|linebreaksbr }}
         </li>
@@ -72,58 +67,54 @@
 </p>
 {% endfor %}
 {% endif %}
-
 {% if projects %}
 <hr>
 <h3 style="text-align: center;">
     PROJECTS
 </h3>
 {% for project in projects %}
-<p>
-    <b>{{ project.name }}</b>
-    <br>
-    <a style="margin-right: 20px;" href="{{ project.github }}">SOURCE CODE</a>|{% if project.link %}<a style="margin-left: 20px;"  href="{{ project.link }}">PROJECT</a>{% endif %}
-    <ul style="margin-top: 0; font-size: 15px;">
+<p style="margin: 0;">
+    <em>{{ project.name }}</em><br>
+    <a style="margin-right: 20px; font-size: 10px;" href="{{ project.github }}">SOURCE CODE</a>{% if project.link %}|<a style="margin-left: 20px; font-size: 10px;"  href="{{ project.link }}">PROJECT</a>{% endif %}
+    <ul style="font-size: 12px;">
         <li>
-            {{ project.description|linebreaksbr	}}
+            <h6 style="font-size: 10px;">{{ project.description|linebreaksbr	}}</h6>
         </li>
     </ul>
 </p>
 {% endfor %}
 {% endif %}
 <hr>
-
-
 {% if education %}
-        <span class="topic">EDUCATION</span>
+        <h3 style="text-align: center;">
+    EDUCATION
+</h3>
         {% for school in education %}
-        <div class="portfolio">
+        <p style="margin: 0;">
 
-            <em><h3>{{ school.school_name }} ( {{ school.enrollment_date.year }}-{{ school.graduation_date }} )</h3></em>
+            <em>{{ school.school_name }}</em>(
+                {% with school.enrollment_date as date %}{{ date|date:"M, Y" }}{% endwith %}
+                    -
+                {% if school.graduation_date %}
+                {% with school.graduation_date as date %}{{ date|date:"M, Y" }}{% endwith %}
+                {% else %} In progress{% endif %}
+                )
             <ul>
                 <li><h5>Course: {{ school.course }} ({{ school.field }})</h5></li>
                 <li><h5>Address: {{ school.location }}</h5></li>
             </ul>
-        </div>
+       </p>
         <hr>
         {% endfor %}
     {% endif %}
-<hr>
-
         <div class="tech">
              <h4>SKILLS </h4>
                 <ul>
                     {% for item in resume.skills.all %}
-                    <li>{{ item.name }}</li>
+                    <li style="font-size: 10px; margin: 0;">{{ item.name }}</li>
                     {% endfor %}
                 </ul>
         </div>
-
-
 <center><h2>THIS RESUME WAS CREATED WITH RESUME BUILDER BUILT BY: <a href="http://vbellotech.herokuapp.com/">VBELLOTECH</a></h2></center>
-
-    <script src="{% static 'js/bootstrap.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-
 </body>
 </html>

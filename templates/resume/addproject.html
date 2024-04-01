@@ -2,31 +2,31 @@
 {% load static %}
 
 {% block content %}
-<br>
+  <br><br>
+<div id="form">
 <div class="container">
 			<div class="row ">
-						<form  method="POST">
+						<form class="form-group" method="POST">
                             {% csrf_token %}
                             <h5 class="text-center">ADD A PROJECT TO BOOST YOUR <b>"{{ resume.name }}"</b> RESUME</h5>
                                 <div class="col-md-12">
                                         {{ form.as_p }}
                                 </div>
                             <br>
-                            <div class="col-md-12">
-                                <div class="submit-button text-center">
-                                    <button class="btn btn-primary" type="submit">ADD</button>
-                                    <div id="msgSubmit" class="h3 text-center hidden"></div>
-                                    <div class="clearfix"></div>
+                            <p class="col-md-12 text-center">
+                                    <button  type="submit">ADD</button>
+                                <div class="text-center">
+                                    <a href="{{ resume.add_work }}">ADD WORK EXPERIENCE</a>
+                                    |
+                                    <a href="{{ resume.get_preview }}">PREVIEW RESUME</a>
                                 </div>
-                            </div>
+                            </p>
+
 						</form>
-                 <div class="spread">
-                    <a href="{{ resume.add_work }}">ADD WORK EXPERIENCE</a>
-                   <a href="{{ resume.get_preview }}">PREVIEW RESUME</a>
-                </div>
+
             </div>
         </div>
 
-
+</div>
 
 {% endblock content %}

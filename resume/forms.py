@@ -32,12 +32,13 @@ class ResumeForm(forms.ModelForm):
             )
         }
 
+
 class SkillsForm(forms.Form):
     tech = forms.ModelMultipleChoiceField(
         required=False,
-        queryset = Tech.objects.all(),
+        queryset=Tech.objects.all(),
         initial=0,
-        widget=forms.CheckboxSelectMultiple(attrs={'class': 'mt-2 mb-3 focus:border-blue-600 px-3',})
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'mt-2 mb-3 focus:border-blue-600 px-3', })
     )
 
 
@@ -64,19 +65,22 @@ class EducationForm(forms.Form):
         widget=forms.RadioSelect(attrs={'class': 'mt-2 mb-3 focus:border-blue-600 px-3', })
     )
 
-    enrollment_date = forms.DateField(required=False, widget=forms.SelectDateWidget(empty_label=('Year', 'Month', 'Day'),
-        years=range(1990, datetime.now().year),
-        attrs={
-            'data-date-format': 'mm/yyyy',
-            "placeholder": 'FORMAT YYYY-MM-DD (2002-02-20)',
-    }))
+    enrollment_date = forms.DateField(required=False,
+                                      widget=forms.SelectDateWidget(empty_label=('Year', 'Month', 'Day'),
+                                                                    years=range(1990, datetime.now().year),
+                                                                    attrs={
+                                                                        'data-date-format': 'mm/yyyy',
+                                                                        "placeholder": 'FORMAT YYYY-MM-DD (2002-02-20)',
+                                                                    }))
 
-    graduation_date = forms.DateField(required=False, widget=forms.SelectDateWidget(empty_label=('Year', 'Month', 'Day'),
-        years=range(1990, datetime.now().year),
-        attrs={
-            'data-date-format': 'mm/yyyy',
-            "placeholder": 'FORMAT YYYY-MM-DD (2002-02-20)',
-    }))
+    graduation_date = forms.DateField(required=False,
+                                      widget=forms.SelectDateWidget(empty_label=('Year', 'Month', 'Day'),
+                                                                    years=range(1990, datetime.now().year),
+                                                                    attrs={
+                                                                        'data-date-format': 'mm/yyyy',
+                                                                        "placeholder": 'FORMAT YYYY-MM-DD (2002-02-20)',
+                                                                    }))
+
 
 class ProjectForm(forms.Form):
     name = forms.CharField(required=False, widget=forms.TextInput(attrs={
@@ -119,21 +123,13 @@ class WorkForm(forms.Form):
     }))
 
     start_date = forms.DateField(required=False, widget=forms.SelectDateWidget(empty_label=('Year', 'Month', 'Day'),
-        years=range(1990, datetime.now().year),
-        attrs={
-            'data-date-format': 'dd/mm/yyyy',
-    }))
+                                                                               years=range(1990, datetime.now().year),
+                                                                               attrs={
+                                                                                   'data-date-format': 'dd/mm/yyyy',
+                                                                               }))
 
     end_date = forms.DateField(required=False, widget=forms.SelectDateWidget(empty_label=('Year', 'Month', 'Day'),
-        years=range(1990, datetime.now().year + 1),
-        attrs={
-            'data-date-format': 'dd/mm/yyyy',
-    }))
-
-
-
-
-
-
-
-
+                                                                             years=range(1990, datetime.now().year + 1),
+                                                                             attrs={
+                                                                                 'data-date-format': 'dd/mm/yyyy',
+                                                                             }))

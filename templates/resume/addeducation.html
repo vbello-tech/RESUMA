@@ -2,10 +2,11 @@
 {% load static %}
 
 {% block content %}
-<br>
+  <br><br>
+<div id="form">
 <div class="container">
 			<div class="row ">
-						<form  method="post">
+						<form class="form-group" method="post">
                             {% csrf_token %}
                             <h5 class="text-center">ADD AN EDUCATIONAL DETAIL TO BOOST YOUR <b>"{{ resume.name }}"</b> RESUME</h5>
                                 <div class="col-md-12">
@@ -26,7 +27,7 @@
                 </div>
             </div>
         </div>
-
+</div>
 
 
 {% endblock content %}

@@ -66,7 +66,6 @@ class Resume(models.Model):
         return reverse("resume:resume", kwargs={
             'slug': self.slug,
             'name': self.name,
-            'user': self.user,
         })
 
     def __str__(self):

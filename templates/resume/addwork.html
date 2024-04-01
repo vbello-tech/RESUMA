@@ -2,7 +2,8 @@
 {% load static %}
 
 {% block content %}
-<br>
+  <br><br>
+<div id="form">
 <div class="container">
 			<div class="row ">
 						<form  method="POST">
@@ -14,23 +15,18 @@
                                 <h5>Dont worry about putting the correct day if you dont remeber, only the year and month will be displayed.</h5>
 
                             <br>
-                            <div class="col-md-12">
-                                <div class="submit text-center">
-                                    <button class="btn btn-primary"  type="submit">ADD</button>
-                                    <div id="msgSubmit" class="h3 text-center hidden"></div>
-                                    <div class="clearfix"></div>
+                             <p class="col-md-12 text-center">
+                                    <button  type="submit">ADD</button>
+                                <div class="text-center">
+                                    <a href="{{ resume.add_education }}">ADD EDUCATION DETAILS</a>
+                                    |
+                                    <a href="{{ resume.get_preview }}">PREVIEW RESUME</a>
                                 </div>
-                            </div>
+                            </p>
 						</form>
-                <div class="col-md-12">
-                    <div class="submit text-center">
-                        <a href="{{ resume.get_preview }}">PREVIEW RESUME</a>
-                        <a href="{{ resume.add_education }}">ADD EDUCATION DETAILS</a>
-                    </div>
-                </div>
             </div>
         </div>
 
-
+</div>
 
 {% endblock content %}

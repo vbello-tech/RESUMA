@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<br>
+  <br><br>
                  <div class="spread">
                     <a href="{% url 'resume:generate_link' pk=resume.pk %}">GENERATE LINK</a>
                    <a href="{% url 'resume:generate_pdf' pk=resume.pk %}">GENERATE PDF</a>
@@ -39,7 +39,13 @@
         {% for school in education %}
         <div class="portfolio">
 
-            <em><h3>{{ school.school_name }} ( {{ school.enrollment_date }}-{{ school.graduation_date }} )</h3></em>
+            <h3><em>{{ school.school_name }} (
+                {% with school.enrollment_date as date %}{{ date|date:"M, Y" }}{% endwith %}
+                    -
+                {% if school.graduation_date %}
+                {% with school.graduation_date as date %}{{ date|date:"M, Y" }}{% endwith %}
+                {% else %} In progress{% endif %}
+                )</em></h3>
             <ul>
                 <li><h5>Course: {{ school.course }} ({{ school.field }})</h5></li>
                 <li><h5>Location: {{ school.location }}</h5></li>
@@ -78,7 +84,8 @@
         <div class="portfolio">
 
             {% if work.end_date %}
-            <h1>{{ work.company_name }} ( {{ work.role }} {{ work.start_date }}-{{ work.end_date }} )</h1>
+            <h1>{{ work.company_name }} ( {{ work.role }}
+                {% with work.start_date as date %}{{ date|date:"M, Y" }}{% endwith %}-{{ work.end_date }} )</h1>
             {% else %}
             <h1>{{ work.company_name }} ( {{ work.role }} {{ work.start_date }}- CURRENT )</h1>
             {% endif %}

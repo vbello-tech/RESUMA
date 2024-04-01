@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
+{% load filter %}
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -41,8 +42,7 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link active" href="{% url 'resume:home' %}">Home</a></li>
-          <li><a class="nav-link" href="#about">About Us</a></li>
-          <li><a class="nav-link" href="#services">Challenges</a></li>
+          <li><a class="nav-link" href="{% url 'resume:add_resume' %}">Create Resume</a></li>
            {% if user.is_authenticated %}
           <li class="dropdown"><a href="#"><span>{{ request.user }}</span> <i class="bi bi-chevron-down"></i></a>
             <ul>

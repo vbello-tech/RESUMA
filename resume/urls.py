@@ -1,14 +1,6 @@
 from django.urls import path
 from .views import *
 from django.urls import path, reverse_lazy
-from django.contrib.auth.views import (
-    LoginView,
-    LogoutView,
-    PasswordResetView,
-    PasswordResetConfirmView,
-    PasswordResetDoneView,
-    PasswordResetCompleteView,
-)
 
 app_name ="resume"
 
@@ -23,5 +15,7 @@ urlpatterns =[
     path('resume/<int:pk>/generate-pdf/', GeneratePdf.as_view(), name="generate_pdf"),
     path('resume/<int:pk>/generate-link/', generate_link, name="generate_link"),
     path('resume/<int:pk>/preview/', ResumePreviewView.as_view(), name="preview_resume"),
-    path('resume/<str:slug>/', ResumeView.as_view(), name="resume"),
+    path('resume/<str:slug>/<str:name>/', ResumeView.as_view(), name="resume"),
 ]
+
+# http://127.0.0.1:8000/resume/2/generate-pdf/
