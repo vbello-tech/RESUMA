@@ -13,3 +13,4 @@ site/__pycache__/
 site/settings/__pycache__/
 /__pycache__/
 resume_template.html
+staticfiles/
