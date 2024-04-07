@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.shortcuts import reverse
 from phonenumber_field.modelfields import PhoneNumberField
 import random, string
+from ckeditor.fields import RichTextField
 
 
 # Create your models here.
@@ -36,6 +37,11 @@ class Resume(models.Model):
     resume_link = models.URLField(blank=True, null=True)
     skills = models.ManyToManyField("Tech", related_name="techskill", blank=True)
     slug = models.SlugField(default=create_code())
+
+    def complete(self):
+        return reverse("resume:complete_resume", kwargs={
+            'pk': self.pk,
+        })
 
     def add_project(self):
         return reverse("resume:add_project", kwargs={
@@ -115,7 +121,7 @@ class Work(models.Model):
     resume = models.ForeignKey('Resume', related_name="resume_work", null=True, on_delete=models.CASCADE)
     company_name = models.CharField(max_length=300)
     role = models.CharField(max_length=300, blank=True, null=True)
-    company_description = models.CharField(max_length=250, blank=False, null=False)
+    company_description = RichTextField()
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
 

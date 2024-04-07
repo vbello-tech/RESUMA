@@ -25,6 +25,7 @@ class NewUSerForm(UserCreationForm):
             user.save()
         return user
 
+
 class EditUserForm(UserChangeForm):
     email = forms.EmailField(required=True)
     first_name = forms.CharField(required=True)
@@ -54,7 +55,7 @@ class ProfileForm(forms.Form):
     }))
     phone = PhoneNumberField(required=False, widget=PhoneNumberPrefixWidget(
         initial='NG',
-         attrs={
+        attrs={
             'class': 'form-control',
             'placeholder': 'PHONE NUMBER',
             'aria-describedby': 'basic-addon2'
@@ -81,8 +82,8 @@ class ProfileForm(forms.Form):
         'aria-describedby': 'basic-addon2'
     }))
 
-class EditProfileForm(forms.ModelForm):
 
+class EditProfileForm(forms.ModelForm):
     class Meta:
         model = Userprofile
         fields = ('bio', 'phone', 'portfolio', 'github', 'linkedin',)

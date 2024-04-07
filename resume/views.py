@@ -95,7 +95,7 @@ class AddResumeView(View, LoginRequiredMixin):
                     resume = form.save(commit=False)
                     resume.user = self.request.user
                     resume.save()
-                    return redirect(resume.add_project())
+                    return redirect(resume.complete())
                 else:
                     return redirect('resume:home')
             else:
@@ -105,17 +105,25 @@ class AddResumeView(View, LoginRequiredMixin):
             return redirect('resume:home')
 
 
-# ADD PROJECT TO RESUME
-class AddProjectView(View, LoginRequiredMixin):
+class CompleteResumeView(View):
     def get(self, request, pk, *args, **kwargs):
         resume = Resume.objects.get(user=request.user, pk=pk)
-        form = ProjectForm()
+        project_form = ProjectForm()
+        work_form = WorkForm()
+        education_form = EducationForm()
+        skill_form = SkillsForm()
         context = {
             'resume': resume,
-            'form': form,
+            'form': project_form,
+            #'work_form': work_form,
+            #'educatiom_form': education_form,
+            #'skill_form': skill_form,
         }
-        return render(self.request, 'resume/addproject.html', context)
+        return render(self.request, 'resume/complete_resume.html', context)
 
+
+# ADD PROJECT TO RESUME
+class AddProjectView(View, LoginRequiredMixin):
     def post(self, request, pk, *args, **kwargs):
         try:
             if self.request.user.is_authenticated:
@@ -145,15 +153,6 @@ class AddProjectView(View, LoginRequiredMixin):
 
 # ADD WORK EXPERIENCE
 class AddWorkView(View, LoginRequiredMixin):
-    def get(self, request, pk, *args, **kwargs):
-        resume = Resume.objects.get(user=request.user, pk=pk)
-        form = WorkForm()
-        context = {
-            'form': form,
-            'resume': resume,
-        }
-        return render(self.request, 'resume/addwork.html', context)
-
     def post(self, request, pk, *args, **kwargs):
         try:
             resume = Resume.objects.get(user=request.user, pk=pk)
@@ -183,15 +182,6 @@ class AddWorkView(View, LoginRequiredMixin):
 
 # ADD EDUCATION HISTORY
 class AddEducationView(View, LoginRequiredMixin):
-    def get(self, request, pk, *args, **kwargs):
-        resume = Resume.objects.get(user=request.user, pk=pk)
-        form = EducationForm()
-        context = {
-            'form': form,
-            'resume': resume,
-        }
-        return render(self.request, 'resume/addeducation.html', context)
-
     def post(self, request, pk, *args, **kwargs):
         resume = Resume.objects.get(user=request.user, pk=pk)
         form = EducationForm(self.request.POST or None)
@@ -225,15 +215,6 @@ class AddEducationView(View, LoginRequiredMixin):
 
 # ADD EDUCATION HISTORY
 class AddSkillsView(View, LoginRequiredMixin):
-    def get(self, request, pk, *args, **kwargs):
-        resume = Resume.objects.get(user=request.user, pk=pk)
-        form = SkillsForm()
-        context = {
-            'form': form,
-            'resume': resume,
-        }
-        return render(self.request, 'resume/addskills.html', context)
-
     def post(self, request, pk, *args, **kwargs):
         try:
             resume = Resume.objects.get(user=request.user, pk=pk)
@@ -319,3 +300,12 @@ def handler500(request):
     response = render(request, "500.html", context)
     response.status_code = 500
     return response
+
+
+def testing(request):
+    form = ResumeForm()
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'resume/testing.html', context)

@@ -27,6 +27,10 @@
   <!-- Template Main CSS File -->
   <link href="{% static 'styling/style.css' %}" rel="stylesheet">
 
+  {% block extra_head %}
+
+    {% endblock extra_head %}
+
 </head>
 
 <body>
@@ -139,5 +143,10 @@
 
     <!-- Template Main JS File -->
     <script src="{% static 'js/app.js' %}"></script>
+
+  {% block extra_script %}
+
+    {% endblock extra_script %}
+
 </body>
 </html>

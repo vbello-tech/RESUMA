@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<style>
+        .modal {
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(255,255,255, 0.8); /* Black w/opacity/see-through */
+            color: black;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            width: 80%;
+            height: auto;
+            margin: 0 ;
+            transform: translate(-50%, -50%);
+            padding: 10px;
+            border: 1px solid gray;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+    </style>
+    {% endblock extra_head %}
+
+
+
+{% block content %}
+
+<br><br><br><br>
+
+ yo fam.
+
+<button id="open-modal">Open Form</button>
+
+
+    <div id="modal" class="modal">
+        <br><br><br>
+        <div id="form">
+                <div class="container">
+                    <div class="row">
+                                <form class="form-group" method="POST">
+                                    {% csrf_token %}
+
+                                        <div class="col-md-12">
+                                            <div>
+                                                <h2>RESUME NAME:</h2>
+                                                {{ form.as_p }}
+                                            </div>
+                                        </div>
+                                    <br>
+
+                                    <p class="text-center">
+                                        <button  type="submit">CREATE RESUME</button>
+                                    </p>
+                                </form>
+                    </div>
+                </div>
+        </div>
+
+        <span id="close-modal">&times;</span>
+    </div>
+
+
+
+
+<script>
+        const modal = document.getElementById('modal');
+        const openModalBtn = document.getElementById('open-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+
+        openModalBtn.addEventListener('click', () => {
+            modal.style.display = 'block';
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+    </script>
+
+
+{% endblock content %}

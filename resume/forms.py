@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberInternationalFallbackWidget, PhoneNumberPrefixWidget
 from datetime import datetime
+from ckeditor.widgets import CKEditorWidget
 
 Field_chioce = (
     ('BSC SCIENCE', 'BSC SCIENCE'),
@@ -116,10 +117,9 @@ class WorkForm(forms.Form):
         "placeholder": 'YOUR ROLE IN THE COMPANY',
     }))
 
-    company_description = forms.CharField(required=False, widget=forms.Textarea(attrs={
+    company_description = forms.CharField(required=False, widget=CKEditorWidget(attrs={
         'class': 'form-control',
         "placeholder": 'A BRIEF DESCRIPTION OF WHAT THE COMAPNY IS.',
-        'rows': 3,
     }))
 
     start_date = forms.DateField(required=False, widget=forms.SelectDateWidget(empty_label=('Year', 'Month', 'Day'),

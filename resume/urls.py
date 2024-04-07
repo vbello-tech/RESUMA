@@ -7,6 +7,7 @@ app_name ="resume"
 urlpatterns =[
     path('', home, name="home"),
     path('add-resume/', AddResumeView.as_view(), name="add_resume"),
+    path('complete-resume/<int:pk>/', CompleteResumeView.as_view(), name="complete_resume"),
     path('resume/user/resume/', user_resume, name="user_resume"),
     path('add-resume/add-project/<int:pk>', AddProjectView.as_view(), name="add_project"),
     path('add-resume/add-work/<int:pk>', AddWorkView.as_view(), name="add_work"),
@@ -16,6 +17,5 @@ urlpatterns =[
     path('resume/<int:pk>/generate-link/', generate_link, name="generate_link"),
     path('resume/<int:pk>/preview/', ResumePreviewView.as_view(), name="preview_resume"),
     path('resume/<str:slug>/<str:name>/', ResumeView.as_view(), name="resume"),
+    path('testing/', testing, name="testing"),
 ]
-
-# http://127.0.0.1:8000/resume/2/generate-pdf/
